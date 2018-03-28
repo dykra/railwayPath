@@ -6,4 +6,5 @@ Repozytorium: https://github.com/dykra/railwayPath
 
 Zadania: https://github.com/dykra/railwayPath/projects
 
+Raporty: https://docs.google.com/document/d/1MuYO0mAPt7K74dTIKSIrpz1mBAzN1oLltxg016jqdUQ/edit?usp=sharing
 
