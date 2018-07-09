@@ -6,8 +6,8 @@ setup(
     packages=[''],
     url='',
     license='',
-    author='Kaziow,Nowak,Palewicz,Tomasiewicz',
+    author='Kazior,Nowak,Palewicz,Tomasiewicz',
     author_email='railwayPathINZYNIERKA@gmail.com',
     description='',
-    install_requires = ['pymssql'],
+    install_requires=['pymssql'],
 )
