@@ -1,45 +1,50 @@
--- =============================================
+ï»¿-- =============================================
 -- CREATE NEW TABLE FILTERED_PARCEL
 -- not interested values are dropped
 -- =============================================
 
-BEGIN TRAN
 
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_NAME = 'FILTERED_PARCEL'))
+BEGIN
+	DROP TABLE FILTERED_PARCEL
+END
+     
 SELECT  *
-INTO FILTERED_PARCEL FROM PARCEL
-WHERE LS1_Sale_Date > 20150000
+	INTO FILTERED_PARCEL FROM PARCEL
+	WHERE LS1_Sale_Date > 20150000
       and LS1_Sale_Amount != 9
       and LS1_Sale_Amount != 0
-      and LS1_Sale_Amount != 999999999
+      and LS1_Sale_Amount != 999999999;
 
 
 DELETE FROM FILTERED_PARCEL
 WHERE Zoning_Code IS NULL
-
-COMMIT TRAN;
-
+GO
 
 -- =============================================
 -- Get data from Zoning_Code column
 -- Adding and filling new column Simple_Zoning_Code
 -- Adding and filling new column City
+-- Adding new column Price_Per_Single_Area_Unit 
+-- Adding new column Parcel_Area
 -- =============================================
 
-ALTER TABLE FILTERED_PARCEL
-  ADD Simple_Zoning_Code NVARCHAR(15)
-    DEFAULT NULL
+IF (NOT EXISTS (select * from information_schema.COLUMNS where TABLE_NAME = 'FILTERED_PARCEL' and COLUMN_NAME = 'Simple_Zoning_Code'))
+	BEGIN
+		ALTER TABLE FILTERED_PARCEL
+			ADD 
+				Simple_Zoning_Code NVARCHAR(15) DEFAULT NULL, 
+				City NVARCHAR(5),
+				Price_Per_Single_Area_Unit INT,
+				Parcel_Area INT
+	END
 GO
-
-ALTER TABLE FILTERED_PARCEL
-  ADD City NVARCHAR(5)
-GO
-
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code=substring(Zoning_Code,3,1)
 
 UPDATE FILTERED_PARCEL
   SET City=substring(Zoning_Code,1,2)
-
+GO
 
 -- =============================================
 -- Get data from connected to parcel area
@@ -47,45 +52,30 @@ UPDATE FILTERED_PARCEL
 -- =============================================
 
 
-ALTER TABLE FILTERED_PARCEL
-  ADD Price_Per_Single_Area_Unit INT
-GO
-
-ALTER TABLE FILTERED_PARCEL
-  ADD Parcel_Area INT
-GO
-
 UPDATE FILTERED_PARCEL
   SET Parcel_Area=Shape.STArea()
+GO
 
 UPDATE FILTERED_PARCEL
   SET Price_Per_Single_Area_Unit=(LS1_Sale_Amount/(Parcel_Area+1))
+GO
 
 
 -- =============================================
 -- ADD NEW COLUMNS FOR BASIC AREAS TYPES
 -- ============================================= to jest dodatkowe
 
-ALTER TABLE FILTERED_PARCEL
-  ADD Residential SMALLINT
+--IF (NOT EXISTS (select * from information_schema.COLUMNS where TABLE_NAME = 'FILTERED_PARCEL' and COLUMN_NAME =))
+BEGIN
+	ALTER TABLE FILTERED_PARCEL
+  ADD 
+	Residential SMALLINT, 
+	Special_Purposes_Plan SMALLINT, 
+	Agricultural SMALLINT, 
+	Commercial SMALLINT,
+	Manufacturing SMALLINT
+END
 GO
-
-ALTER TABLE FILTERED_PARCEL
-    ADD Special_Purposes_Plan SMALLINT
-GO
-
-ALTER TABLE FILTERED_PARCEL
-  ADD Agricultural SMALLINT
-GO
-
-ALTER TABLE FILTERED_PARCEL
-  ADD Commercial SMALLINT
-GO
-
-ALTER TABLE FILTERED_PARCEL
-  ADD Manufacturing SMALLINT
-GO
-
 
 -- =============================================
 -- Parse Zoning codes
@@ -96,10 +86,6 @@ GO
 -- =============================================
 
 UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'R1'
-    WHERE substring(Zoning_Code, 3, 2) like 'R1'
-
-UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code =
     CASE substring(Zoning_Code, 3, 1)
         WHEN 'R' THEN
@@ -107,39 +93,30 @@ UPDATE FILTERED_PARCEL
                 WHEN '1' THEN 'R1'
                 WHEN '2' THEN 'R2'
                 WHEN '3' THEN 'R3'
+				WHEN '4' THEN 'R4'
               END
-
+	END
+	WHERE Simple_Zoning_Code is null
+GO
 
 
 -- for SCUR1, SCUR2, SCUR3, SCUR4, SCUR5 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = substring(Zoning_Code, 4, 2)
     WHERE Zoning_Code like 'SCUR%'
+GO
 
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'R2'
-    WHERE substring(Zoning_Code, 3, 2) like 'R2'
+	WHERE Zoning_Code like 'LAMR2'
+GO
 
-
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'R2'
-    WHERE Zoning_Code like 'LAMR2';
-
---
-
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'R3'
-    WHERE substring(Zoning_Code, 3, 2) like 'R3';
-   
-
---
---TODO opisac R4 i R5 czym sa
-
---
 UPDATE FILTERED_PARCEL
     SET Residential = (CASE
-                       WHEN Simple_Zoning_code IN ('R1', 'R2', 'R3', 'R4', 'R5') THEN 1 ELSE 0 END);
+                       WHEN Simple_Zoning_code IN ('R1', 'R2', 'R3', 'R4', 'R5') THEN 1 ELSE 0 END)
+GO
+
 
 -- =============================================
 -- AGRICULTURAL
@@ -167,7 +144,7 @@ UPDATE FILTERED_PARCEL
              CASE substring(Zoning_Code, 4, 1)
                 WHEN '1' THEN 'A1'
                 WHEN '2' THEN 'A2'
-                WHEN '3' THEN 'A3' -- TODO A3 co to jest?
+                WHEN '3' THEN 'A3'
               END
 
         WHEN 'C' THEN
@@ -175,7 +152,7 @@ UPDATE FILTERED_PARCEL
                 WHEN '1' THEN 'C1'
                 WHEN '2' THEN 'C2'
                 WHEN '3' THEN 'C3'
-                WHEN '4' THEN 'C4' --TODO C4 co to jest?
+                WHEN '4' THEN 'C4'
               END
 
         WHEN 'M' THEN
@@ -185,6 +162,8 @@ UPDATE FILTERED_PARCEL
                 WHEN '3' THEN 'M3'
               END
     END
+WHERE Simple_Zoning_Code is null;
+
 
 -- TODO co to jest C5
 UPDATE FILTERED_PARCEL
@@ -197,20 +176,16 @@ UPDATE FILTERED_PARCEL
     WHERE Zoning_Code like 'LACM';
 
 
-
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'CR'
     WHERE Zoning_Code like 'LBCR*'
           or Zoning_Code like 'LBCR'
           or Zoning_Code like 'AHCR'
-          or Zoning_Code like 'LRCR*'
-
+          or Zoning_Code like 'LRCR*';
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'CPD'
     WHERE Zoning_Code like 'CPD';
-
-
 
 UPDATE FILTERED_PARCEL
     SET Agricultural = (CASE
@@ -237,26 +212,22 @@ UPDATE FILTERED_PARCEL
           or Zoning_Code like 'PDSP*'
           or Zoning_Code like 'LRSP'
           or Zoning_Code like 'NOSP2*'
+		  or Zoning_Code like 'SCSP';
 
-
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'SP'
-    WHERE Zoning_Code like 'SCSP';
-
-
+		  
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'RR'
-    WHERE substring(Zoning_Code, 3, 3) like 'RR-'    
+    WHERE substring(Zoning_Code, 3, 3) like 'RR-';    
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'PR'
-    WHERE substring(Zoning_Code, 3, 3) like 'PR-'
+    WHERE substring(Zoning_Code, 3, 3) like 'PR-';
 
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'PR'
     WHERE Zoning_Code like 'LCPR*'
-          or Zoning_Code like 'POPRD*'
+          or Zoning_Code like 'POPRD*';
 
 
 UPDATE FILTERED_PARCEL
@@ -264,51 +235,51 @@ UPDATE FILTERED_PARCEL
                        WHEN Simple_Zoning_code IN ('SP', 'RR', 'PR') THEN 1 ELSE 0 END);
 
 
-
 -- =============================================
 -- OTHER TYPES
 -- =============================================
 
 UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'GAMUO'
-    WHERE Zoning_Code like 'GAMUO';
+  SET Simple_Zoning_Code =
+    CASE Zoning_Code
+        WHEN 'GAMUO' THEN 'GAMUO' 
+		WHEN 'RBPDR*' THEN 'RBPDR*' 
+		WHEN 'PRSF*' THEN 'SF?' 
+		WHEN 'LAWC' THEN 'W1' 
+		WHEN 'LACW' THEN 'W2' 
+		WHEN 'PSC-' THEN 'PSC?'  
+		WHEN 'LBPD1' THEN 'PD1?' 
+		WHEN 'LAMR1' THEN 'R1'     
+	END
+WHERE Simple_Zoning_Code is null
+GO
 
 UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'RBPDR*'
-    WHERE Zoning_Code like 'RBPDR*';
+  SET Simple_Zoning_Code = 'R'
+    WHERE Zoning_Code like '__R%'
+           and Simple_Zoning_Code is null;
 
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'SF?'
-    WHERE Zoning_Code like 'PRSF*';
 
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'W1'
-    WHERE Zoning_Code like 'LAWC'
 
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'W2'
-    WHERE Zoning_Code like 'LACW'
 
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'PSC?'
-    WHERE Zoning_Code like 'PSC-';
 
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'PD1?'
-    WHERE Zoning_Code like 'LBPD1';
+---------------polecenie ktÃ³re zwraca ilosc roznych kodÃ³w - Zoning_Code, ktÃ³rych nie udalo sie odszyfrowaÃ¦------------------
 
-UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = 'R1'
-    WHERE Zoning_Code like 'LAMR1'
+SELECT Zoning_Code, Simple_Zoning_Code, count(*) as quantity FROM FILTERED_PARCEL
+where Simple_Zoning_Code is null
+group by Zoning_Code, Simple_Zoning_Code
+order by quantity desc
 
----------------polecenie które zwraca ilosc roznych kodów - Zoning_Code, których nie udalo sie odszyfrowaæ------------------
-SELECT Zoning_Code, simple_zone, count(*) as q from Lands where simple_zone != 'R1' and simple_zone != 'R2' and simple_zone != 'R3' and simple_zone != 'R4' 
-and simple_zone != 'R5' and simple_zone != 'R' and simple_zone != 'A1' and simple_zone != 'A2' and simple_zone != 'A3' and simple_zone != 'A4'
-and simple_zone != 'C1' and simple_zone != 'C2' and simple_zone != 'C3' and simple_zone != 'RR' and simple_zone != 'M1' and simple_zone != 'C4'
-and simple_zone != 'PR' and simple_zone != 'M2' and simple_zone != 'M3' and simple_zone != 'GAMUO' and simple_zone != 'RBPDR*'
-and simple_zone !='C5' and simple_zone != 'CM' and simple_zone !='SP' and simple_zone !='SF?' 
-and simple_zone !='SP'and simple_zone != 'PSC?'and simple_zone != 'PD1?'and simple_zone != 'W' 
-and simple_zone != 'CR' and simple_zone != 'SP' and simple_zone != 'CPD' and simple_zone != 'CR' and simple_zone != 'PR' 
-and simple_zone !='LAMR1' and simple_zone !='LACW'
-group by Zoning_Code, simple_zone 
-order by q desc 
+
+
+SELECT Zoning_Code, Simple_Zoning_Code, count(*) as quantity FROM FILTERED_PARCEL
+group by Zoning_Code, Simple_Zoning_Code
+order by quantity desc
+
+
+select * from FILTERED_PARCEL
+
+
+
+
+
