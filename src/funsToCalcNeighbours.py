@@ -1,4 +1,5 @@
 import pyodbc
+import time
 
 from geopy import distance
 
@@ -16,7 +17,7 @@ def get_cursor():
 def get_parcels_to_check(piece_id, pieces_map):
     keys = pieces_map.keys()
     result = []
-    map_element = pieces_map[piece_id]
+    map_element = tuple(pieces_map[piece_id])
     result.extend(map_element[1])
     for neighbour in map_element[0]:
         if (neighbour in keys):
@@ -32,17 +33,22 @@ def get_distance_between_parcels_in_kilometers(parcel1, parcel2):
 
 def get_parcels_with_neighbours(parcels, pieces_map):
     print("getting")
-    i = 0
+    j = 0
+    print(len(parcels))
     for p in parcels:
+        j += 1
+        if (j % 50 == 0):
+            print(j)
         piece_id = p[3]
-        parcels_to_check = get_parcels_to_check(piece_id, pieces_map)
+        parcels_to_check = []
+        parcels_to_check = list(get_parcels_to_check(piece_id, pieces_map))
+
         for ptc in parcels_to_check:
-            ptc.append(get_distance_between_parcels_in_kilometers(p,ptc))
-        result_neighbours = sorted(parcels_to_check, key=lambda x: x[5])[:11]
-        p.append(result_neighbours)
-        i += 1
-        # if (i % 1000 == 0):
-        print("Done ", i)
+            ptc[6] = (get_distance_between_parcels_in_kilometers(p,ptc))
+        result_neighbours = sorted(parcels_to_check, key=lambda x: x[6])[:11]
+
+        p[7] = list([[r[0],r[5]] for r in result_neighbours])
+
     return parcels
 
 
@@ -63,21 +69,28 @@ def get_pieces_map(parcels):
 def convert_neighbours(row):
     neigh_list = list(map(int, row[4].split(',')))
     row[4] = neigh_list
+    # row.append(0.0)
+    # row.append([])
     return list(row)
 
 
 def get_all_parcels(cursor):
     parcels = []
-
-    cursor.execute('select objectid, CAST(center_lat as float), CAST(center_lon as float), pieceNumber, neighbours_str '
-                   'from dbo.filtered_parcel '
+    print("will be downloading")
+    cursor.execute('select top 200000 ieraobjectid, CAST(center_lat as float), CAST(center_lon as float), pieceNumber, neighbours_str, shapeAsText '
+                   'from dbo.parcel '
                    'where CENTER_LAT != 0 and CENTER_LON != 0 '
                    'order by pieceNumber')
-
+    i = 0
+    print("downloaded")
     for row in cursor:
         new_row = convert_neighbours(row)
+        new_row.append(0.0)
+        new_row.append([])
         parcels.append(new_row)
-
+        i = i + 1
+        if (i % 10000 == 0):
+            print("Done ", i)
     return parcels
 
 # median of areas
