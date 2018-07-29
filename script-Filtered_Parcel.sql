@@ -272,31 +272,38 @@ UPDATE FILTERED_PARCEL
 
 
 
-
+select * from Lands_Vectors
 
 
 ---------New table - Lands_Vectors - Lands with mapped values into integer--
 select * into Lands_Vectors from Filtered_Parcel
 
 alter table Lands_Vectors
-drop column AIN, Shape
-GO
-
-
-
-alter table Lands_Vectors
-drop column PHASE, PCLTYPE, MOVED, TRA, USECODE, BLOCK, UDATE, EDITORNAME, UNIT_NO, PM_REF, TOT_UNITS, Agency_Class_Number,
+drop column AIN, Shape, PHASE, PCLTYPE, MOVED, TRA, USECODE, BLOCK, UDATE, EDITORNAME, UNIT_NO, PM_REF, TOT_UNITS, Agency_Class_Number,
 SA_Fraction, SA_Unit, MA_Fraction, MA_Unit, F1st_Owner_Assee_Name, F1st_Owner_Name_Overflow, Special_Name_Legend,
 Special_Name_Assee_Name, F2nd_Owner_Assee_Name, HA_City_Ky, HA_Information, Partial_Interest, Document_Reason_Cde, Ownership_Cde, 
-Exemption_Claim_Type, PersProp_Ky, PersProp_Value, Pers_Prop_Exempt_Value, Fixture_Value, Fixture_Exempt_Value
+Exemption_Claim_Type, PersProp_Ky, PersProp_Value, Pers_Prop_Exempt_Value, Fixture_Value, Fixture_Exempt_Value,
+
+ASSRDATA_M, Real_Est_Exempt_Value, LS1_Verification_Ky, LS2_Verification_Ky, LS3_Verification_Ky, LS3_Sale_Amount,
+Impairment_Key, Legal_Description_Line2, Legal_Description_Line3, Legal_Description_Line4,
+
+BD_LINE_4_No_of_Bedrooms, BD_LINE_4_No_of_Baths, BD_LINE_4_No_of_Units, BD_LINE_4_Sq_Ft_of_Main_Improve, BD_LINE_5_Subpart, BD_LINE_5_Design_Type,
+BD_LINE_5_Quality__Class___Shap, BD_LINE_5_No_of_Units, BD_LINE_5_No_of_Bedrooms, BD_LINE_5_No_of_Baths, BD_LINE_5_Sq_Ft_of_Main_Improve,
+TAXS_Ky, TAXS_Yr_Sold_to_St, BD_LINE_4_Subpart, BD_LINE_4_Design_Type, BD_LINE_4_Quality__Class___Shap, BD_LINE_4_Yr_Built, BD_LINE_5_Yr_Built,
+BD_LINE_4_Unit_Cost_Main, BD_LINE_4_RCN_Main, BD_LINE_5_Year_Changed, BD_LINE_5_Unit_Cost_Main, BD_LINE_5_RCN_Main, First_Transferee_Name, First_Transferee_Name_Overflow, Second_Transferee_Name,
+Recorders_Document_Key, Legal_Description_Line5, Legal_Description_Last
+
 GO
+
+alter table Lands_Vectors
+drop column
+
+
 
 select * from Lands_Vectors
 
 
-alter table Lands_Vectors
-drop column ASSRDATA_M, Real_Est_Exempt_Value, LS1_Verification_Ky, LS2_Verification_Ky, LS3_Verification_Ky, LS3_Sale_Amount, 
-GO
+
 
 
 
@@ -507,13 +514,6 @@ Zoning_Code, BD_LINE_1_Quality__Class___Shap,
 SA_Street_and_City_and_State, MA_Street_and_City_and_State, City, Simple_Zoning_Code
 
 
-select * from Lands_Vectors
-
-
-
-
-
-
 
 
 
@@ -530,19 +530,62 @@ WHERE Use_Cde is null;
  GO
 -------
 
+update Lands_Vectors
+set BD_LINE_2_Design_Type = 1 
+where BD_LINE_2_Design_Type is null
+GO
+
+update Lands_Vectors
+set BD_LINE_2_Quality__Class___Shap = 1 
+where BD_LINE_2_Quality__Class___Shap is null
+GO
+
+update Lands_Vectors
+set BD_LINE_3_Design_Type = 1 
+where BD_LINE_3_Design_Type is null
+GO
+
+update Lands_Vectors
+set BD_LINE_3_Quality__Class___Shap = 1 
+where BD_LINE_3_Quality__Class___Shap is null
+GO
+
+update Lands_Vectors
+set Land_Reason_Key = 1 
+where Land_Reason_Key is null
+GO
+
+select * from Lands_Vectors
+
 
 --do csv ObjectID;PERIMETERLS2_Sale_Date;LS3_Sale_Date;BD_LINE_1_Subpart;BD_LINE_1_Design_Type;BD_LINE_1_Yr_Built;BD_LINE_1_No_of_Units;BD_LINE_1_No_of_Bedrooms;BD_LINE_1_No_of_Baths;BD_LINE_1_Sq_Ft_of_Main_Improve;BD_LINE_2_Yr_Built;BD_LINE_2_No_of_Units;BD_LINE_2_No_of_Bedrooms;BD_LINE_2_No_of_Baths;BD_LINE_2_Sq_Ft_of_Main_Improve;Current_Land_Base_Year;Current_Improvement_Base_Year;Current_Land_Base_Value;Current_Improvement_Base_Value;Cluster_Location;Cluster_Type;Cluster_Appraisal_Unit;Document_Transfer_Tax_Sales_Amo;BD_LINE_1_Year_Changed;BD_LINE_1_Unit_Cost_Main;BD_LINE_1_RCN_Main;BD_LINE_2_Year_Changed;BD_LINE_2_Unit_Cost_Main;BD_LINE_2_RCN_Main;Landlord_Reappraisal_Year;Landlord_Number_of_Units;Price_Per_Area;Area;SA_Localization_int;MA_Localization_int;MA_Direction_int;SA_Direction_int;Simple_Zone_int;Zoning_Code_int;BD_LINE_1_Quality__Class___Shap_int;City_int
 
 IMPROVE_Curr_Value;SA_Zip_Cde;Recording_Date;Use_Cde;
 
+--to test if there is any null values in any column
+
+DECLARE @tb NVARCHAR(255) = N'dbo.Lands_Vectors';
+
+DECLARE @sql NVARCHAR(MAX) = N'SELECT * FROM ' + @tb
+    + ' WHERE 1 = 0';
+
+SELECT @sql += N' OR ' + QUOTENAME(name) + ' IS NULL'
+    FROM sys.columns 
+    WHERE [object_id] = OBJECT_ID(@tb);
+
+EXEC sp_executesql @sql;
+
+
+
+
 ---Move LS1_Sale_Amount column to the end, rename it
 
 alter table Lands_Vectors
 add Sale_Amount int 
+GO
 
 update Lands_Vectors set Sale_Amount = LS1_Sale_Amount
 
-select LS1_Sale_Amount, Sale_Amount from Lands_Vectors
 
 
 alter table Lands_Vectors
@@ -553,3 +596,63 @@ drop column LS1_Sale_Amount
 select * from Lands_Vectors 
 order by Sale_Amount 
 
+SELECT OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr,LAND_Curr_Value,	'+
+                           'IMPROVE_Curr_Roll_YR, IMPROVE_Curr_Value, SA_House_Number, SA_Zip_Cde, MA_House_Number,	MA_Zip_Cde,	Recording_Date,'+
+ 'Hmownr_Exempt_Number, Hmownr_Exempt_Value, LS1_Sale_Date, LS2_Sale_Date,'+
+'LS3_Sale_Date, BD_LINE_1_Subpart, BD_LINE_1_Design_Type, BD_LINE_1_Yr_Built, BD_LINE_1_No_of_Units,'+
+'BD_LINE_1_No_of_Bedrooms, BD_LINE_1_No_of_Baths, BD_LINE_1_Sq_Ft_of_Main_Improve, BD_LINE_2_Subpart,'+
+'BD_LINE_2_Design_Type, BD_LINE_2_Yr_Built, BD_LINE_2_No_of_Units,'+
+'BD_LINE_2_No_of_Bedrooms, BD_LINE_2_No_of_Baths, BD_LINE_2_Sq_Ft_of_Main_Improve, BD_LINE_3_Subpart,'+
+'BD_LINE_3_Design_Type, BD_LINE_3_Yr_Built, BD_LINE_3_No_of_Units,'+
+'BD_LINE_3_No_of_Bedrooms, BD_LINE_3_No_of_Baths, BD_LINE_3_Sq_Ft_of_Main_Improve,'+
+'Current_Land_Base_Year, Current_Improvement_Base_Year,'+
+'Current_Land_Base_Value, Current_Improvement_Base_Value, Cluster_Location, Cluster_Type,'+
+'Cluster_Appraisal_Unit, Document_Transfer_Tax_Sales_Amo, BD_LINE_1_Year_Changed,'+
+'BD_LINE_1_Unit_Cost_Main, BD_LINE_1_RCN_Main, BD_LINE_2_Year_Changed, BD_LINE_2_Unit_Cost_Main,'+
+'BD_LINE_2_RCN_Main, BD_LINE_3_Year_Changed, BD_LINE_3_Unit_Cost_Main, BD_LINE_3_RCN_Main,'+
+'BD_LINE_4_Year_Changed,	Landlord_Reappraisal_Year,	Landlord_Number_of_Units,'+
+'Recorders_Document_Number,	Price_Per_Single_Area_Unit,	Parcel_Area, Residential,'+
+'Special_Purposes_Plan, Agricultural, Commercial, Manufacturing, SA_Localization_int,'+
+'MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,'+
+'Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int,	Sale_Amount FROM Lands_Vectors WHERE Sale_Amount < 10000000
+
+
+select distinct Land_reason_Key from Lands_Vectors
+
+UPDATE FILTERED_PARCEL
+  SET Simple_Zoning_Code =
+    CASE Zoning_Code
+        WHEN 1 THEN 'GAMUO' 
+		WHEN 2 THEN 'RBPDR*' 
+		WHEN 3 THEN 'SF?' 
+		WHEN 5 THEN 'W1' 
+		WHEN 7 THEN 'W2' 
+		WHEN 8 THEN 'PSC?'  
+		WHEN 'LBPD1' THEN 'PD1?' 
+		WHEN 'LAMR1' THEN 'R1'     
+	END
+WHERE Simple_Zoning_Code is null
+GO
+
+
+
+SELECT OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr,LAND_Curr_Value, IMPROVE_Curr_Roll_YR, IMPROVE_Curr_Value, SA_House_Number, SA_Zip_Cde, MA_House_Number,	MA_Zip_Cde,	Recording_Date,
+Hmownr_Exempt_Number, Hmownr_Exempt_Value, LS1_Sale_Date, LS2_Sale_Date,
+LS3_Sale_Date, BD_LINE_1_Yr_Built, BD_LINE_1_No_of_Units,
+BD_LINE_1_No_of_Bedrooms, BD_LINE_1_No_of_Baths, BD_LINE_1_Sq_Ft_of_Main_Improve, BD_LINE_2_Subpart,
+BD_LINE_2_Yr_Built, BD_LINE_2_No_of_Units,
+BD_LINE_2_No_of_Bedrooms, BD_LINE_2_No_of_Baths, BD_LINE_2_Sq_Ft_of_Main_Improve,
+BD_LINE_3_Subpart,
+BD_LINE_3_Yr_Built, BD_LINE_3_No_of_Units,BD_LINE_3_No_of_Bedrooms, BD_LINE_3_No_of_Baths, BD_LINE_3_Sq_Ft_of_Main_Improve,
+Current_Land_Base_Year, Current_Improvement_Base_Year,
+Current_Land_Base_Value, Current_Improvement_Base_Value, Cluster_Location, Cluster_Type,
+Cluster_Appraisal_Unit, Document_Transfer_Tax_Sales_Amo, BD_LINE_1_Year_Changed,
+BD_LINE_1_Unit_Cost_Main, BD_LINE_1_RCN_Main, BD_LINE_2_Year_Changed, 
+BD_LINE_2_Unit_Cost_Main, BD_LINE_2_RCN_Main, BD_LINE_3_Year_Changed, 
+BD_LINE_3_Unit_Cost_Main, BD_LINE_3_RCN_Main, BD_LINE_4_Year_Changed,Landlord_Reappraisal_Year,
+Landlord_Number_of_Units,
+Recorders_Document_Number,	Price_Per_Single_Area_Unit,	Parcel_Area, Residential,
+Special_Purposes_Plan, Agricultural, Commercial, Manufacturing, SA_Localization_int,
+MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
+Zoning_Code_int,
+BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount FROM Lands_Vectors WHERE Sale_Amount < 10000000
