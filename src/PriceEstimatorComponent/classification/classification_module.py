@@ -1,7 +1,7 @@
 from src.Utils.DatabaseHandler import DatabaseHandler
-from src.Utils.Logger import create_loggers_helper
+from src.Utils.logger import create_loggers_helper
 import pandas as pd
-
+import sys
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
