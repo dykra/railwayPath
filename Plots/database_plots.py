@@ -1,4 +1,4 @@
-from src.Utils.database_handler import execute_sql_statement
+from PriceEstimatorComponent.database_handler import execute_sql_statement
 import matplotlib.pyplot as plt
 import seaborn as sns
 import sys
@@ -7,7 +7,7 @@ sns.set(style="white")
 sns.set(style="whitegrid", color_codes=True)
 
 
-# TODO  zaleznosc danych od wyniku (wykresy) : cena , lattitude i longitude :)
+# TODO -  zaleznosc danych od wyniku (wykresy) : cena , lattitude i longitude :)
 def show_statistics(data, column_name, plot_name=""):
     sns.countplot(x=column_name, data=data, palette='hls')
     plt.show()
