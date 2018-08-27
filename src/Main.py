@@ -62,8 +62,8 @@ def main():
     if mode == 1:
         df = pd.read_sql_query('select * from PARCEL_DATA_SET', cnxn)
     elif mode == 2:
-        file = r'resources/Lands_Vectors.csv'
-        df = pd.read_csv(file, delimiter=';')
+        file = 'resources/Lands_Vectors.csv'
+        df = pd.read_csv(file, delimiter=',')
 
     print('---Data loaded---')
 
@@ -86,10 +86,9 @@ def main():
     # the activation function using the activation argument.
 
 
-
     print('Ok-1')
     # fix random seed for reproducibility
-    seed = 7
+    seed = 2**32 - 29638824
     numpy.random.seed(seed)
     # evaluate model with standardized dataset
     estimator = KerasRegressor(build_fn=baseline_model, epochs=100, batch_size=1, verbose=0)
