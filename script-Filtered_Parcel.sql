@@ -636,6 +636,8 @@ GO
 
 
 
+
+
 SELECT OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr,LAND_Curr_Value, IMPROVE_Curr_Roll_YR, IMPROVE_Curr_Value, SA_House_Number, SA_Zip_Cde, MA_House_Number,	MA_Zip_Cde,	Recording_Date,
 Hmownr_Exempt_Number, Hmownr_Exempt_Value, LS1_Sale_Date, LS2_Sale_Date,
 LS3_Sale_Date, BD_LINE_1_Yr_Built, BD_LINE_1_No_of_Units,
@@ -655,4 +657,9 @@ Recorders_Document_Number,	Price_Per_Single_Area_Unit,	Parcel_Area, Residential,
 Special_Purposes_Plan, Agricultural, Commercial, Manufacturing, SA_Localization_int,
 MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
 Zoning_Code_int,
-BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount FROM Lands_Vectors WHERE Sale_Amount < 10000000
+BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount
+INTO PARCEL_DATA_SET FROM Lands_Vectors
+	WHERE Sale_Amount < 10000000
+
+
+ select top 10 * from PARCEL_DATA_SET
