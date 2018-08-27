@@ -17,15 +17,15 @@ logger = create_loggers()
 
 class DatabaseHandler:
     def __init__(self, server, user_name, database_name):
-        print('Password:')
+        print('Provide SQL database password:')
         try:
             p = getpass.getpass()
         except Exception as err:
-            print('ERROR:', err)
+            logger.error(err)
+            exit(1)
         else:
-            print('You entered:', p)
-        self.conn = pymssql.connect(server, user_name, p, database_name)
-        self.cursor = self.conn.cursor()
+            self.conn = pymssql.connect(server, user_name, p, database_name)
+            self.cursor = self.conn.cursor()
 
     def execute_statement(self, string_statement):
         self.cursor.execute(string_statement)
