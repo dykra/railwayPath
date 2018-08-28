@@ -29,7 +29,9 @@ GO
 -- Adding new column Parcel_Area
 -- =============================================
 
-IF (NOT EXISTS (select * from information_schema.COLUMNS where TABLE_NAME = 'FILTERED_PARCEL' and COLUMN_NAME = 'Simple_Zoning_Code'))
+IF (NOT EXISTS (SELECT *
+                FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_NAME = 'FILTERED_PARCEL' AND COLUMN_NAME = 'Simple_Zoning_Code'))
 	BEGIN
 		ALTER TABLE FILTERED_PARCEL
 			ADD
@@ -41,7 +43,7 @@ IF (NOT EXISTS (select * from information_schema.COLUMNS where TABLE_NAME = 'FIL
 GO
 
 UPDATE FILTERED_PARCEL
-  SET City=substring(Zoning_Code,1,2)
+  SET City=SUBSTRING(Zoning_Code,1,2)
 GO
 
 -- =============================================
@@ -59,9 +61,9 @@ UPDATE FILTERED_PARCEL
 GO
 
 
--- =============================================
--- ADD NEW COLUMNS FOR BASIC AREAS TYPES
--- =============================================
+-- ============================================================
+-- ADD NEW COLUMNS FOR BASIC AREAS TYPES AND PRICE GROUP COLUMN
+-- ============================================================
 
 BEGIN
 	ALTER TABLE FILTERED_PARCEL
@@ -70,7 +72,8 @@ BEGIN
 	Special_Purposes_Plan SMALLINT,
 	Agricultural SMALLINT,
 	Commercial SMALLINT,
-	Manufacturing SMALLINT
+	Manufacturing SMALLINT,
+    Price_Group VARCHAR(50);
 END
 GO
 
@@ -98,8 +101,8 @@ GO
 
 
 UPDATE FILTERED_PARCEL
-  SET Simple_Zoning_Code = substring(Zoning_Code, 4, 2)
-    WHERE Zoning_Code like 'SCUR%'
+  SET Simple_Zoning_Code = SUBSTRING(Zoning_Code, 4, 2)
+    WHERE Zoning_Code LIKE 'SCUR%'
 GO
 
 
@@ -110,7 +113,10 @@ GO
 
 UPDATE FILTERED_PARCEL
     SET Residential = (CASE
-                       WHEN Simple_Zoning_code IN ('R1', 'R2', 'R3', 'R4', 'R5') THEN 1 ELSE 0 END)
+                        WHEN Simple_Zoning_code IN ('R1', 'R2', 'R3', 'R4', 'R5')
+                            THEN 1
+                            ELSE 0
+                        END)
 GO
 
 
@@ -187,11 +193,17 @@ UPDATE FILTERED_PARCEL
 
 UPDATE FILTERED_PARCEL
     SET Commercial = (CASE
-                       WHEN Simple_Zoning_code IN ('C1', 'C2', 'C3', 'C4', 'C5', 'CM', 'CPD', 'CR') THEN 1 ELSE 0 END);
+                       WHEN Simple_Zoning_code IN ('C1', 'C2', 'C3', 'C4', 'C5', 'CM', 'CPD', 'CR')
+                            THEN 1
+                            ELSE 0
+                       END);
 
 UPDATE FILTERED_PARCEL
     SET Manufacturing = (CASE
-                       WHEN Simple_Zoning_code IN ('M1', 'M2', 'M3') THEN 1 ELSE 0 END);
+                         WHEN Simple_Zoning_code IN ('M1', 'M2', 'M3')
+                            THEN 1
+                            ELSE 0
+                         END);
 
 -- =============================================
 -- SPECIAL PURPOSE ZONES
@@ -202,16 +214,16 @@ UPDATE FILTERED_PARCEL
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'SP'
-    WHERE Zoning_Code like 'PDSP'
-          or Zoning_Code like 'PDSP*'
-          or Zoning_Code like 'LRSP'
-          or Zoning_Code like 'NOSP2*'
-		  or Zoning_Code like 'SCSP';
+    WHERE Zoning_Code LIKE 'PDSP'
+          OR Zoning_Code LIKE 'PDSP*'
+          OR Zoning_Code LIKE 'LRSP'
+          OR Zoning_Code LIKE 'NOSP2*'
+		  OR Zoning_Code LIKE 'SCSP';
 
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'RR'
-    WHERE substring(Zoning_Code, 3, 3) like 'RR-';
+    WHERE SUBSTRING(Zoning_Code, 3, 3) LIKE 'RR-';
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'PR'
@@ -220,13 +232,17 @@ UPDATE FILTERED_PARCEL
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'PR'
-    WHERE Zoning_Code like 'LCPR*'
-          or Zoning_Code like 'POPRD*';
+    WHERE Zoning_Code LIKE 'LCPR*'
+          OR Zoning_Code LIKE 'POPRD*';
 
 
 UPDATE FILTERED_PARCEL
-    SET Special_Purposes_Plan = (CASE
-                       WHEN Simple_Zoning_code IN ('SP', 'RR', 'PR') THEN 1 ELSE 0 END);
+    SET Special_Purposes_Plan =
+                      (CASE
+                       WHEN Simple_Zoning_code IN ('SP', 'RR', 'PR')
+                            THEN 1
+                            ELSE 0
+                       END);
 
 
 -- =============================================
@@ -245,30 +261,27 @@ UPDATE FILTERED_PARCEL
 		WHEN 'LBPD1' THEN 'PD1?'
 		WHEN 'LAMR1' THEN 'R1'
 	END
-WHERE Simple_Zoning_Code is null
+WHERE Simple_Zoning_Code IS NULL
 GO
 
 UPDATE FILTERED_PARCEL
   SET Simple_Zoning_Code = 'R'
-    WHERE Zoning_Code like '__R%'
-           and Simple_Zoning_Code is null;
+    WHERE Zoning_Code LIKE '__R%'
+           AND Simple_Zoning_Code IS NULL;
 
 
 -- =============================================
 -- SPECIFY PRICE GROUPS DEPENDS ON THE PRICE
 -- =============================================
 
-ALTER TABLE FILTERED_PARCEL
-  ADD Price_Group VARCHAR(50);
-
 UPDATE FILTERED_PARCEL
  SET Price_Group='cheap'
-   Where LS1_Sale_Amount <= 500000
+   WHERE LS1_Sale_Amount <= 500000
 
 UPDATE FILTERED_PARCEL
  SET Price_Group='medium'
-   Where ( LS1_Sale_Amount > 500000 and LS1_Sale_Amount < 1000000 )
+   WHERE ( LS1_Sale_Amount > 500000 AND LS1_Sale_Amount < 1000000 )
 
 UPDATE FILTERED_PARCEL
  SET Price_Group = 'expensive'
-Where LS1_Sale_Amount >= 1000000
+    WHERE LS1_Sale_Amount >= 1000000
