@@ -1,3 +1,10 @@
 <component name="ProjectDictionaryState">
-  <dictionary name="magda" />
+  <dictionary name="magda">
+    <words>
+      <w>asctime</w>
+      <w>dataset</w>
+      <w>keras</w>
+      <w>tensorflow</w>
+    </words>
+  </dictionary>
 </component>

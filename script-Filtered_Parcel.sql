@@ -663,3 +663,7 @@ INTO PARCEL_DATA_SET FROM Lands_Vectors
 
 
  select top 10 * from PARCEL_DATA_SET
+
+
+
+ select * from PARCEL_DATA_SET where Sale_Amount <1000000 and Sale_Amount > 500000 

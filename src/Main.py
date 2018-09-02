@@ -1,39 +1,83 @@
-
 import sys
 import pyodbc
-
 import pandas as pd
 import tensorflow as tf
-import tensorflow.python # import pywrap_tensorflow
+from keras.losses import mean_squared_error, mean_absolute_percentage_error
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, K
 import numpy
-
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
-
 import matplotlib.pyplot as plt
+import logging
 
-import pickle
-
-# --reading arguments
 from keras.wrappers.scikit_learn import KerasRegressor
+
+
+"""
+    Model is defined in this function.
+    
+    To create model should be specified sequence of layers.
+    In each layer can be specified the number of neurons (first arg),
+    the initialization method (second arg) as init and specified
+    the activation function using the activation argument.       
+    
+:return: Model
+    
+"""
 
 
 def baseline_model():
     model = Sequential()
     model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
     model.add(Dense(1, kernel_initializer='normal'))
-    model.compile(loss='mean_squared_error', optimizer='adam')
+    # model.compile(loss='mean_squared_error', optimizer='adam')
+    precision = as_keras_metric(tf.metrics.precision)
+    recall = as_keras_metric(tf.metrics.recall)
+    model.compile(loss=mean_absolute_percentage_error, optimizer='adam', metrics=[precision, recall])
     return model
 
 
+def soft_acc(y_true, y_pred):
+    return K.mean(K.equal(K.round(y_true), K.round(y_pred)))
+
+
+"""
+    Function to wrap tensorflow metrics.
+
+:return: Wrapper
+
+"""
+
+
+def as_keras_metric(method):
+    import functools
+    from keras import backend as K
+
+    """
+            Wrapper for turning tensorflow metrics into keras metrics
+    """
+    @functools.wraps(method)
+    def wrapper(self, args, **kwargs):
+        value, update_op = method(self, args, **kwargs)
+        K.get_session().run(tf.local_variables_initializer())
+        with tf.control_dependencies([update_op]):
+            value = tf.identity(value)
+        return value
+    return wrapper
+
+
 def main():
+    #  ----------  Set logger
+    logger_format = '%(asctime)-15s s -8s %(message)s'
+    logging.basicConfig(format=logger_format)
 
-    #mode = ''
-
+    #  ----------  Reading arguments
+    logging.info('--= Read arguments =--')
+    # TODO: https://docs.python.org/3/library/argparse.html
     argv = sys.argv
 
     print(argv[1])
@@ -49,116 +93,69 @@ def main():
         print('No such mode')
         sys.exit(2)
 
-    print('Chosen mode is: ', mode)
+    logging.info('--= Chosen mode is: %s =--', mode)
 
-    # you have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager
+    #  ----------  You have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager.
     cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
-                      "Server=DESKTOP-C1V4R2D;"
-                      "Database=LosAngelesCounty;"
-                      "Trusted_Connection=yes;")
+                          "Server=DESKTOP-C1V4R2D;"
+                          "Database=LosAngelesCounty;"
+                          "Trusted_Connection=yes;")
 
-
-    # ---------     Load data to DataFrame
+    #  ----------  Load data to DataFrame
     if mode == 1:
-        df = pd.read_sql_query('select * from PARCEL_DATA_SET', cnxn)
+        df = pd.read_sql_query('''
+            SELECT *
+            FROM LosAngelesCounty.dbo.PARCEL_DATA_SET
+            WHERE Sale_Amount <1000000 AND Sale_Amount > 500000
+          ''', cnxn)
     elif mode == 2:
         file = 'resources/Lands_Vectors.csv'
         df = pd.read_csv(file, delimiter=',')
 
-    print('---Data loaded---')
+    logging.info('--= Data loaded =--')
 
     # split into X set and Y set było 68
-    X = df.iloc[:, 1:71]
-    Y = df.iloc[:, 71]
-    ## 52
-    print(X)
-    print('-------')
-    print(Y)
+    x = df.iloc[:, 1:71]
+    y = df.iloc[:, 71]
 
-    # ---------   Define model
-    # sequence of layers
-    #  we will use a fully-connected network structure with three layers.
-    #
-    # Fully connected layers are defined using the Dense class
+    logging.info('--= X set =--')
+    print(x)
+    logging.info('--= Y set =--')
+    print(y)
 
-    # We can specify the number of neurons in the layer as the first argument,
-    #  the initialization method as the second argument as init and specify
-    # the activation function using the activation argument.
-
-
-    print('Ok-1')
-    # fix random seed for reproducibility
-    seed = 2**32 - 29638824
+    #  ----------  Fix random seed for reproducibility
+    seed = 2 ** 32 - 29638824
     numpy.random.seed(seed)
-    # evaluate model with standardized dataset
-    estimator = KerasRegressor(build_fn=baseline_model, epochs=100, batch_size=1, verbose=0)
-    print('Ok-2')
+
+    #  ----------  Evaluate model with standardized dataset
+    estimator = KerasRegressor(build_fn=baseline_model, epochs=100, batch_size=1, verbose=False)
 
     kfold = KFold(n_splits=2, random_state=seed)
-    print('Ok-3')
 
-    results = cross_val_score(estimator, X.values, Y.values, cv=kfold, n_jobs=1)
-    print('Ok-4')
-    print("Accuracy: %0.2f (+/- %0.2f)" % (results.mean(), results.std()*2))
+    results = cross_val_score(estimator, x.values, y.values, cv=kfold, n_jobs=1, verbose=False)
 
-    # Save to file in the current working directory
-    pkl_filename = "pickle_model.pkl"
-    with open(pkl_filename, 'wb') as file:
-        pickle.dump(results, file)
+    logging.info('--= Model counted. =--')
+    print("Results: %.2f (+/- %.2f) MSE" % (results.mean(), results.std() * 2))
 
-    # Load from file
-    with open(pkl_filename, 'rb') as file:
-        pickle_model = pickle.load(file)
+    estimator.fit(x.values, y.values, verbose=False)
 
-    # Calculate the accuracy score and predict target values
-    score = pickle_model.score(X.values, Y.values)
+    prediction = estimator.predict(x.values)
 
-    print("Test score: {0:.2f} %".format(100 * score))
-    Ypredict = pickle_model.predict(X.values)
-    print('Ok-5')
+    print('First prediction:', prediction[0])
 
+    # print("{0:.15f}".format(mean_squared_error(prediction, Y.values)))
+    print('mean_squared_error:', abs(mean_squared_error(prediction, y.values)))
+    print('estimator.model.loss:', abs(estimator.model.loss(prediction, y.values)))
 
-    # cross_val_predict returns an array of the same size as `y` where each entry
-    # is a prediction obtained by cross validation:
+    logging.info('--= Model summary: =--')
+    estimator.model.summary()
 
+    scores = estimator.model.evaluate(x.values, y.values)
 
+    print("Accuracy: %.2f%%" % scores)
 
-
-
-
-    # fig, ax = plt.subplots()
-    # ax.scatter(Y.values, results, edgecolors=(0, 0, 0))
-    # ax.plot([Y.values.min(), Y.values.max()], [Y.values.min(), Y.values.max()], 'k--', lw=4)
-    # ax.set_xlabel('Measured')
-    # ax.set_ylabel('Predicted')
-    # plt.show()
-    #
-    #
-
-    # serialize model to JSON
-    # model_json = results.to_json()
-    # with open("model.json", "w") as json_file:
-    #     json_file.write(model_json)
-    # # serialize weights to HDF5
-    # model.save_weights("model.h5")
-    # print("Saved model to disk")
-    #
-    # # later...
-    #
-    # # load json and create model
-    # json_file = open('model.json', 'r')
-    # loaded_model_json = json_file.read()
-    # json_file.close()
-    # loaded_model = model_from_json(loaded_model_json)
-    # # load weights into new model
-    # loaded_model.load_weights("model.h5")
-    # print("Loaded model from disk")
-    #
-    # # evaluate loaded model on test data
-    # loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-    # score = loaded_model.evaluate(X, Y, verbose=0)
-    # print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1] * 100))
-    #
+    estimator.model.save('model.h5')
+    logging.info('--= Model saved in model.h5 file. =--')
 
 
 if __name__ == '__main__':
