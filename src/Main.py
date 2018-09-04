@@ -91,8 +91,10 @@ def main():
     seed = 7
     numpy.random.seed(seed)
 
+
     model = baseline_model()
     results = model.fit(x.values, y.values, epochs=9265, batch_size=len(x.values), verbose=2)
+
     logging.info('--= Plot metrics =--')
     pyplot.plot(results.history['mean_squared_error'])
     pyplot.show()

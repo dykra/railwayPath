@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d52ca2cf-5b9f-4806-91a6-3c4f5e13abb9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/magda.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/magda.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script-Filtered_Parcel.sql" beforeDir="false" afterPath="$PROJECT_DIR$/script-Filtered_Parcel.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pickle_model.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/src/pickle_model.pkl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/railwayPath$Model.coverage" NAME="Model Coverage Results" MODIFIED="1535891716913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/railwayPath$Model.coverage" NAME="Model Coverage Results" MODIFIED="1535953771431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -58,22 +54,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+            <state relative-caret-position="901">
+              <caret line="110" column="45" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="110" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tester.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Tester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="340">
+              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="35" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,6 +91,8 @@
     <findStrings>
       <find>fit</find>
       <find>r</find>
+      <find>as_keras_metric</find>
+      <find>soft_acc</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -101,9 +102,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Knime.py" />
-        <option value="$PROJECT_DIR$/src/Tester.py" />
         <option value="$PROJECT_DIR$/src/test2" />
         <option value="$PROJECT_DIR$/src/Main.py" />
+        <option value="$PROJECT_DIR$/src/Tester.py" />
       </list>
     </option>
   </component>
@@ -123,9 +124,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="496" />
-    <option name="y" value="21" />
-    <option name="width" value="1297" />
+    <option name="x" value="88" />
+    <option name="width" value="1822" />
     <option name="height" value="1038" />
   </component>
   <component name="ProjectView">
@@ -144,6 +144,10 @@
               <item name="railwayPath" type="b2602c69:ProjectViewProjectNode" />
               <item name="railwayPath" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="railwayPath" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
           </expand>
           <select />
@@ -178,7 +182,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test2">
+  <component name="RunManager" selected="Python.Tester">
     <configuration name="Model" type="PythonConfigurationType" factoryName="Python">
       <module name="railwayPath" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -285,24 +289,47 @@
       <option name="project" value="LOCAL" />
       <updated>1534803371667</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="docs added, code cleaned, new metric">
+      <created>1535891918316</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1535891918316</updated>
+    </task>
+    <task id="LOCAL-00003" summary="cleanups, nice, small error, new seed, plots">
+      <created>1535955018311</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1535955018311</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="496" y="21" width="1297" height="1038" extended-state="0" />
-    <editor active="true" />
+    <frame x="71" y="0" width="1457" height="830" extended-state="0" />
     <layout>
-      <window_info anchor="bottom" id="TODO" order="5" />
+      <window_info anchor="bottom" id="TODO" order="5" weight="0.32897604" />
       <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.14832535" side_tool="true" weight="0.35735735" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.3280507" />
-      <window_info active="true" anchor="right" id="Run" order="6" sideWeight="0.8516746" visible="true" weight="0.47931305" />
-      <window_info anchor="right" id="Terminal" order="7" weight="0.4078125" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.15100671" />
+      <window_info active="true" anchor="right" id="Run" order="6" sideWeight="0.8516746" visible="true" weight="0.58196133" />
+      <window_info anchor="right" id="Terminal" order="7" weight="0.40778252" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19470294" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" weight="0.3296875" />
-      <window_info anchor="right" id="SciView" order="4" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32942432" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="SciView" order="4" weight="0.5682303" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="2" weight="0.4" />
@@ -313,7 +340,6 @@
       <window_info anchor="right" x="0" y="0" width="328" height="544" id="Documentation" order="5" side_tool="true" weight="0.32954547" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,13 +350,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="code is ready, fatal accuracy" />
-    <option name="LAST_COMMIT_MESSAGE" value="code is ready, fatal accuracy" />
+    <MESSAGE value="docs added, code cleaned, new metric" />
+    <MESSAGE value="cleanups, nice, small error, new seed, plots" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanups, nice, small error, new seed, plots" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2142">
           <caret line="126" column="57" lean-forward="true" selection-start-line="126" selection-start-column="57" selection-end-line="126" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -355,6 +386,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -488,20 +522,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tester.py">
+    <entry file="file://$PROJECT_DIR$/src/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="901">
+          <caret line="110" column="45" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="110" selection-end-column="45" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.py">
+    <entry file="file://$PROJECT_DIR$/src/Tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+        <state relative-caret-position="340">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
