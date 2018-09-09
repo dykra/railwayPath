@@ -111,7 +111,7 @@ venv.bak/
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
-
+.idea/webResources.xml
 .idea/inspectionProfiles/Project_Default.xml
 
 # User-specific stuff:
