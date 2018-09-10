@@ -8,6 +8,7 @@ from src.PriceEstimatorComponent.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from src.PriceEstimatorComponent.serialization import serialize_class, deserialize_class
+from src.PriceEstimatorComponent.constants import target_column_name
 
 
 def create_logger():
@@ -47,12 +48,12 @@ def serialization_object_decorate(func, file_path="./index.pickle"):
 
 
 @serialization_object_decorate
-def prepare_classification_model(data, target_column_name='Price_Group'):
-    return ClassificationLogisticRegression(data, target_column_name)
+def prepare_classification_model(data, target_column=target_column_name):
+    return ClassificationLogisticRegression(data, target_column)
 
 
-def classification_regression():
-    database_handler = DatabaseHandler(server=sys.argv[1], user_name=sys.argv[2], database_name=sys.argv[3])
+def classification_regression(server, user_name, database_name):
+    database_handler = DatabaseHandler(server=server, user_name=user_name, database_name=database_name)
     data_frame = database_handler.execute_statement(statement='select '
                                                               'Price_Group, '
                                                               'Residential,'
@@ -77,12 +78,13 @@ def classification_regression():
                                                               'Current_improvement_base_value,'
                                                               'cluster_location,'
                                                               'cluster_type '
-                                                              'FROM FILTERED_PARCEL')
+                                                              'FROM FILTERED_PARCEL '
+                                                              'WHERE Price_Group IS NOT NULL')
     database_handler.close_connection()
     train, test = train_test_split(data_frame, test_size=0.2)
-    logger.debug('Data splitted for training and test')
+    logger.debug('Data is split for training and test.')
     model = prepare_classification_model(train, 'Price_Group')
-    CalculateValue(model).predict(data_to_predict=test)
+    print(CalculateValue(model).predict(data_to_predict=test))
     logger.info('Prediction is done.')
 
 
@@ -111,10 +113,7 @@ class ClassificationLogisticRegression:
                                                   scoring=scoring)
         logger.info("10-fold cross validation average accuracy: %.3f" % (results.mean()))
         return model_cv
-# TODO - przepisac to jako cos to łatwo mozna zapisywac i z modelu korzystc do wyliczania tych
-# TODO - opcja przxy uruchomieniu czy do bazy zapisujemyczy czy zwracamy wartosci po prostu
-# TODO - zjednolicic z programem Madzi zeby to razem miało jakiś sens
 
 
 if __name__ == '__main__':
-    classification_regression()
+    classification_regression(server=sys.argv[1], user_name=sys.argv[2], database_name=sys.argv[3])
