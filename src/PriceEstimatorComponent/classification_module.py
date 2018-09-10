@@ -3,25 +3,20 @@ from sklearn import model_selection
 import sys
 import logging
 
-from PriceEstimatorComponent.database_handler import execute_sql_statement
-from PriceEstimatorComponent.logger import create_loggers_helper
+from src.PriceEstimatorComponent.database_handler import DatabaseHandler
+from src.PriceEstimatorComponent.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from PriceEstimatorComponent.serialization import serialize_class, deserialize_class
-sys.path.insert(0, './classification')
-
-# https://towardsdatascience.com/train-test-split-and-cross-validation-in-python-80b61beca4b6
-# https://towardsdatascience.com/building-a-logistic-regression-in-python-step-by-step-becd4d56c9c8
+from src.PriceEstimatorComponent.serialization import serialize_class, deserialize_class
 
 
-def create_loggers():
-    logger1 = logging.getLogger(__name__)
-    logger1.setLevel(logging.DEBUG)
-    logger1 = create_loggers_helper(logger1)
-    return logger1
+def create_logger():
+    _logger = logging.getLogger(__name__)
+    _logger.setLevel(logging.DEBUG)
+    return create_loggers_helper(_logger)
 
 
-logger = create_loggers()
+logger = create_logger()
 
 
 class CalculateValue:
@@ -36,9 +31,6 @@ class CalculateValue:
         logger.info('Accuracy of logistic regression classifier on test set: {:.2f}'
                     .format(self.model.model.score(X, y)))
         return y_predicted
-
-
-# https://datascience.blog.wzb.eu/2016/08/12/a-tip-for-the-impatient-simple-caching-with-python-pickle-and-decorators/
 
 
 def serialization_object_decorate(func, file_path="./index.pickle"):
@@ -60,35 +52,35 @@ def prepare_classification_model(data, target_column_name='Price_Group'):
 
 
 def classification_regression():
-    data_frame = execute_sql_statement(server=sys.argv[1], user_name=sys.argv[2], database_name=sys.argv[3],
-                                       statement='select '
-                                                 'Price_Group, '
-                                                 'Residential,'
-                                                 'Special_Purposes_Plan, '
-                                                 'Agricultural, Commercial,  '
-                                                 'Manufacturing, '
-                                                 'Price_Per_Single_Area_Unit, '
-                                                 'IMPROVE_Curr_Value, PARCEL_TYP, '
-                                                 'LAND_Curr_Value, '
-                                                 'PERIMETER,'
-                                                 'PARCEL_TYP,'
-                                                 'CENTER_X,'
-                                                 'CENTER_Y,'
-                                                 'CENTER_LAT,'
-                                                 'CENTER_LON,'
-                                                 'Parcel_Area,'
-                                                 'LAND_Curr_Roll_Yr,'
-                                                 'IMPROVE_Curr_Roll_YR,'
-                                                 'BD_LINE_1_Yr_Built,'
-                                                 'BD_LINE_1_Sq_Ft_of_Main_Improve,'
-                                                 'City_int,'
-                                                 'Current_improvement_base_value,'
-                                                 'cluster_location,'
-                                                 'cluster_type '
-                                                 'FROM FILTERED_PARCEL'
-                                       )
+    database_handler = DatabaseHandler(server=sys.argv[1], user_name=sys.argv[2], database_name=sys.argv[3])
+    data_frame = database_handler.execute_statement(statement='select '
+                                                              'Price_Group, '
+                                                              'Residential,'
+                                                              'Special_Purposes_Plan, '
+                                                              'Agricultural, Commercial,  '
+                                                              'Manufacturing, '
+                                                              'Price_Per_Single_Area_Unit, '
+                                                              'IMPROVE_Curr_Value, PARCEL_TYP, '
+                                                              'LAND_Curr_Value, '
+                                                              'PERIMETER,'
+                                                              'PARCEL_TYP,'
+                                                              'CENTER_X,'
+                                                              'CENTER_Y,'
+                                                              'CENTER_LAT,'
+                                                              'CENTER_LON,'
+                                                              'Parcel_Area,'
+                                                              'LAND_Curr_Roll_Yr,'
+                                                              'IMPROVE_Curr_Roll_YR,'
+                                                              'BD_LINE_1_Yr_Built,'
+                                                              'BD_LINE_1_Sq_Ft_of_Main_Improve,'
+                                                              'City_int,'
+                                                              'Current_improvement_base_value,'
+                                                              'cluster_location,'
+                                                              'cluster_type '
+                                                              'FROM FILTERED_PARCEL')
+    database_handler.close_connection()
     train, test = train_test_split(data_frame, test_size=0.2)
-    logger.debug('Data splited for training and test')
+    logger.debug('Data splitted for training and test')
     model = prepare_classification_model(train, 'Price_Group')
     CalculateValue(model).predict(data_to_predict=test)
     logger.info('Prediction is done.')
@@ -105,7 +97,7 @@ class ClassificationLogisticRegression:
     def logistic_regression(self):
         logistic_reg = LogisticRegression()
         logistic_reg.fit(self.data_final[self.X_columns], self.data_final[self.y_column].values.ravel())
-        logger.debug('Logistic regression model is computed')
+        logger.debug('Logistic regression model is computed.')
         return logistic_reg
 
     def cross_validation_regression(self):
@@ -119,6 +111,9 @@ class ClassificationLogisticRegression:
                                                   scoring=scoring)
         logger.info("10-fold cross validation average accuracy: %.3f" % (results.mean()))
         return model_cv
+# TODO - przepisac to jako cos to łatwo mozna zapisywac i z modelu korzystc do wyliczania tych
+# TODO - opcja przxy uruchomieniu czy do bazy zapisujemyczy czy zwracamy wartosci po prostu
+# TODO - zjednolicic z programem Madzi zeby to razem miało jakiś sens
 
 
 if __name__ == '__main__':
