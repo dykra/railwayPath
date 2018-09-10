@@ -3,7 +3,7 @@ import pandas as pd
 import logging
 import sys
 from src.PriceEstimatorComponent.constants import database_password
-from src.PriceEstimatorComponent.logger import create_loggers_helper
+from src.PriceEstimatorComponent.Utils.logger import create_loggers_helper
 
 
 def create_logger():

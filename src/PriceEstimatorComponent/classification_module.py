@@ -3,8 +3,8 @@ from sklearn import model_selection
 import sys
 import logging
 
-from src.PriceEstimatorComponent.database_handler import DatabaseHandler
-from src.PriceEstimatorComponent.logger import create_loggers_helper
+from src.PriceEstimatorComponent.Utils.database_handler import DatabaseHandler
+from src.PriceEstimatorComponent.Utils.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from src.PriceEstimatorComponent.serialization import serialize_class, deserialize_class
