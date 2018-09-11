@@ -2,12 +2,13 @@ import sys
 import pyodbc
 import pandas as pd
 import tensorflow as tf
-from keras.losses import mean_squared_error
+from keras.losses import mean_squared_error, mean_absolute_percentage_error
 from keras.models import Sequential
 from keras.layers import Dense, K
 import numpy
 from matplotlib import pyplot
 import logging
+from keras.callbacks import ModelCheckpoint
 
 
 """
@@ -26,7 +27,10 @@ import logging
 def baseline_model():
     model = Sequential()
     model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(50, kernel_initializer='normal'))
     model.add(Dense(1, kernel_initializer='normal'))
+    model.load_weights("withBestFit.h5")
+
     model.compile(loss=mean_squared_error, optimizer='adam',
                   metrics=['mean_squared_error',
                            'mean_absolute_error', 'mean_absolute_percentage_error',
@@ -65,20 +69,27 @@ def main():
                           "Database=LosAngelesCounty;"
                           "Trusted_Connection=yes;")
 
+    # SELECT *
+    # FROM LosAngelesCounty.dbo.PARCEL_DATA_SET
+    # WHERE Sale_Amount <1000000 AND Sale_Amount > 500000
     #  ----------  Load data to DataFrame
     if mode == 1:
         df = pd.read_sql_query('''
-            SELECT *
-            FROM LosAngelesCounty.dbo.PARCEL_DATA_SET
-            WHERE Sale_Amount <1000000 AND Sale_Amount > 500000
-          ''', cnxn)
+            SELECT * FROM PARCEL_VECTORS
+	        WHERE Sale_Amount <200000 
+	            and Price_Per_Single_Area_Unit >= 1 
+	            and LS1_Sale_Date > 20150000
+                and Sale_Amount != 9
+                and Sale_Amount != 0
+                and Sale_Amount != 999999999  
+                      ''', cnxn)
     elif mode == 2:
         file = 'resources/Lands_Vectors.csv'
         df = pd.read_csv(file, delimiter=',')
 
     logging.info('--= Data loaded =--')
 
-    # split into X set and Y set było 68
+    # split into X set and Y set było 71
     x = df.iloc[:, 1:71]
     y = df.iloc[:, 71]
 
@@ -89,22 +100,28 @@ def main():
 
     #  ----------  Fix random seed for reproducibility
     seed = 7
+
     numpy.random.seed(seed)
 
-
     model = baseline_model()
-    results = model.fit(x.values, y.values, epochs=9265, batch_size=len(x.values), verbose=2)
+    filepath = "weights.best.hdf5"
+    #checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+    #callbacks_list = [checkpoint]
+
+    results = model.fit(x.values, y.values, epochs=800, batch_size=len(x.values), validation_split=0.1,
+                        #callbacks=callbacks_list,
+                        verbose=2)
 
     logging.info('--= Plot metrics =--')
-    pyplot.plot(results.history['mean_squared_error'])
+    #pyplot.plot(results.history['mean_squared_error'])
     pyplot.show()
     pyplot.plot(results.history['mean_absolute_error'])
     pyplot.show()
     pyplot.plot(results.history['mean_absolute_percentage_error'])
     pyplot.show()
-    pyplot.plot(results.history['cosine_proximity'])
+    #pyplot.plot(results.history['cosine_proximity'])
     pyplot.show()
-    logging.info('--= Model counted. =--')
+    #logging.info('--= Model counted. =--')
 
     prediction = model.predict(x.values)
 
@@ -113,8 +130,8 @@ def main():
     logging.info('--= Model summary: =--')
     model.summary()
 
-    model.save('model.h5')
-    logging.info('--= Model saved in model.h5 file. =--')
+    model.save('withBestFit.h5')
+    logging.info('--= Model saved in test_with_lattitude_and_longitude.h5 file. =--')
 
 
 if __name__ == '__main__':
