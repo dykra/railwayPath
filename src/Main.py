@@ -10,6 +10,17 @@ from matplotlib import pyplot
 import logging
 from keras.callbacks import ModelCheckpoint
 
+""" 
+    Global variables
+"""
+
+date_limit = 20150000
+excluded_values = [0, 9, 999999999]
+basic_query = ("SELECT * FROM PARCEL_VECTORS"
+        " WHERE Sale_Amount < {} and Sale_Amount > {}"
+        " and LS1_Sale_Date > {}" 
+        " and Sale_Amount != {} and Sale_Amount != {} and Sale_Amount != {}")
+
 
 """
     Model is defined in this function.
@@ -23,19 +34,38 @@ from keras.callbacks import ModelCheckpoint
     
 """
 
-
-def baseline_model():
+def baseline_model_for_to_500tys_and_above_1mln():
     model = Sequential()
     model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
     model.add(Dense(50, kernel_initializer='normal'))
     model.add(Dense(1, kernel_initializer='normal'))
-    model.load_weights("withBestFit.h5")
+    #500tys_1mln-PV
+    model.load_weights("to500tys.hdf5") #dla modelu powyzej 1mln to dane na początek daje blad 30 %
 
+    #model.load_weights("1mln_200mln.hdf5")
     model.compile(loss=mean_squared_error, optimizer='adam',
                   metrics=['mean_squared_error',
                            'mean_absolute_error', 'mean_absolute_percentage_error',
                            'cosine_proximity'])
     return model
+
+
+"""
+    0 bucket: lower_limit = 0, upper_limit = 500000
+    1 bucket: lower_limit = 500000, upper_limit = 1000000
+    2 bucket: lower_limit = 1000000, upper_limit = 200000000
+
+"""
+
+
+def get_one_bucket_data(cnxn, lower_limit, upper_limit):
+    query = basic_query.\
+        format(upper_limit, lower_limit, date_limit, excluded_values[0], excluded_values[1], excluded_values[2])
+    if lower_limit == 0:
+        result = pd.read_sql(query + " and Price_Per_Single_Area_Unit >= 1", cnxn)
+    else:
+        result = pd.read_sql(query, cnxn)
+    return result
 
 
 def main():
@@ -63,26 +93,17 @@ def main():
 
     logging.info('--= Chosen mode is: %s =--', mode)
 
-    #  ----------  You have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager.
-    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
-                          "Server=DESKTOP-C1V4R2D;"
-                          "Database=LosAngelesCounty;"
-                          "Trusted_Connection=yes;")
+    driver = "{SQL Server Native Client 11.0}"
+    server = "DESKTOP-C1V4R2D"
+    database = "LosAngelesCounty"
 
-    # SELECT *
-    # FROM LosAngelesCounty.dbo.PARCEL_DATA_SET
-    # WHERE Sale_Amount <1000000 AND Sale_Amount > 500000
-    #  ----------  Load data to DataFrame
+    #  ----------  You have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager.
+    connection_string = "Driver={}; Server={}; Database={}; Trusted_Connection=yes;".format(driver, server, database)
+    cnxn = pyodbc.connect(connection_string)
+
     if mode == 1:
-        df = pd.read_sql_query('''
-            SELECT * FROM PARCEL_VECTORS
-	        WHERE Sale_Amount <200000 
-	            and Price_Per_Single_Area_Unit >= 1 
-	            and LS1_Sale_Date > 20150000
-                and Sale_Amount != 9
-                and Sale_Amount != 0
-                and Sale_Amount != 999999999  
-                      ''', cnxn)
+        df = get_one_bucket_data(cnxn, 0, 500000)
+
     elif mode == 2:
         file = 'resources/Lands_Vectors.csv'
         df = pd.read_csv(file, delimiter=',')
@@ -103,34 +124,33 @@ def main():
 
     numpy.random.seed(seed)
 
-    model = baseline_model()
-    filepath = "weights.best.hdf5"
-    #checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
-    #callbacks_list = [checkpoint]
-
-    results = model.fit(x.values, y.values, epochs=800, batch_size=len(x.values), validation_split=0.1,
-                        #callbacks=callbacks_list,
+    model = baseline_model_for_to_500tys_and_above_1mln()
+    filepath = "500tys_1mln-PV.hdf5"
+    checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+    callbacks_list = [checkpoint]
+#9000
+    results = model.fit(x.values, y.values, epochs=200, batch_size=len(x.values), validation_split=0.1,
+                        callbacks=callbacks_list,
                         verbose=2)
 
     logging.info('--= Plot metrics =--')
-    #pyplot.plot(results.history['mean_squared_error'])
+    pyplot.plot(results.history['mean_squared_error'])
     pyplot.show()
     pyplot.plot(results.history['mean_absolute_error'])
     pyplot.show()
     pyplot.plot(results.history['mean_absolute_percentage_error'])
     pyplot.show()
-    #pyplot.plot(results.history['cosine_proximity'])
+    pyplot.plot(results.history['cosine_proximity'])
     pyplot.show()
-    #logging.info('--= Model counted. =--')
+    logging.info('--= Model counted. =--')
 
     prediction = model.predict(x.values)
-
     print('First prediction:', prediction[0])
 
     logging.info('--= Model summary: =--')
     model.summary()
 
-    model.save('withBestFit.h5')
+    model.save('500tys_1mln-PV.h5')
     logging.info('--= Model saved in test_with_lattitude_and_longitude.h5 file. =--')
 
 

@@ -177,7 +177,6 @@ UPDATE PARCEL_VECTORS
 WHERE Simple_Zoning_Code is null;
 
 
--- TODO co to jest C5
 UPDATE PARCEL_VECTORS
   SET Simple_Zoning_Code = 'C5'
     WHERE Zoning_Code like 'LAC5';
@@ -233,13 +232,7 @@ UPDATE PARCEL_VECTORS
 
 UPDATE PARCEL_VECTORS
   SET Simple_Zoning_Code = 'PR'
-    WHERE substring(Zoning_Code, 3, 3) like 'PR-';
-
-
-UPDATE PARCEL_VECTORS
-  SET Simple_Zoning_Code = 'PR'
-    WHERE Zoning_Code like 'LCPR*'
-          or Zoning_Code like 'POPRD*';
+    WHERE substring(Zoning_Code, 3, 3) like 'PR-' or Zoning_Code like 'LCPR*' or Zoning_Code like 'POPRD*';
 
 
 UPDATE PARCEL_VECTORS
@@ -483,8 +476,6 @@ ADD SA_Localization_int int,
 	City_int int
 
 
-
-
 ---Rewriting mapping from mapping tables into Lands_Vector table----------
 
 --1
@@ -511,7 +502,6 @@ GO
 
 
 --3
-
 update l set l.Zoning_Code_int = z.Zoning_Code_int
 from PARCEL_VECTORS l
 inner join Zoning_Codes_Mapping z on l.Zoning_Code = z.Zoning_Code
@@ -591,7 +581,6 @@ Zoning_Code, BD_LINE_1_Quality__Class___Shap,
 SA_Street_and_City_and_State, MA_Street_and_City_and_State, City, Simple_Zoning_Code, Shape
 
 
-
 ------Mapping NULL values into numbers----------
 
 exec UpdateNullValues
@@ -608,60 +597,5 @@ GO
 update PARCEL_VECTORS set Sale_Amount = LS1_Sale_Amount
 GO
 
-
 alter table PARCEL_VECTORS
 drop column LS1_Sale_Amount
-
----
-
-
-
-SELECT OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr,LAND_Curr_Value, IMPROVE_Curr_Roll_YR, IMPROVE_Curr_Value, SA_House_Number, SA_Zip_Cde, 
-MA_House_Number,	MA_Zip_Cde,	Recording_Date,
-Hmownr_Exempt_Number, Hmownr_Exempt_Value, LS1_Sale_Date, LS2_Sale_Date,
-LS3_Sale_Date, BD_LINE_1_Yr_Built, BD_LINE_1_No_of_Units,	--20
-
-BD_LINE_1_No_of_Bedrooms, BD_LINE_1_No_of_Baths, BD_LINE_1_Sq_Ft_of_Main_Improve, BD_LINE_2_Subpart,
-BD_LINE_2_Yr_Built, BD_LINE_2_No_of_Units,
-BD_LINE_2_No_of_Bedrooms, BD_LINE_2_No_of_Baths, BD_LINE_2_Sq_Ft_of_Main_Improve,
-BD_LINE_3_Subpart,
-BD_LINE_3_Yr_Built, BD_LINE_3_No_of_Units,BD_LINE_3_No_of_Bedrooms, BD_LINE_3_No_of_Baths, BD_LINE_3_Sq_Ft_of_Main_Improve,
-Current_Land_Base_Year, Current_Improvement_Base_Year,
-Current_Land_Base_Value, Current_Improvement_Base_Value, Cluster_Location,	--20
-
-Cluster_Type, Cluster_Appraisal_Unit, Document_Transfer_Tax_Sales_Amo, BD_LINE_1_Year_Changed,
-BD_LINE_1_Unit_Cost_Main, BD_LINE_1_RCN_Main, BD_LINE_2_Year_Changed, 
-BD_LINE_2_Unit_Cost_Main, BD_LINE_2_RCN_Main, BD_LINE_3_Year_Changed, 
-BD_LINE_3_Unit_Cost_Main, BD_LINE_3_RCN_Main, BD_LINE_4_Year_Changed,Landlord_Reappraisal_Year,
-Landlord_Number_of_Units, Recorders_Document_Number, Price_Per_Single_Area_Unit, Parcel_Area, Residential,
-Special_Purposes_Plan,	--20 
-
-Agricultural, Commercial, Manufacturing, SA_Localization_int,
-MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
-Zoning_Code_int,
-BD_LINE_1_Quality__Class___Shap_int,	--10
-
-City_int, Sale_Amount
-INTO PARCEL_DATA_SET FROM Lands_Vectors
-	WHERE Sale_Amount < 10000000
-
-
- select top 10 * from PARCEL_DATA_SET
-
-
-
- select * from PARCEL_DATA_SET where Sale_Amount <1000000 and Sale_Amount > 500000
- order by OBJECTID 
-
-
-
-SELECT *
- --select top 1 * 
- FROM PARCEL_VECTORS
-	WHERE Sale_Amount <500000
-	and LS1_Sale_Date > 20150000
-      and Sale_Amount != 9
-      and Sale_Amount != 0
-      and Sale_Amount != 999999999 and Zoning_Code_int != 0 
-	order by Price_Per_Single_Area_Unit--OBJECTID
----TU skonczone
