@@ -1,0 +1,947 @@
+"C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\python.exe" C:/Magdalena/INŻYNIERKA/railwayPath/src/Main.py 1
+Using TensorFlow backend.
+1
+        PERIMETER    ...     City_int
+0        0.000000    ...           61
+1        0.000000    ...          121
+2        0.000000    ...           61
+3        0.000000    ...           61
+4        0.000000    ...          121
+5        0.000000    ...          121
+6        0.000000    ...          103
+7        0.000000    ...          121
+8        0.000000    ...          121
+9        0.000000    ...          121
+10       0.000000    ...          121
+11       0.000000    ...          121
+12     297.915174    ...           28
+13       0.000000    ...          121
+14       0.000000    ...          121
+15       0.000000    ...           68
+16       0.000000    ...           61
+17     372.492501    ...           62
+18       0.000000    ...           61
+19       0.000000    ...           61
+20       0.000000    ...          121
+21       0.000000    ...           61
+22       0.000000    ...           61
+23       0.000000    ...          121
+24     299.779365    ...           28
+25     299.913983    ...           28
+26     390.438385    ...           28
+27       0.000000    ...          121
+28       0.000000    ...           62
+29       0.000000    ...           62
+...           ...    ...          ...
+56739    0.000000    ...           55
+56740    0.000000    ...           61
+56741    0.000000    ...           63
+56742    0.000000    ...           49
+56743    0.000000    ...           49
+56744    0.000000    ...           61
+56745    0.000000    ...           49
+56746    0.000000    ...           49
+56747    0.000000    ...           61
+56748    0.000000    ...           61
+56749    0.000000    ...           61
+56750    0.000000    ...           61
+56751    0.000000    ...           61
+56752    0.000000    ...           61
+56753    0.000000    ...           61
+56754    0.000000    ...           61
+56755    0.000000    ...           61
+56756    0.000000    ...           23
+56757    0.000000    ...           61
+56758    0.000000    ...           23
+56759    0.000000    ...           63
+56760    0.000000    ...           61
+56761    0.000000    ...           61
+56762    0.000000    ...           63
+56763    0.000000    ...           61
+56764    0.000000    ...           23
+56765    0.000000    ...           61
+56766    0.000000    ...           39
+56767    0.000000    ...           39
+56768    0.000000    ...          108
+
+[56769 rows x 70 columns]
+0        925009
+1        550005
+2        700007
+3        957509
+4        650006
+5        625006
+6        945009
+7        620006
+8        630006
+9        855008
+10       735007
+11       990009
+12       836008
+13       818008
+14       900009
+15       630006
+16       570005
+17       625006
+18       765007
+19       560005
+20       891508
+21       640006
+22       730007
+23       973009
+24       610006
+25       610006
+26       692006
+27       755007
+28       639006
+29       583005
+          ...  
+56739    935009
+56740    575005
+56741    560005
+56742    800008
+56743    865008
+56744    608506
+56745    985009
+56746    880008
+56747    575005
+56748    650006
+56749    975009
+56750    929009
+56751    575005
+56752    650006
+56753    875008
+56754    850008
+56755    950509
+56756    706007
+56757    649006
+56758    715007
+56759    670006
+56760    569505
+56761    580005
+56762    617006
+56763    596005
+56764    745007
+56765    965009
+56766    660006
+56767    875008
+56768    623006
+Name: Sale_Amount, Length: 56769, dtype: int64
+2018-09-11 12:54:09.664965: I T:\src\github\tensorflow\tensorflow\core\platform\cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+Train on 51092 samples, validate on 5677 samples
+Epoch 1/200
+ - 1s - loss: 49459281920.0000 - mean_squared_error: 49459281920.0000 - mean_absolute_error: 210368.9844 - mean_absolute_percentage_error: 30.3564 - cosine_proximity: -1.0000e+00 - val_loss: 1393441636352.0000 - val_mean_squared_error: 1393441636352.0000 - val_mean_absolute_error: 132372.9219 - val_mean_absolute_percentage_error: 20.7208 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00001: val_loss improved from inf to 1393441636352.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 2/200
+ - 1s - loss: 14635478016.0000 - mean_squared_error: 14635478016.0000 - mean_absolute_error: 102844.4766 - mean_absolute_percentage_error: 17.0982 - cosine_proximity: -1.0000e+00 - val_loss: 1373709926400.0000 - val_mean_squared_error: 1373709926400.0000 - val_mean_absolute_error: 197662.6719 - val_mean_absolute_percentage_error: 30.9214 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00002: val_loss improved from 1393441636352.00000 to 1373709926400.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 3/200
+ - 1s - loss: 37594505216.0000 - mean_squared_error: 37594505216.0000 - mean_absolute_error: 180674.7344 - mean_absolute_percentage_error: 29.3266 - cosine_proximity: -1.0000e+00 - val_loss: 1243252129792.0000 - val_mean_squared_error: 1243252129792.0000 - val_mean_absolute_error: 117524.9766 - val_mean_absolute_percentage_error: 18.5772 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00003: val_loss improved from 1373709926400.00000 to 1243252129792.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 4/200
+ - 1s - loss: 15606699008.0000 - mean_squared_error: 15606699008.0000 - mean_absolute_error: 107825.7812 - mean_absolute_percentage_error: 17.9927 - cosine_proximity: -1.0000e+00 - val_loss: 1132273598464.0000 - val_mean_squared_error: 1132273598464.0000 - val_mean_absolute_error: 81667.0234 - val_mean_absolute_percentage_error: 11.1762 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00004: val_loss improved from 1243252129792.00000 to 1132273598464.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 5/200
+ - 1s - loss: 5795671552.0000 - mean_squared_error: 5795671552.0000 - mean_absolute_error: 59322.8398 - mean_absolute_percentage_error: 8.5464 - cosine_proximity: -1.0000e+00 - val_loss: 1077805973504.0000 - val_mean_squared_error: 1077805973504.0000 - val_mean_absolute_error: 123166.7422 - val_mean_absolute_percentage_error: 16.1305 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00005: val_loss improved from 1132273598464.00000 to 1077805973504.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 6/200
+ - 1s - loss: 15748296704.0000 - mean_squared_error: 15748296704.0000 - mean_absolute_error: 101196.6484 - mean_absolute_percentage_error: 13.5795 - cosine_proximity: -1.0000e+00 - val_loss: 1058472919040.0000 - val_mean_squared_error: 1058472919040.0000 - val_mean_absolute_error: 144036.7188 - val_mean_absolute_percentage_error: 19.2255 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00006: val_loss improved from 1077805973504.00000 to 1058472919040.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 7/200
+ - 1s - loss: 21335611392.0000 - mean_squared_error: 21335611392.0000 - mean_absolute_error: 125588.1016 - mean_absolute_percentage_error: 17.2737 - cosine_proximity: -1.0000e+00 - val_loss: 1054944657408.0000 - val_mean_squared_error: 1054944657408.0000 - val_mean_absolute_error: 114813.1250 - val_mean_absolute_percentage_error: 14.8555 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00007: val_loss improved from 1058472919040.00000 to 1054944657408.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 8/200
+ - 1s - loss: 15010310144.0000 - mean_squared_error: 15010310144.0000 - mean_absolute_error: 98051.1328 - mean_absolute_percentage_error: 13.0902 - cosine_proximity: -1.0000e+00 - val_loss: 1067204345856.0000 - val_mean_squared_error: 1067204345856.0000 - val_mean_absolute_error: 77440.4922 - val_mean_absolute_percentage_error: 10.0373 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00008: val_loss did not improve from 1054944657408.00000
+Epoch 9/200
+ - 1s - loss: 6922043904.0000 - mean_squared_error: 6922043904.0000 - mean_absolute_error: 62484.3633 - mean_absolute_percentage_error: 8.4885 - cosine_proximity: -1.0000e+00 - val_loss: 1095384301568.0000 - val_mean_squared_error: 1095384301568.0000 - val_mean_absolute_error: 84851.7109 - val_mean_absolute_percentage_error: 12.6560 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00009: val_loss did not improve from 1054944657408.00000
+Epoch 10/200
+ - 1s - loss: 6367138816.0000 - mean_squared_error: 6367138816.0000 - mean_absolute_error: 67110.0703 - mean_absolute_percentage_error: 10.6948 - cosine_proximity: -1.0000e+00 - val_loss: 1117985832960.0000 - val_mean_squared_error: 1117985832960.0000 - val_mean_absolute_error: 112469.4453 - val_mean_absolute_percentage_error: 17.6506 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00010: val_loss did not improve from 1054944657408.00000
+Epoch 11/200
+ - 1s - loss: 11646697472.0000 - mean_squared_error: 11646697472.0000 - mean_absolute_error: 92483.5312 - mean_absolute_percentage_error: 15.3978 - cosine_proximity: -1.0000e+00 - val_loss: 1116293169152.0000 - val_mean_squared_error: 1116293169152.0000 - val_mean_absolute_error: 123198.0234 - val_mean_absolute_percentage_error: 19.4481 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00011: val_loss did not improve from 1054944657408.00000
+Epoch 12/200
+ - 1s - loss: 14011219968.0000 - mean_squared_error: 14011219968.0000 - mean_absolute_error: 102048.3281 - mean_absolute_percentage_error: 17.0251 - cosine_proximity: -1.0000e+00 - val_loss: 1092339105792.0000 - val_mean_squared_error: 1092339105792.0000 - val_mean_absolute_error: 109403.2344 - val_mean_absolute_percentage_error: 17.0967 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00012: val_loss did not improve from 1054944657408.00000
+Epoch 13/200
+ - 1s - loss: 10569080832.0000 - mean_squared_error: 10569080832.0000 - mean_absolute_error: 87816.6875 - mean_absolute_percentage_error: 14.5753 - cosine_proximity: -1.0000e+00 - val_loss: 1058420817920.0000 - val_mean_squared_error: 1058420817920.0000 - val_mean_absolute_error: 87970.5234 - val_mean_absolute_percentage_error: 13.1010 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00013: val_loss did not improve from 1054944657408.00000
+Epoch 14/200
+ - 1s - loss: 6281797120.0000 - mean_squared_error: 6281797120.0000 - mean_absolute_error: 66817.7812 - mean_absolute_percentage_error: 10.5904 - cosine_proximity: -1.0000e+00 - val_loss: 1027218931712.0000 - val_mean_squared_error: 1027218931712.0000 - val_mean_absolute_error: 78509.7109 - val_mean_absolute_percentage_error: 10.6482 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00014: val_loss improved from 1054944657408.00000 to 1027218931712.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 15/200
+ - 1s - loss: 5862984192.0000 - mean_squared_error: 5862984192.0000 - mean_absolute_error: 59496.8398 - mean_absolute_percentage_error: 8.4014 - cosine_proximity: -1.0000e+00 - val_loss: 1003696095232.0000 - val_mean_squared_error: 1003696095232.0000 - val_mean_absolute_error: 83275.5547 - val_mean_absolute_percentage_error: 10.6220 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00015: val_loss improved from 1027218931712.00000 to 1003696095232.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 16/200
+ - 1s - loss: 8542446080.0000 - mean_squared_error: 8542446080.0000 - mean_absolute_error: 68604.9219 - mean_absolute_percentage_error: 9.0305 - cosine_proximity: -1.0000e+00 - val_loss: 985501401088.0000 - val_mean_squared_error: 985501401088.0000 - val_mean_absolute_error: 88478.6172 - val_mean_absolute_percentage_error: 11.1445 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00016: val_loss improved from 1003696095232.00000 to 985501401088.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 17/200
+ - 1s - loss: 10223482880.0000 - mean_squared_error: 10223482880.0000 - mean_absolute_error: 75956.4219 - mean_absolute_percentage_error: 9.9275 - cosine_proximity: -1.0000e+00 - val_loss: 971288346624.0000 - val_mean_squared_error: 971288346624.0000 - val_mean_absolute_error: 83852.0391 - val_mean_absolute_percentage_error: 10.5874 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00017: val_loss improved from 985501401088.00000 to 971288346624.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 18/200
+ - 1s - loss: 8870699008.0000 - mean_squared_error: 8870699008.0000 - mean_absolute_error: 70281.2031 - mean_absolute_percentage_error: 9.2241 - cosine_proximity: -1.0000e+00 - val_loss: 962150596608.0000 - val_mean_squared_error: 962150596608.0000 - val_mean_absolute_error: 75292.5234 - val_mean_absolute_percentage_error: 9.8506 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00018: val_loss improved from 971288346624.00000 to 962150596608.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 19/200
+ - 1s - loss: 6286336000.0000 - mean_squared_error: 6286336000.0000 - mean_absolute_error: 60759.6836 - mean_absolute_percentage_error: 8.3519 - cosine_proximity: -1.0000e+00 - val_loss: 958811078656.0000 - val_mean_squared_error: 958811078656.0000 - val_mean_absolute_error: 73983.9688 - val_mean_absolute_percentage_error: 10.4627 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00019: val_loss improved from 962150596608.00000 to 958811078656.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 20/200
+ - 1s - loss: 5344168960.0000 - mean_squared_error: 5344168960.0000 - mean_absolute_error: 60688.1953 - mean_absolute_percentage_error: 9.1819 - cosine_proximity: -1.0000e+00 - val_loss: 958962860032.0000 - val_mean_squared_error: 958962860032.0000 - val_mean_absolute_error: 77927.3594 - val_mean_absolute_percentage_error: 11.6464 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00020: val_loss did not improve from 958811078656.00000
+Epoch 21/200
+ - 1s - loss: 5967856128.0000 - mean_squared_error: 5967856128.0000 - mean_absolute_error: 66161.4922 - mean_absolute_percentage_error: 10.6030 - cosine_proximity: -1.0000e+00 - val_loss: 958015930368.0000 - val_mean_squared_error: 958015930368.0000 - val_mean_absolute_error: 75151.3828 - val_mean_absolute_percentage_error: 11.3512 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00021: val_loss improved from 958811078656.00000 to 958015930368.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 22/200
+ - 1s - loss: 5431201280.0000 - mean_squared_error: 5431201280.0000 - mean_absolute_error: 62635.5664 - mean_absolute_percentage_error: 10.1639 - cosine_proximity: -1.0000e+00 - val_loss: 955180646400.0000 - val_mean_squared_error: 955180646400.0000 - val_mean_absolute_error: 67427.3906 - val_mean_absolute_percentage_error: 9.7822 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00022: val_loss improved from 958015930368.00000 to 955180646400.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 23/200
+ - 1s - loss: 4089140992.0000 - mean_squared_error: 4089140992.0000 - mean_absolute_error: 53428.7109 - mean_absolute_percentage_error: 8.3104 - cosine_proximity: -1.0000e+00 - val_loss: 953559220224.0000 - val_mean_squared_error: 953559220224.0000 - val_mean_absolute_error: 64961.1836 - val_mean_absolute_percentage_error: 8.7321 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00023: val_loss improved from 955180646400.00000 to 953559220224.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 24/200
+ - 1s - loss: 4091683584.0000 - mean_squared_error: 4091683584.0000 - mean_absolute_error: 49635.1758 - mean_absolute_percentage_error: 7.0067 - cosine_proximity: -1.0000e+00 - val_loss: 954922434560.0000 - val_mean_squared_error: 954922434560.0000 - val_mean_absolute_error: 68122.6406 - val_mean_absolute_percentage_error: 8.8646 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00024: val_loss did not improve from 953559220224.00000
+Epoch 25/200
+ - 1s - loss: 4906960896.0000 - mean_squared_error: 4906960896.0000 - mean_absolute_error: 52427.4492 - mean_absolute_percentage_error: 7.0635 - cosine_proximity: -1.0000e+00 - val_loss: 958437785600.0000 - val_mean_squared_error: 958437785600.0000 - val_mean_absolute_error: 66652.1562 - val_mean_absolute_percentage_error: 8.8909 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00025: val_loss did not improve from 953559220224.00000
+Epoch 26/200
+ - 1s - loss: 4227770368.0000 - mean_squared_error: 4227770368.0000 - mean_absolute_error: 49775.9414 - mean_absolute_percentage_error: 6.9105 - cosine_proximity: -1.0000e+00 - val_loss: 963987243008.0000 - val_mean_squared_error: 963987243008.0000 - val_mean_absolute_error: 67461.2188 - val_mean_absolute_percentage_error: 9.6078 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00026: val_loss did not improve from 953559220224.00000
+Epoch 27/200
+ - 1s - loss: 3713009408.0000 - mean_squared_error: 3713009408.0000 - mean_absolute_error: 50101.2773 - mean_absolute_percentage_error: 7.5806 - cosine_proximity: -1.0000e+00 - val_loss: 969209937920.0000 - val_mean_squared_error: 969209937920.0000 - val_mean_absolute_error: 72402.6719 - val_mean_absolute_percentage_error: 10.7957 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00027: val_loss did not improve from 953559220224.00000
+Epoch 28/200
+ - 1s - loss: 4302816768.0000 - mean_squared_error: 4302816768.0000 - mean_absolute_error: 55578.1602 - mean_absolute_percentage_error: 8.8799 - cosine_proximity: -1.0000e+00 - val_loss: 970324705280.0000 - val_mean_squared_error: 970324705280.0000 - val_mean_absolute_error: 71760.8984 - val_mean_absolute_percentage_error: 10.7075 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00028: val_loss did not improve from 953559220224.00000
+Epoch 29/200
+ - 1s - loss: 4264377856.0000 - mean_squared_error: 4264377856.0000 - mean_absolute_error: 55363.5742 - mean_absolute_percentage_error: 8.8585 - cosine_proximity: -1.0000e+00 - val_loss: 968009252864.0000 - val_mean_squared_error: 968009252864.0000 - val_mean_absolute_error: 65639.0391 - val_mean_absolute_percentage_error: 9.3874 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00029: val_loss did not improve from 953559220224.00000
+Epoch 30/200
+ - 1s - loss: 3558751744.0000 - mean_squared_error: 3558751744.0000 - mean_absolute_error: 49386.0195 - mean_absolute_percentage_error: 7.5390 - cosine_proximity: -1.0000e+00 - val_loss: 966658818048.0000 - val_mean_squared_error: 966658818048.0000 - val_mean_absolute_error: 62727.5430 - val_mean_absolute_percentage_error: 8.4139 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00030: val_loss did not improve from 953559220224.00000
+Epoch 31/200
+ - 1s - loss: 3689065984.0000 - mean_squared_error: 3689065984.0000 - mean_absolute_error: 47193.6172 - mean_absolute_percentage_error: 6.6550 - cosine_proximity: -1.0000e+00 - val_loss: 968601829376.0000 - val_mean_squared_error: 968601829376.0000 - val_mean_absolute_error: 62664.7578 - val_mean_absolute_percentage_error: 8.2013 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00031: val_loss did not improve from 953559220224.00000
+Epoch 32/200
+ - 1s - loss: 3991615232.0000 - mean_squared_error: 3991615232.0000 - mean_absolute_error: 47981.3320 - mean_absolute_percentage_error: 6.5767 - cosine_proximity: -1.0000e+00 - val_loss: 974282358784.0000 - val_mean_squared_error: 974282358784.0000 - val_mean_absolute_error: 60691.8242 - val_mean_absolute_percentage_error: 8.1800 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00032: val_loss did not improve from 953559220224.00000
+Epoch 33/200
+ - 1s - loss: 3444008192.0000 - mean_squared_error: 3444008192.0000 - mean_absolute_error: 46143.1445 - mean_absolute_percentage_error: 6.5955 - cosine_proximity: -1.0000e+00 - val_loss: 983023681536.0000 - val_mean_squared_error: 983023681536.0000 - val_mean_absolute_error: 62329.2734 - val_mean_absolute_percentage_error: 8.9074 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00033: val_loss did not improve from 953559220224.00000
+Epoch 34/200
+ - 1s - loss: 3356062464.0000 - mean_squared_error: 3356062464.0000 - mean_absolute_error: 48224.0742 - mean_absolute_percentage_error: 7.4222 - cosine_proximity: -1.0000e+00 - val_loss: 991625543680.0000 - val_mean_squared_error: 991625543680.0000 - val_mean_absolute_error: 64834.6172 - val_mean_absolute_percentage_error: 9.5194 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00034: val_loss did not improve from 953559220224.00000
+Epoch 35/200
+ - 1s - loss: 3661133824.0000 - mean_squared_error: 3661133824.0000 - mean_absolute_error: 51108.2969 - mean_absolute_percentage_error: 8.1107 - cosine_proximity: -1.0000e+00 - val_loss: 997577916416.0000 - val_mean_squared_error: 997577916416.0000 - val_mean_absolute_error: 62169.6406 - val_mean_absolute_percentage_error: 8.9462 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00035: val_loss did not improve from 953559220224.00000
+Epoch 36/200
+ - 1s - loss: 3299922944.0000 - mean_squared_error: 3299922944.0000 - mean_absolute_error: 48050.0547 - mean_absolute_percentage_error: 7.4666 - cosine_proximity: -1.0000e+00 - val_loss: 1002932535296.0000 - val_mean_squared_error: 1002932535296.0000 - val_mean_absolute_error: 58994.7383 - val_mean_absolute_percentage_error: 8.0392 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00036: val_loss did not improve from 953559220224.00000
+Epoch 37/200
+ - 1s - loss: 3089191424.0000 - mean_squared_error: 3089191424.0000 - mean_absolute_error: 44304.9023 - mean_absolute_percentage_error: 6.4455 - cosine_proximity: -1.0000e+00 - val_loss: 1010888933376.0000 - val_mean_squared_error: 1010888933376.0000 - val_mean_absolute_error: 59157.9883 - val_mean_absolute_percentage_error: 7.7958 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00037: val_loss did not improve from 953559220224.00000
+Epoch 38/200
+ - 1s - loss: 3339729920.0000 - mean_squared_error: 3339729920.0000 - mean_absolute_error: 44308.1406 - mean_absolute_percentage_error: 6.1611 - cosine_proximity: -1.0000e+00 - val_loss: 1022160994304.0000 - val_mean_squared_error: 1022160994304.0000 - val_mean_absolute_error: 58694.7422 - val_mean_absolute_percentage_error: 7.8930 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00038: val_loss did not improve from 953559220224.00000
+Epoch 39/200
+ - 1s - loss: 3049952512.0000 - mean_squared_error: 3049952512.0000 - mean_absolute_error: 43184.6758 - mean_absolute_percentage_error: 6.1553 - cosine_proximity: -1.0000e+00 - val_loss: 1035650924544.0000 - val_mean_squared_error: 1035650924544.0000 - val_mean_absolute_error: 60350.5078 - val_mean_absolute_percentage_error: 8.5579 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00039: val_loss did not improve from 953559220224.00000
+Epoch 40/200
+ - 1s - loss: 2882851840.0000 - mean_squared_error: 2882851840.0000 - mean_absolute_error: 44260.0625 - mean_absolute_percentage_error: 6.7467 - cosine_proximity: -1.0000e+00 - val_loss: 1048177344512.0000 - val_mean_squared_error: 1048177344512.0000 - val_mean_absolute_error: 62884.5938 - val_mean_absolute_percentage_error: 9.1642 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00040: val_loss did not improve from 953559220224.00000
+Epoch 41/200
+ - 1s - loss: 3064636928.0000 - mean_squared_error: 3064636928.0000 - mean_absolute_error: 46451.2227 - mean_absolute_percentage_error: 7.3143 - cosine_proximity: -1.0000e+00 - val_loss: 1057169866752.0000 - val_mean_squared_error: 1057169866752.0000 - val_mean_absolute_error: 60933.0938 - val_mean_absolute_percentage_error: 8.7119 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00041: val_loss did not improve from 953559220224.00000
+Epoch 42/200
+ - 1s - loss: 2798373120.0000 - mean_squared_error: 2798373120.0000 - mean_absolute_error: 43788.7305 - mean_absolute_percentage_error: 6.7441 - cosine_proximity: -1.0000e+00 - val_loss: 1062161022976.0000 - val_mean_squared_error: 1062161022976.0000 - val_mean_absolute_error: 58190.0938 - val_mean_absolute_percentage_error: 7.9284 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00042: val_loss did not improve from 953559220224.00000
+Epoch 43/200
+ - 1s - loss: 2707767296.0000 - mean_squared_error: 2707767296.0000 - mean_absolute_error: 41018.4141 - mean_absolute_percentage_error: 5.9352 - cosine_proximity: -1.0000e+00 - val_loss: 1065965846528.0000 - val_mean_squared_error: 1065965846528.0000 - val_mean_absolute_error: 57350.5898 - val_mean_absolute_percentage_error: 7.6436 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00043: val_loss did not improve from 953559220224.00000
+Epoch 44/200
+ - 1s - loss: 2802087424.0000 - mean_squared_error: 2802087424.0000 - mean_absolute_error: 40720.3711 - mean_absolute_percentage_error: 5.7270 - cosine_proximity: -1.0000e+00 - val_loss: 1070763081728.0000 - val_mean_squared_error: 1070763081728.0000 - val_mean_absolute_error: 56464.0156 - val_mean_absolute_percentage_error: 7.7384 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00044: val_loss did not improve from 953559220224.00000
+Epoch 45/200
+ - 1s - loss: 2525319936.0000 - mean_squared_error: 2525319936.0000 - mean_absolute_error: 39977.0898 - mean_absolute_percentage_error: 5.8573 - cosine_proximity: -1.0000e+00 - val_loss: 1076117045248.0000 - val_mean_squared_error: 1076117045248.0000 - val_mean_absolute_error: 57812.5859 - val_mean_absolute_percentage_error: 8.2567 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00045: val_loss did not improve from 953559220224.00000
+Epoch 46/200
+ - 1s - loss: 2549814528.0000 - mean_squared_error: 2549814528.0000 - mean_absolute_error: 41806.7109 - mean_absolute_percentage_error: 6.4748 - cosine_proximity: -1.0000e+00 - val_loss: 1079850172416.0000 - val_mean_squared_error: 1079850172416.0000 - val_mean_absolute_error: 57150.6406 - val_mean_absolute_percentage_error: 8.1729 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00046: val_loss did not improve from 953559220224.00000
+Epoch 47/200
+ - 1s - loss: 2510603008.0000 - mean_squared_error: 2510603008.0000 - mean_absolute_error: 41563.6758 - mean_absolute_percentage_error: 6.4640 - cosine_proximity: -1.0000e+00 - val_loss: 1082664484864.0000 - val_mean_squared_error: 1082664484864.0000 - val_mean_absolute_error: 53939.5781 - val_mean_absolute_percentage_error: 7.4013 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00047: val_loss did not improve from 953559220224.00000
+Epoch 48/200
+ - 1s - loss: 2305349376.0000 - mean_squared_error: 2305349376.0000 - mean_absolute_error: 38455.2617 - mean_absolute_percentage_error: 5.6939 - cosine_proximity: -1.0000e+00 - val_loss: 1088003375104.0000 - val_mean_squared_error: 1088003375104.0000 - val_mean_absolute_error: 52943.8516 - val_mean_absolute_percentage_error: 7.0272 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00048: val_loss did not improve from 953559220224.00000
+Epoch 49/200
+ - 1s - loss: 2376336640.0000 - mean_squared_error: 2376336640.0000 - mean_absolute_error: 37554.5977 - mean_absolute_percentage_error: 5.3242 - cosine_proximity: -1.0000e+00 - val_loss: 1090371584000.0000 - val_mean_squared_error: 1090371584000.0000 - val_mean_absolute_error: 52540.8594 - val_mean_absolute_percentage_error: 7.1018 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00049: val_loss did not improve from 953559220224.00000
+Epoch 50/200
+ - 1s - loss: 2205817856.0000 - mean_squared_error: 2205817856.0000 - mean_absolute_error: 36921.5547 - mean_absolute_percentage_error: 5.3691 - cosine_proximity: -1.0000e+00 - val_loss: 1082461913088.0000 - val_mean_squared_error: 1082461913088.0000 - val_mean_absolute_error: 53533.1328 - val_mean_absolute_percentage_error: 7.5375 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00050: val_loss did not improve from 953559220224.00000
+Epoch 51/200
+ - 1s - loss: 2167846144.0000 - mean_squared_error: 2167846144.0000 - mean_absolute_error: 38066.1875 - mean_absolute_percentage_error: 5.8492 - cosine_proximity: -1.0000e+00 - val_loss: 1071937617920.0000 - val_mean_squared_error: 1071937617920.0000 - val_mean_absolute_error: 53109.6719 - val_mean_absolute_percentage_error: 7.5094 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00051: val_loss did not improve from 953559220224.00000
+Epoch 52/200
+ - 1s - loss: 2132014208.0000 - mean_squared_error: 2132014208.0000 - mean_absolute_error: 37958.1016 - mean_absolute_percentage_error: 5.8737 - cosine_proximity: -1.0000e+00 - val_loss: 1062524092416.0000 - val_mean_squared_error: 1062524092416.0000 - val_mean_absolute_error: 50292.0156 - val_mean_absolute_percentage_error: 6.8406 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00052: val_loss did not improve from 953559220224.00000
+Epoch 53/200
+ - 1s - loss: 1982571264.0000 - mean_squared_error: 1982571264.0000 - mean_absolute_error: 35310.0430 - mean_absolute_percentage_error: 5.2063 - cosine_proximity: -1.0000e+00 - val_loss: 1056718782464.0000 - val_mean_squared_error: 1056718782464.0000 - val_mean_absolute_error: 49216.9531 - val_mean_absolute_percentage_error: 6.5294 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00053: val_loss did not improve from 953559220224.00000
+Epoch 54/200
+ - 1s - loss: 2008947456.0000 - mean_squared_error: 2008947456.0000 - mean_absolute_error: 34462.8555 - mean_absolute_percentage_error: 4.9105 - cosine_proximity: -1.0000e+00 - val_loss: 1053527900160.0000 - val_mean_squared_error: 1053527900160.0000 - val_mean_absolute_error: 49362.3633 - val_mean_absolute_percentage_error: 6.7437 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00054: val_loss did not improve from 953559220224.00000
+Epoch 55/200
+ - 1s - loss: 1850372608.0000 - mean_squared_error: 1850372608.0000 - mean_absolute_error: 33928.5156 - mean_absolute_percentage_error: 5.0190 - cosine_proximity: -1.0000e+00 - val_loss: 1047415947264.0000 - val_mean_squared_error: 1047415947264.0000 - val_mean_absolute_error: 51054.8750 - val_mean_absolute_percentage_error: 7.2217 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00055: val_loss did not improve from 953559220224.00000
+Epoch 56/200
+ - 1s - loss: 1861164672.0000 - mean_squared_error: 1861164672.0000 - mean_absolute_error: 35051.4180 - mean_absolute_percentage_error: 5.4203 - cosine_proximity: -1.0000e+00 - val_loss: 1033777643520.0000 - val_mean_squared_error: 1033777643520.0000 - val_mean_absolute_error: 49352.0391 - val_mean_absolute_percentage_error: 6.8853 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00056: val_loss did not improve from 953559220224.00000
+Epoch 57/200
+ - 1s - loss: 1739603712.0000 - mean_squared_error: 1739603712.0000 - mean_absolute_error: 33416.4492 - mean_absolute_percentage_error: 5.0771 - cosine_proximity: -1.0000e+00 - val_loss: 1016793858048.0000 - val_mean_squared_error: 1016793858048.0000 - val_mean_absolute_error: 46970.0977 - val_mean_absolute_percentage_error: 6.2967 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00057: val_loss did not improve from 953559220224.00000
+Epoch 58/200
+ - 1s - loss: 1715401344.0000 - mean_squared_error: 1715401344.0000 - mean_absolute_error: 31812.4785 - mean_absolute_percentage_error: 4.5825 - cosine_proximity: -1.0000e+00 - val_loss: 1003398103040.0000 - val_mean_squared_error: 1003398103040.0000 - val_mean_absolute_error: 46470.6797 - val_mean_absolute_percentage_error: 6.2721 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00058: val_loss did not improve from 953559220224.00000
+Epoch 59/200
+ - 1s - loss: 1625879936.0000 - mean_squared_error: 1625879936.0000 - mean_absolute_error: 31091.3965 - mean_absolute_percentage_error: 4.5203 - cosine_proximity: -1.0000e+00 - val_loss: 991107874816.0000 - val_mean_squared_error: 991107874816.0000 - val_mean_absolute_error: 47513.5586 - val_mean_absolute_percentage_error: 6.6595 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00059: val_loss did not improve from 953559220224.00000
+Epoch 60/200
+ - 1s - loss: 1576517504.0000 - mean_squared_error: 1576517504.0000 - mean_absolute_error: 31696.4707 - mean_absolute_percentage_error: 4.8536 - cosine_proximity: -1.0000e+00 - val_loss: 977408884736.0000 - val_mean_squared_error: 977408884736.0000 - val_mean_absolute_error: 46581.8750 - val_mean_absolute_percentage_error: 6.5156 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00060: val_loss did not improve from 953559220224.00000
+Epoch 61/200
+ - 1s - loss: 1514008448.0000 - mean_squared_error: 1514008448.0000 - mean_absolute_error: 30919.8789 - mean_absolute_percentage_error: 4.7270 - cosine_proximity: -1.0000e+00 - val_loss: 963125116928.0000 - val_mean_squared_error: 963125116928.0000 - val_mean_absolute_error: 43942.5508 - val_mean_absolute_percentage_error: 5.9112 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00061: val_loss did not improve from 953559220224.00000
+Epoch 62/200
+ - 1s - loss: 1454455296.0000 - mean_squared_error: 1454455296.0000 - mean_absolute_error: 29066.2910 - mean_absolute_percentage_error: 4.2184 - cosine_proximity: -1.0000e+00 - val_loss: 951483039744.0000 - val_mean_squared_error: 951483039744.0000 - val_mean_absolute_error: 43157.1211 - val_mean_absolute_percentage_error: 5.8055 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00062: val_loss improved from 953559220224.00000 to 951483039744.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 63/200
+ - 1s - loss: 1394459264.0000 - mean_squared_error: 1394459264.0000 - mean_absolute_error: 28389.5332 - mean_absolute_percentage_error: 4.1252 - cosine_proximity: -1.0000e+00 - val_loss: 942560051200.0000 - val_mean_squared_error: 942560051200.0000 - val_mean_absolute_error: 44209.9609 - val_mean_absolute_percentage_error: 6.1689 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00063: val_loss improved from 951483039744.00000 to 942560051200.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 64/200
+ - 1s - loss: 1342847872.0000 - mean_squared_error: 1342847872.0000 - mean_absolute_error: 28821.9629 - mean_absolute_percentage_error: 4.4089 - cosine_proximity: -1.0000e+00 - val_loss: 933674221568.0000 - val_mean_squared_error: 933674221568.0000 - val_mean_absolute_error: 43217.3945 - val_mean_absolute_percentage_error: 5.9941 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00064: val_loss improved from 942560051200.00000 to 933674221568.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 65/200
+ - 1s - loss: 1277668736.0000 - mean_squared_error: 1277668736.0000 - mean_absolute_error: 27853.0605 - mean_absolute_percentage_error: 4.2309 - cosine_proximity: -1.0000e+00 - val_loss: 925830610944.0000 - val_mean_squared_error: 925830610944.0000 - val_mean_absolute_error: 41003.0742 - val_mean_absolute_percentage_error: 5.4829 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00065: val_loss improved from 933674221568.00000 to 925830610944.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 66/200
+ - 1s - loss: 1239886720.0000 - mean_squared_error: 1239886720.0000 - mean_absolute_error: 26334.7168 - mean_absolute_percentage_error: 3.8037 - cosine_proximity: -1.0000e+00 - val_loss: 920671289344.0000 - val_mean_squared_error: 920671289344.0000 - val_mean_absolute_error: 40847.1797 - val_mean_absolute_percentage_error: 5.5383 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00066: val_loss improved from 925830610944.00000 to 920671289344.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 67/200
+ - 1s - loss: 1162280960.0000 - mean_squared_error: 1162280960.0000 - mean_absolute_error: 25737.2168 - mean_absolute_percentage_error: 3.7938 - cosine_proximity: -1.0000e+00 - val_loss: 916606484480.0000 - val_mean_squared_error: 916606484480.0000 - val_mean_absolute_error: 42028.4727 - val_mean_absolute_percentage_error: 5.8653 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00067: val_loss improved from 920671289344.00000 to 916606484480.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 68/200
+ - 1s - loss: 1142296960.0000 - mean_squared_error: 1142296960.0000 - mean_absolute_error: 26178.5957 - mean_absolute_percentage_error: 4.0244 - cosine_proximity: -1.0000e+00 - val_loss: 911036055552.0000 - val_mean_squared_error: 911036055552.0000 - val_mean_absolute_error: 39803.7070 - val_mean_absolute_percentage_error: 5.4135 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00068: val_loss improved from 916606484480.00000 to 911036055552.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 69/200
+ - 1s - loss: 1061155776.0000 - mean_squared_error: 1061155776.0000 - mean_absolute_error: 24453.0000 - mean_absolute_percentage_error: 3.6296 - cosine_proximity: -1.0000e+00 - val_loss: 905888202752.0000 - val_mean_squared_error: 905888202752.0000 - val_mean_absolute_error: 38403.8594 - val_mean_absolute_percentage_error: 5.1191 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00069: val_loss improved from 911036055552.00000 to 905888202752.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 70/200
+ - 1s - loss: 1038484544.0000 - mean_squared_error: 1038484544.0000 - mean_absolute_error: 23615.8516 - mean_absolute_percentage_error: 3.4097 - cosine_proximity: -1.0000e+00 - val_loss: 902450118656.0000 - val_mean_squared_error: 902450118656.0000 - val_mean_absolute_error: 39349.7891 - val_mean_absolute_percentage_error: 5.4209 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00070: val_loss improved from 905888202752.00000 to 902450118656.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 71/200
+ - 1s - loss: 978035136.0000 - mean_squared_error: 978035136.0000 - mean_absolute_error: 23631.5176 - mean_absolute_percentage_error: 3.5892 - cosine_proximity: -1.0000e+00 - val_loss: 898507603968.0000 - val_mean_squared_error: 898507603968.0000 - val_mean_absolute_error: 38470.6016 - val_mean_absolute_percentage_error: 5.2752 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00071: val_loss improved from 902450118656.00000 to 898507603968.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 72/200
+ - 1s - loss: 930114432.0000 - mean_squared_error: 930114432.0000 - mean_absolute_error: 22845.4805 - mean_absolute_percentage_error: 3.4550 - cosine_proximity: -1.0000e+00 - val_loss: 895077187584.0000 - val_mean_squared_error: 895077187584.0000 - val_mean_absolute_error: 36289.1133 - val_mean_absolute_percentage_error: 4.8115 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00072: val_loss improved from 898507603968.00000 to 895077187584.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 73/200
+ - 1s - loss: 903353984.0000 - mean_squared_error: 903353984.0000 - mean_absolute_error: 21667.9863 - mean_absolute_percentage_error: 3.1239 - cosine_proximity: -1.0000e+00 - val_loss: 893975461888.0000 - val_mean_squared_error: 893975461888.0000 - val_mean_absolute_error: 36893.6484 - val_mean_absolute_percentage_error: 5.0174 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00073: val_loss improved from 895077187584.00000 to 893975461888.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 74/200
+ - 1s - loss: 840572864.0000 - mean_squared_error: 840572864.0000 - mean_absolute_error: 21322.9531 - mean_absolute_percentage_error: 3.1998 - cosine_proximity: -1.0000e+00 - val_loss: 893168320512.0000 - val_mean_squared_error: 893168320512.0000 - val_mean_absolute_error: 36955.6250 - val_mean_absolute_percentage_error: 5.0631 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00074: val_loss improved from 893975461888.00000 to 893168320512.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 75/200
+ - 1s - loss: 810572096.0000 - mean_squared_error: 810572096.0000 - mean_absolute_error: 21010.3984 - mean_absolute_percentage_error: 3.1931 - cosine_proximity: -1.0000e+00 - val_loss: 891995160576.0000 - val_mean_squared_error: 891995160576.0000 - val_mean_absolute_error: 34749.5352 - val_mean_absolute_percentage_error: 4.5957 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00075: val_loss improved from 893168320512.00000 to 891995160576.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 76/200
+ - 1s - loss: 778615104.0000 - mean_squared_error: 778615104.0000 - mean_absolute_error: 19802.2734 - mean_absolute_percentage_error: 2.8568 - cosine_proximity: -1.0000e+00 - val_loss: 893429219328.0000 - val_mean_squared_error: 893429219328.0000 - val_mean_absolute_error: 35359.2109 - val_mean_absolute_percentage_error: 4.7839 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00076: val_loss did not improve from 891995160576.00000
+Epoch 77/200
+ - 1s - loss: 724842368.0000 - mean_squared_error: 724842368.0000 - mean_absolute_error: 19487.5469 - mean_absolute_percentage_error: 2.9174 - cosine_proximity: -1.0000e+00 - val_loss: 896757792768.0000 - val_mean_squared_error: 896757792768.0000 - val_mean_absolute_error: 35429.3242 - val_mean_absolute_percentage_error: 4.8161 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00077: val_loss did not improve from 891995160576.00000
+Epoch 78/200
+ - 1s - loss: 697825344.0000 - mean_squared_error: 697825344.0000 - mean_absolute_error: 19180.8887 - mean_absolute_percentage_error: 2.8984 - cosine_proximity: -1.0000e+00 - val_loss: 902360399872.0000 - val_mean_squared_error: 902360399872.0000 - val_mean_absolute_error: 33941.4258 - val_mean_absolute_percentage_error: 4.4822 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00078: val_loss did not improve from 891995160576.00000
+Epoch 79/200
+ - 1s - loss: 686602752.0000 - mean_squared_error: 686602752.0000 - mean_absolute_error: 18291.5156 - mean_absolute_percentage_error: 2.6321 - cosine_proximity: -1.0000e+00 - val_loss: 911110242304.0000 - val_mean_squared_error: 911110242304.0000 - val_mean_absolute_error: 36795.9570 - val_mean_absolute_percentage_error: 5.0354 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00079: val_loss did not improve from 891995160576.00000
+Epoch 80/200
+ - 1s - loss: 654488000.0000 - mean_squared_error: 654488000.0000 - mean_absolute_error: 18261.7461 - mean_absolute_percentage_error: 2.7691 - cosine_proximity: -1.0000e+00 - val_loss: 908557877248.0000 - val_mean_squared_error: 908557877248.0000 - val_mean_absolute_error: 34763.7695 - val_mean_absolute_percentage_error: 4.6618 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00080: val_loss did not improve from 891995160576.00000
+Epoch 81/200
+ - 1s - loss: 620726144.0000 - mean_squared_error: 620726144.0000 - mean_absolute_error: 17204.4902 - mean_absolute_percentage_error: 2.5414 - cosine_proximity: -1.0000e+00 - val_loss: 899504930816.0000 - val_mean_squared_error: 899504930816.0000 - val_mean_absolute_error: 32373.8652 - val_mean_absolute_percentage_error: 4.2641 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00081: val_loss did not improve from 891995160576.00000
+Epoch 82/200
+ - 1s - loss: 596315520.0000 - mean_squared_error: 596315520.0000 - mean_absolute_error: 16492.1738 - mean_absolute_percentage_error: 2.4029 - cosine_proximity: -1.0000e+00 - val_loss: 890548518912.0000 - val_mean_squared_error: 890548518912.0000 - val_mean_absolute_error: 33017.2461 - val_mean_absolute_percentage_error: 4.4440 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00082: val_loss improved from 891995160576.00000 to 890548518912.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 83/200
+ - 1s - loss: 589806144.0000 - mean_squared_error: 589806144.0000 - mean_absolute_error: 16814.9082 - mean_absolute_percentage_error: 2.5565 - cosine_proximity: -1.0000e+00 - val_loss: 884649754624.0000 - val_mean_squared_error: 884649754624.0000 - val_mean_absolute_error: 31316.2891 - val_mean_absolute_percentage_error: 4.0794 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00083: val_loss improved from 890548518912.00000 to 884649754624.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 84/200
+ - 1s - loss: 575612416.0000 - mean_squared_error: 575612416.0000 - mean_absolute_error: 16023.9619 - mean_absolute_percentage_error: 2.3126 - cosine_proximity: -1.0000e+00 - val_loss: 885437759488.0000 - val_mean_squared_error: 885437759488.0000 - val_mean_absolute_error: 31996.6484 - val_mean_absolute_percentage_error: 4.2655 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00084: val_loss did not improve from 884649754624.00000
+Epoch 85/200
+ - 1s - loss: 545299200.0000 - mean_squared_error: 545299200.0000 - mean_absolute_error: 15702.6787 - mean_absolute_percentage_error: 2.3628 - cosine_proximity: -1.0000e+00 - val_loss: 888546394112.0000 - val_mean_squared_error: 888546394112.0000 - val_mean_absolute_error: 30984.0586 - val_mean_absolute_percentage_error: 4.0688 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00085: val_loss did not improve from 884649754624.00000
+Epoch 86/200
+ - 1s - loss: 517714400.0000 - mean_squared_error: 517714400.0000 - mean_absolute_error: 14852.0010 - mean_absolute_percentage_error: 2.1828 - cosine_proximity: -1.0000e+00 - val_loss: 891022082048.0000 - val_mean_squared_error: 891022082048.0000 - val_mean_absolute_error: 31820.3086 - val_mean_absolute_percentage_error: 4.1943 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00086: val_loss did not improve from 884649754624.00000
+Epoch 87/200
+ - 1s - loss: 505985792.0000 - mean_squared_error: 505985792.0000 - mean_absolute_error: 14567.9082 - mean_absolute_percentage_error: 2.1372 - cosine_proximity: -1.0000e+00 - val_loss: 888320491520.0000 - val_mean_squared_error: 888320491520.0000 - val_mean_absolute_error: 33047.5039 - val_mean_absolute_percentage_error: 4.4165 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00087: val_loss did not improve from 884649754624.00000
+Epoch 88/200
+ - 1s - loss: 499687552.0000 - mean_squared_error: 499687552.0000 - mean_absolute_error: 14554.3057 - mean_absolute_percentage_error: 2.1791 - cosine_proximity: -1.0000e+00 - val_loss: 877950730240.0000 - val_mean_squared_error: 877950730240.0000 - val_mean_absolute_error: 30596.5801 - val_mean_absolute_percentage_error: 3.9756 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00088: val_loss improved from 884649754624.00000 to 877950730240.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 89/200
+ - 1s - loss: 491417312.0000 - mean_squared_error: 491417312.0000 - mean_absolute_error: 14262.9062 - mean_absolute_percentage_error: 2.0587 - cosine_proximity: -1.0000e+00 - val_loss: 865574060032.0000 - val_mean_squared_error: 865574060032.0000 - val_mean_absolute_error: 32130.0430 - val_mean_absolute_percentage_error: 4.3054 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00089: val_loss improved from 877950730240.00000 to 865574060032.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 90/200
+ - 1s - loss: 490872832.0000 - mean_squared_error: 490872832.0000 - mean_absolute_error: 14409.7256 - mean_absolute_percentage_error: 2.1979 - cosine_proximity: -1.0000e+00 - val_loss: 851094142976.0000 - val_mean_squared_error: 851094142976.0000 - val_mean_absolute_error: 28627.2656 - val_mean_absolute_percentage_error: 3.6483 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00090: val_loss improved from 865574060032.00000 to 851094142976.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 91/200
+ - 1s - loss: 511576928.0000 - mean_squared_error: 511576928.0000 - mean_absolute_error: 15032.4492 - mean_absolute_percentage_error: 2.1543 - cosine_proximity: -1.0000e+00 - val_loss: 842221813760.0000 - val_mean_squared_error: 842221813760.0000 - val_mean_absolute_error: 34479.1953 - val_mean_absolute_percentage_error: 4.7012 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00091: val_loss improved from 851094142976.00000 to 842221813760.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 92/200
+ - 1s - loss: 563876544.0000 - mean_squared_error: 563876544.0000 - mean_absolute_error: 16308.2549 - mean_absolute_percentage_error: 2.5458 - cosine_proximity: -1.0000e+00 - val_loss: 832771784704.0000 - val_mean_squared_error: 832771784704.0000 - val_mean_absolute_error: 29526.9199 - val_mean_absolute_percentage_error: 3.7325 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00092: val_loss improved from 842221813760.00000 to 832771784704.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 93/200
+ - 1s - loss: 687600384.0000 - mean_squared_error: 687600384.0000 - mean_absolute_error: 19485.7363 - mean_absolute_percentage_error: 2.8076 - cosine_proximity: -1.0000e+00 - val_loss: 832569999360.0000 - val_mean_squared_error: 832569999360.0000 - val_mean_absolute_error: 43678.0781 - val_mean_absolute_percentage_error: 6.1438 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00093: val_loss improved from 832771784704.00000 to 832569999360.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 94/200
+ - 1s - loss: 935899904.0000 - mean_squared_error: 935899904.0000 - mean_absolute_error: 23897.9355 - mean_absolute_percentage_error: 3.7843 - cosine_proximity: -1.0000e+00 - val_loss: 822053765120.0000 - val_mean_squared_error: 822053765120.0000 - val_mean_absolute_error: 35325.4648 - val_mean_absolute_percentage_error: 4.5891 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00094: val_loss improved from 832569999360.00000 to 822053765120.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 95/200
+ - 1s - loss: 1199754880.0000 - mean_squared_error: 1199754880.0000 - mean_absolute_error: 29157.1230 - mean_absolute_percentage_error: 4.2964 - cosine_proximity: -1.0000e+00 - val_loss: 816967712768.0000 - val_mean_squared_error: 816967712768.0000 - val_mean_absolute_error: 47770.3906 - val_mean_absolute_percentage_error: 6.7637 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00095: val_loss improved from 822053765120.00000 to 816967712768.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 96/200
+ - 1s - loss: 1130944640.0000 - mean_squared_error: 1130944640.0000 - mean_absolute_error: 27459.9336 - mean_absolute_percentage_error: 4.3264 - cosine_proximity: -1.0000e+00 - val_loss: 797780082688.0000 - val_mean_squared_error: 797780082688.0000 - val_mean_absolute_error: 28824.7285 - val_mean_absolute_percentage_error: 3.6654 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00096: val_loss improved from 816967712768.00000 to 797780082688.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 97/200
+ - 1s - loss: 634158912.0000 - mean_squared_error: 634158912.0000 - mean_absolute_error: 18628.8496 - mean_absolute_percentage_error: 2.7132 - cosine_proximity: -1.0000e+00 - val_loss: 783230369792.0000 - val_mean_squared_error: 783230369792.0000 - val_mean_absolute_error: 27669.2305 - val_mean_absolute_percentage_error: 3.5729 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00097: val_loss improved from 797780082688.00000 to 783230369792.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 98/200
+ - 1s - loss: 409912896.0000 - mean_squared_error: 409912896.0000 - mean_absolute_error: 12783.9814 - mean_absolute_percentage_error: 1.8726 - cosine_proximity: -1.0000e+00 - val_loss: 771502768128.0000 - val_mean_squared_error: 771502768128.0000 - val_mean_absolute_error: 37915.7656 - val_mean_absolute_percentage_error: 5.2438 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00098: val_loss improved from 783230369792.00000 to 771502768128.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 99/200
+ - 1s - loss: 695577536.0000 - mean_squared_error: 695577536.0000 - mean_absolute_error: 19332.0742 - mean_absolute_percentage_error: 3.0308 - cosine_proximity: -1.0000e+00 - val_loss: 756613120000.0000 - val_mean_squared_error: 756613120000.0000 - val_mean_absolute_error: 31109.5742 - val_mean_absolute_percentage_error: 4.0122 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00099: val_loss improved from 771502768128.00000 to 756613120000.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 100/200
+ - 1s - loss: 882294976.0000 - mean_squared_error: 882294976.0000 - mean_absolute_error: 24187.4297 - mean_absolute_percentage_error: 3.5701 - cosine_proximity: -1.0000e+00 - val_loss: 751565537280.0000 - val_mean_squared_error: 751565537280.0000 - val_mean_absolute_error: 36609.4727 - val_mean_absolute_percentage_error: 5.0419 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00100: val_loss improved from 756613120000.00000 to 751565537280.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 101/200
+ - 1s - loss: 613290368.0000 - mean_squared_error: 613290368.0000 - mean_absolute_error: 17699.0059 - mean_absolute_percentage_error: 2.7616 - cosine_proximity: -1.0000e+00 - val_loss: 741545476096.0000 - val_mean_squared_error: 741545476096.0000 - val_mean_absolute_error: 28218.2812 - val_mean_absolute_percentage_error: 3.6874 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00101: val_loss improved from 751565537280.00000 to 741545476096.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 102/200
+ - 1s - loss: 370787136.0000 - mean_squared_error: 370787136.0000 - mean_absolute_error: 12229.7285 - mean_absolute_percentage_error: 1.8024 - cosine_proximity: -1.0000e+00 - val_loss: 732280389632.0000 - val_mean_squared_error: 732280389632.0000 - val_mean_absolute_error: 28166.3926 - val_mean_absolute_percentage_error: 3.6117 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00102: val_loss improved from 741545476096.00000 to 732280389632.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 103/200
+ - 1s - loss: 537140288.0000 - mean_squared_error: 537140288.0000 - mean_absolute_error: 17285.7070 - mean_absolute_percentage_error: 2.5288 - cosine_proximity: -1.0000e+00 - val_loss: 729438552064.0000 - val_mean_squared_error: 729438552064.0000 - val_mean_absolute_error: 39682.8086 - val_mean_absolute_percentage_error: 5.5279 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00103: val_loss improved from 732280389632.00000 to 729438552064.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 104/200
+ - 1s - loss: 695000384.0000 - mean_squared_error: 695000384.0000 - mean_absolute_error: 20158.4102 - mean_absolute_percentage_error: 3.1428 - cosine_proximity: -1.0000e+00 - val_loss: 721731125248.0000 - val_mean_squared_error: 721731125248.0000 - val_mean_absolute_error: 28797.7500 - val_mean_absolute_percentage_error: 3.7029 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00104: val_loss improved from 729438552064.00000 to 721731125248.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 105/200
+ - 1s - loss: 541880704.0000 - mean_squared_error: 541880704.0000 - mean_absolute_error: 17070.0566 - mean_absolute_percentage_error: 2.4754 - cosine_proximity: -1.0000e+00 - val_loss: 722237390848.0000 - val_mean_squared_error: 722237390848.0000 - val_mean_absolute_error: 31158.5840 - val_mean_absolute_percentage_error: 4.1553 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00105: val_loss did not improve from 721731125248.00000
+Epoch 106/200
+ - 1s - loss: 374517760.0000 - mean_squared_error: 374517760.0000 - mean_absolute_error: 12444.7393 - mean_absolute_percentage_error: 1.8453 - cosine_proximity: -1.0000e+00 - val_loss: 709085560832.0000 - val_mean_squared_error: 709085560832.0000 - val_mean_absolute_error: 36485.5117 - val_mean_absolute_percentage_error: 4.7218 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00106: val_loss improved from 721731125248.00000 to 709085560832.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 107/200
+ - 1s - loss: 1017031936.0000 - mean_squared_error: 1017031936.0000 - mean_absolute_error: 22649.0625 - mean_absolute_percentage_error: 3.0668 - cosine_proximity: -1.0000e+00 - val_loss: 705474789376.0000 - val_mean_squared_error: 705474789376.0000 - val_mean_absolute_error: 70981.5156 - val_mean_absolute_percentage_error: 10.2823 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00107: val_loss improved from 709085560832.00000 to 705474789376.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 108/200
+ - 1s - loss: 3378753280.0000 - mean_squared_error: 3378753280.0000 - mean_absolute_error: 54671.3008 - mean_absolute_percentage_error: 8.4526 - cosine_proximity: -1.0000e+00 - val_loss: 685890797568.0000 - val_mean_squared_error: 685890797568.0000 - val_mean_absolute_error: 70332.2500 - val_mean_absolute_percentage_error: 10.0134 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00108: val_loss improved from 705474789376.00000 to 685890797568.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 109/200
+ - 1s - loss: 4965824512.0000 - mean_squared_error: 4965824512.0000 - mean_absolute_error: 68105.0078 - mean_absolute_percentage_error: 10.3128 - cosine_proximity: -1.0000e+00 - val_loss: 689794514944.0000 - val_mean_squared_error: 689794514944.0000 - val_mean_absolute_error: 34779.9180 - val_mean_absolute_percentage_error: 4.7664 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00109: val_loss did not improve from 685890797568.00000
+Epoch 110/200
+ - 1s - loss: 555025536.0000 - mean_squared_error: 555025536.0000 - mean_absolute_error: 15906.9551 - mean_absolute_percentage_error: 2.4562 - cosine_proximity: -1.0000e+00 - val_loss: 700516859904.0000 - val_mean_squared_error: 700516859904.0000 - val_mean_absolute_error: 67863.2031 - val_mean_absolute_percentage_error: 9.8179 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00110: val_loss did not improve from 685890797568.00000
+Epoch 111/200
+ - 1s - loss: 3054783488.0000 - mean_squared_error: 3054783488.0000 - mean_absolute_error: 51355.7930 - mean_absolute_percentage_error: 7.9512 - cosine_proximity: -1.0000e+00 - val_loss: 692895350784.0000 - val_mean_squared_error: 692895350784.0000 - val_mean_absolute_error: 45685.8047 - val_mean_absolute_percentage_error: 6.2447 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00111: val_loss did not improve from 685890797568.00000
+Epoch 112/200
+ - 1s - loss: 2330304768.0000 - mean_squared_error: 2330304768.0000 - mean_absolute_error: 44201.5977 - mean_absolute_percentage_error: 6.6477 - cosine_proximity: -1.0000e+00 - val_loss: 694275211264.0000 - val_mean_squared_error: 694275211264.0000 - val_mean_absolute_error: 30688.2031 - val_mean_absolute_percentage_error: 3.9787 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00112: val_loss did not improve from 685890797568.00000
+Epoch 113/200
+ - 1s - loss: 832025152.0000 - mean_squared_error: 832025152.0000 - mean_absolute_error: 22470.9473 - mean_absolute_percentage_error: 3.3130 - cosine_proximity: -1.0000e+00 - val_loss: 696774164480.0000 - val_mean_squared_error: 696774164480.0000 - val_mean_absolute_error: 68540.3359 - val_mean_absolute_percentage_error: 9.9435 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00113: val_loss did not improve from 685890797568.00000
+Epoch 114/200
+ - 1s - loss: 2900758016.0000 - mean_squared_error: 2900758016.0000 - mean_absolute_error: 49778.5586 - mean_absolute_percentage_error: 7.7246 - cosine_proximity: -1.0000e+00 - val_loss: 673595850752.0000 - val_mean_squared_error: 673595850752.0000 - val_mean_absolute_error: 26091.8262 - val_mean_absolute_percentage_error: 3.3535 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00114: val_loss improved from 685890797568.00000 to 673595850752.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 115/200
+ - 1s - loss: 466095200.0000 - mean_squared_error: 466095200.0000 - mean_absolute_error: 13047.6328 - mean_absolute_percentage_error: 1.8972 - cosine_proximity: -1.0000e+00 - val_loss: 656322199552.0000 - val_mean_squared_error: 656322199552.0000 - val_mean_absolute_error: 45681.4062 - val_mean_absolute_percentage_error: 6.2412 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00115: val_loss improved from 673595850752.00000 to 656322199552.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 116/200
+ - 1s - loss: 2238285568.0000 - mean_squared_error: 2238285568.0000 - mean_absolute_error: 42925.3516 - mean_absolute_percentage_error: 6.4198 - cosine_proximity: -1.0000e+00 - val_loss: 651899437056.0000 - val_mean_squared_error: 651899437056.0000 - val_mean_absolute_error: 40828.8281 - val_mean_absolute_percentage_error: 5.7646 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00116: val_loss improved from 656322199552.00000 to 651899437056.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 117/200
+ - 1s - loss: 942427904.0000 - mean_squared_error: 942427904.0000 - mean_absolute_error: 23265.1777 - mean_absolute_percentage_error: 3.6706 - cosine_proximity: -1.0000e+00 - val_loss: 646510215168.0000 - val_mean_squared_error: 646510215168.0000 - val_mean_absolute_error: 46868.7617 - val_mean_absolute_percentage_error: 6.6995 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00117: val_loss improved from 651899437056.00000 to 646510215168.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 118/200
+ - 1s - loss: 1342617472.0000 - mean_squared_error: 1342617472.0000 - mean_absolute_error: 30134.4297 - mean_absolute_percentage_error: 4.7488 - cosine_proximity: -1.0000e+00 - val_loss: 635368177664.0000 - val_mean_squared_error: 635368177664.0000 - val_mean_absolute_error: 34474.5000 - val_mean_absolute_percentage_error: 4.5333 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00118: val_loss improved from 646510215168.00000 to 635368177664.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 119/200
+ - 1s - loss: 1352906624.0000 - mean_squared_error: 1352906624.0000 - mean_absolute_error: 30811.7852 - mean_absolute_percentage_error: 4.5474 - cosine_proximity: -1.0000e+00 - val_loss: 632443699200.0000 - val_mean_squared_error: 632443699200.0000 - val_mean_absolute_error: 27798.5664 - val_mean_absolute_percentage_error: 3.5563 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00119: val_loss improved from 635368177664.00000 to 632443699200.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 120/200
+ - 1s - loss: 745415936.0000 - mean_squared_error: 745415936.0000 - mean_absolute_error: 19464.2383 - mean_absolute_percentage_error: 2.8167 - cosine_proximity: -1.0000e+00 - val_loss: 632105467904.0000 - val_mean_squared_error: 632105467904.0000 - val_mean_absolute_error: 50940.4336 - val_mean_absolute_percentage_error: 7.3473 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00120: val_loss improved from 632443699200.00000 to 632105467904.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 121/200
+ - 1s - loss: 1494667136.0000 - mean_squared_error: 1494667136.0000 - mean_absolute_error: 32382.5312 - mean_absolute_percentage_error: 5.1101 - cosine_proximity: -1.0000e+00 - val_loss: 616444854272.0000 - val_mean_squared_error: 616444854272.0000 - val_mean_absolute_error: 29683.7832 - val_mean_absolute_percentage_error: 4.0204 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00121: val_loss improved from 632105467904.00000 to 616444854272.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 122/200
+ - 1s - loss: 505544896.0000 - mean_squared_error: 505544896.0000 - mean_absolute_error: 13121.9707 - mean_absolute_percentage_error: 1.9955 - cosine_proximity: -1.0000e+00 - val_loss: 599168253952.0000 - val_mean_squared_error: 599168253952.0000 - val_mean_absolute_error: 34424.3086 - val_mean_absolute_percentage_error: 4.5204 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00122: val_loss improved from 616444854272.00000 to 599168253952.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 123/200
+ - 1s - loss: 1393274880.0000 - mean_squared_error: 1393274880.0000 - mean_absolute_error: 31204.2988 - mean_absolute_percentage_error: 4.5833 - cosine_proximity: -1.0000e+00 - val_loss: 589406011392.0000 - val_mean_squared_error: 589406011392.0000 - val_mean_absolute_error: 27517.8809 - val_mean_absolute_percentage_error: 3.6914 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00123: val_loss improved from 599168253952.00000 to 589406011392.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 124/200
+ - 1s - loss: 488547840.0000 - mean_squared_error: 488547840.0000 - mean_absolute_error: 12731.8672 - mean_absolute_percentage_error: 1.9171 - cosine_proximity: -1.0000e+00 - val_loss: 582257147904.0000 - val_mean_squared_error: 582257147904.0000 - val_mean_absolute_error: 43211.2539 - val_mean_absolute_percentage_error: 6.2059 - val_cosine_proximity: -1.0000e+00
+
+Epoch 00124: val_loss improved from 589406011392.00000 to 582257147904.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 125/200
+ - 1s - loss: 1173732352.0000 - mean_squared_error: 1173732352.0000 - mean_absolute_error: 27169.5215 - mean_absolute_percentage_error: 4.3242 - cosine_proximity: -1.0000e+00 - val_loss: 569714409472.0000 - val_mean_squared_error: 569714409472.0000 - val_mean_absolute_error: 25713.1270 - val_mean_absolute_percentage_error: 3.3091 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00125: val_loss improved from 582257147904.00000 to 569714409472.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 126/200
+ - 1s - loss: 570944960.0000 - mean_squared_error: 570944960.0000 - mean_absolute_error: 15107.4414 - mean_absolute_percentage_error: 2.1561 - cosine_proximity: -1.0000e+00 - val_loss: 562830770176.0000 - val_mean_squared_error: 562830770176.0000 - val_mean_absolute_error: 28685.9688 - val_mean_absolute_percentage_error: 3.6843 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00126: val_loss improved from 569714409472.00000 to 562830770176.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 127/200
+ - 1s - loss: 926773376.0000 - mean_squared_error: 926773376.0000 - mean_absolute_error: 23104.6094 - mean_absolute_percentage_error: 3.3367 - cosine_proximity: -1.0000e+00 - val_loss: 561011884032.0000 - val_mean_squared_error: 561011884032.0000 - val_mean_absolute_error: 34414.7773 - val_mean_absolute_percentage_error: 4.8409 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00127: val_loss improved from 562830770176.00000 to 561011884032.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 128/200
+ - 1s - loss: 670859008.0000 - mean_squared_error: 670859008.0000 - mean_absolute_error: 17530.3457 - mean_absolute_percentage_error: 2.7744 - cosine_proximity: -1.0000e+00 - val_loss: 553497001984.0000 - val_mean_squared_error: 553497001984.0000 - val_mean_absolute_error: 35799.7383 - val_mean_absolute_percentage_error: 5.0665 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00128: val_loss improved from 561011884032.00000 to 553497001984.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 129/200
+ - 1s - loss: 717372288.0000 - mean_squared_error: 717372288.0000 - mean_absolute_error: 18664.6309 - mean_absolute_percentage_error: 2.9638 - cosine_proximity: -1.0000e+00 - val_loss: 539600846848.0000 - val_mean_squared_error: 539600846848.0000 - val_mean_absolute_error: 26776.1562 - val_mean_absolute_percentage_error: 3.4269 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00129: val_loss improved from 553497001984.00000 to 539600846848.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 130/200
+ - 1s - loss: 740055488.0000 - mean_squared_error: 740055488.0000 - mean_absolute_error: 19294.7715 - mean_absolute_percentage_error: 2.7592 - cosine_proximity: -1.0000e+00 - val_loss: 529111810048.0000 - val_mean_squared_error: 529111810048.0000 - val_mean_absolute_error: 24981.9492 - val_mean_absolute_percentage_error: 3.2081 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00130: val_loss improved from 539600846848.00000 to 529111810048.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 131/200
+ - 1s - loss: 561902272.0000 - mean_squared_error: 561902272.0000 - mean_absolute_error: 15146.3691 - mean_absolute_percentage_error: 2.1543 - cosine_proximity: -1.0000e+00 - val_loss: 521897443328.0000 - val_mean_squared_error: 521897443328.0000 - val_mean_absolute_error: 35424.8008 - val_mean_absolute_percentage_error: 5.0344 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00131: val_loss improved from 529111810048.00000 to 521897443328.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 132/200
+ - 1s - loss: 761573504.0000 - mean_squared_error: 761573504.0000 - mean_absolute_error: 19823.8965 - mean_absolute_percentage_error: 3.1619 - cosine_proximity: -1.0000e+00 - val_loss: 511148589056.0000 - val_mean_squared_error: 511148589056.0000 - val_mean_absolute_error: 27290.6445 - val_mean_absolute_percentage_error: 3.7117 - val_cosine_proximity: -9.9965e-01
+
+Epoch 00132: val_loss improved from 521897443328.00000 to 511148589056.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 133/200
+ - 1s - loss: 475867904.0000 - mean_squared_error: 475867904.0000 - mean_absolute_error: 13142.6328 - mean_absolute_percentage_error: 1.9992 - cosine_proximity: -1.0000e+00 - val_loss: 501762457600.0000 - val_mean_squared_error: 501762457600.0000 - val_mean_absolute_error: 26650.4102 - val_mean_absolute_percentage_error: 3.4266 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00133: val_loss improved from 511148589056.00000 to 501762457600.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 134/200
+ - 1s - loss: 734953984.0000 - mean_squared_error: 734953984.0000 - mean_absolute_error: 19615.1875 - mean_absolute_percentage_error: 2.8051 - cosine_proximity: -1.0000e+00 - val_loss: 497515724800.0000 - val_mean_squared_error: 497515724800.0000 - val_mean_absolute_error: 25558.4121 - val_mean_absolute_percentage_error: 3.4100 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00134: val_loss improved from 501762457600.00000 to 497515724800.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 135/200
+ - 1s - loss: 442100704.0000 - mean_squared_error: 442100704.0000 - mean_absolute_error: 12368.5234 - mean_absolute_percentage_error: 1.8255 - cosine_proximity: -1.0000e+00 - val_loss: 493375750144.0000 - val_mean_squared_error: 493375750144.0000 - val_mean_absolute_error: 34292.6992 - val_mean_absolute_percentage_error: 4.8660 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00135: val_loss improved from 497515724800.00000 to 493375750144.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 136/200
+ - 1s - loss: 668548800.0000 - mean_squared_error: 668548800.0000 - mean_absolute_error: 18234.7637 - mean_absolute_percentage_error: 2.8975 - cosine_proximity: -1.0000e+00 - val_loss: 483635920896.0000 - val_mean_squared_error: 483635920896.0000 - val_mean_absolute_error: 24899.5742 - val_mean_absolute_percentage_error: 3.2705 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00136: val_loss improved from 493375750144.00000 to 483635920896.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 137/200
+ - 1s - loss: 450476480.0000 - mean_squared_error: 450476480.0000 - mean_absolute_error: 12843.4951 - mean_absolute_percentage_error: 1.8470 - cosine_proximity: -1.0000e+00 - val_loss: 474240090112.0000 - val_mean_squared_error: 474240090112.0000 - val_mean_absolute_error: 24893.0527 - val_mean_absolute_percentage_error: 3.2024 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00137: val_loss improved from 483635920896.00000 to 474240090112.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 138/200
+ - 1s - loss: 581146240.0000 - mean_squared_error: 581146240.0000 - mean_absolute_error: 16444.9316 - mean_absolute_percentage_error: 2.3415 - cosine_proximity: -1.0000e+00 - val_loss: 467230294016.0000 - val_mean_squared_error: 467230294016.0000 - val_mean_absolute_error: 28378.2539 - val_mean_absolute_percentage_error: 3.9224 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00138: val_loss improved from 474240090112.00000 to 467230294016.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 139/200
+ - 1s - loss: 475536384.0000 - mean_squared_error: 475536384.0000 - mean_absolute_error: 13863.8115 - mean_absolute_percentage_error: 2.1459 - cosine_proximity: -1.0000e+00 - val_loss: 458564534272.0000 - val_mean_squared_error: 458564534272.0000 - val_mean_absolute_error: 28862.4551 - val_mean_absolute_percentage_error: 4.0107 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00139: val_loss improved from 467230294016.00000 to 458564534272.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 140/200
+ - 1s - loss: 493022784.0000 - mean_squared_error: 493022784.0000 - mean_absolute_error: 14469.6416 - mean_absolute_percentage_error: 2.2555 - cosine_proximity: -1.0000e+00 - val_loss: 448829292544.0000 - val_mean_squared_error: 448829292544.0000 - val_mean_absolute_error: 24202.0781 - val_mean_absolute_percentage_error: 3.1381 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00140: val_loss improved from 458564534272.00000 to 448829292544.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 141/200
+ - 1s - loss: 498919808.0000 - mean_squared_error: 498919808.0000 - mean_absolute_error: 14806.8311 - mean_absolute_percentage_error: 2.1105 - cosine_proximity: -1.0000e+00 - val_loss: 442961330176.0000 - val_mean_squared_error: 442961330176.0000 - val_mean_absolute_error: 23740.0488 - val_mean_absolute_percentage_error: 3.1107 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00141: val_loss improved from 448829292544.00000 to 442961330176.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 142/200
+ - 1s - loss: 423912128.0000 - mean_squared_error: 423912128.0000 - mean_absolute_error: 12850.4854 - mean_absolute_percentage_error: 1.8469 - cosine_proximity: -1.0000e+00 - val_loss: 439304290304.0000 - val_mean_squared_error: 439304290304.0000 - val_mean_absolute_error: 29696.4277 - val_mean_absolute_percentage_error: 4.1567 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00142: val_loss improved from 442961330176.00000 to 439304290304.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 143/200
+ - 1s - loss: 500104576.0000 - mean_squared_error: 500104576.0000 - mean_absolute_error: 14985.4482 - mean_absolute_percentage_error: 2.3473 - cosine_proximity: -1.0000e+00 - val_loss: 432857251840.0000 - val_mean_squared_error: 432857251840.0000 - val_mean_absolute_error: 25063.7031 - val_mean_absolute_percentage_error: 3.3733 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00143: val_loss improved from 439304290304.00000 to 432857251840.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 144/200
+ - 1s - loss: 386135328.0000 - mean_squared_error: 386135328.0000 - mean_absolute_error: 11976.1533 - mean_absolute_percentage_error: 1.7757 - cosine_proximity: -1.0000e+00 - val_loss: 426202398720.0000 - val_mean_squared_error: 426202398720.0000 - val_mean_absolute_error: 23917.7676 - val_mean_absolute_percentage_error: 3.1029 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00144: val_loss improved from 432857251840.00000 to 426202398720.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 145/200
+ - 1s - loss: 474003808.0000 - mean_squared_error: 474003808.0000 - mean_absolute_error: 14681.8486 - mean_absolute_percentage_error: 2.0975 - cosine_proximity: -1.0000e+00 - val_loss: 422068584448.0000 - val_mean_squared_error: 422068584448.0000 - val_mean_absolute_error: 25771.6719 - val_mean_absolute_percentage_error: 3.4952 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00145: val_loss improved from 426202398720.00000 to 422068584448.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 146/200
+ - 1s - loss: 377859488.0000 - mean_squared_error: 377859488.0000 - mean_absolute_error: 12099.5312 - mean_absolute_percentage_error: 1.8108 - cosine_proximity: -1.0000e+00 - val_loss: 418706358272.0000 - val_mean_squared_error: 418706358272.0000 - val_mean_absolute_error: 28542.3711 - val_mean_absolute_percentage_error: 3.9568 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00146: val_loss improved from 422068584448.00000 to 418706358272.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 147/200
+ - 1s - loss: 429752064.0000 - mean_squared_error: 429752064.0000 - mean_absolute_error: 13688.6621 - mean_absolute_percentage_error: 2.1118 - cosine_proximity: -1.0000e+00 - val_loss: 415978061824.0000 - val_mean_squared_error: 415978061824.0000 - val_mean_absolute_error: 24457.8594 - val_mean_absolute_percentage_error: 3.2181 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00147: val_loss improved from 418706358272.00000 to 415978061824.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 148/200
+ - 1s - loss: 394154656.0000 - mean_squared_error: 394154656.0000 - mean_absolute_error: 12858.1572 - mean_absolute_percentage_error: 1.8462 - cosine_proximity: -1.0000e+00 - val_loss: 417409040384.0000 - val_mean_squared_error: 417409040384.0000 - val_mean_absolute_error: 24932.0254 - val_mean_absolute_percentage_error: 3.3056 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00148: val_loss did not improve from 415978061824.00000
+Epoch 149/200
+ - 1s - loss: 384286688.0000 - mean_squared_error: 384286688.0000 - mean_absolute_error: 12703.9785 - mean_absolute_percentage_error: 1.8293 - cosine_proximity: -1.0000e+00 - val_loss: 420342726656.0000 - val_mean_squared_error: 420342726656.0000 - val_mean_absolute_error: 29546.2539 - val_mean_absolute_percentage_error: 4.1179 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00149: val_loss did not improve from 415978061824.00000
+Epoch 150/200
+ - 1s - loss: 409952512.0000 - mean_squared_error: 409952512.0000 - mean_absolute_error: 13359.2734 - mean_absolute_percentage_error: 2.0514 - cosine_proximity: -1.0000e+00 - val_loss: 417722302464.0000 - val_mean_squared_error: 417722302464.0000 - val_mean_absolute_error: 26416.9668 - val_mean_absolute_percentage_error: 3.5906 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00150: val_loss did not improve from 415978061824.00000
+Epoch 151/200
+ - 1s - loss: 354857600.0000 - mean_squared_error: 354857600.0000 - mean_absolute_error: 11858.2256 - mean_absolute_percentage_error: 1.7592 - cosine_proximity: -1.0000e+00 - val_loss: 411928264704.0000 - val_mean_squared_error: 411928264704.0000 - val_mean_absolute_error: 23693.0527 - val_mean_absolute_percentage_error: 3.0995 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00151: val_loss improved from 415978061824.00000 to 411928264704.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 152/200
+ - 1s - loss: 393897920.0000 - mean_squared_error: 393897920.0000 - mean_absolute_error: 13173.5518 - mean_absolute_percentage_error: 1.8945 - cosine_proximity: -1.0000e+00 - val_loss: 407797858304.0000 - val_mean_squared_error: 407797858304.0000 - val_mean_absolute_error: 24709.4512 - val_mean_absolute_percentage_error: 3.3258 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00152: val_loss improved from 411928264704.00000 to 407797858304.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 153/200
+ - 1s - loss: 346220480.0000 - mean_squared_error: 346220480.0000 - mean_absolute_error: 11614.8760 - mean_absolute_percentage_error: 1.7301 - cosine_proximity: -1.0000e+00 - val_loss: 405231763456.0000 - val_mean_squared_error: 405231763456.0000 - val_mean_absolute_error: 26631.3594 - val_mean_absolute_percentage_error: 3.6470 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00153: val_loss improved from 407797858304.00000 to 405231763456.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 154/200
+ - 1s - loss: 372460384.0000 - mean_squared_error: 372460384.0000 - mean_absolute_error: 12375.9854 - mean_absolute_percentage_error: 1.8816 - cosine_proximity: -1.0000e+00 - val_loss: 403986382848.0000 - val_mean_squared_error: 403986382848.0000 - val_mean_absolute_error: 23702.0801 - val_mean_absolute_percentage_error: 3.1293 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00154: val_loss improved from 405231763456.00000 to 403986382848.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 155/200
+ - 1s - loss: 358487360.0000 - mean_squared_error: 358487360.0000 - mean_absolute_error: 12216.0127 - mean_absolute_percentage_error: 1.7715 - cosine_proximity: -1.0000e+00 - val_loss: 405546500096.0000 - val_mean_squared_error: 405546500096.0000 - val_mean_absolute_error: 23079.2129 - val_mean_absolute_percentage_error: 3.0456 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00155: val_loss did not improve from 403986382848.00000
+Epoch 156/200
+ - 1s - loss: 340230720.0000 - mean_squared_error: 340230720.0000 - mean_absolute_error: 11598.6699 - mean_absolute_percentage_error: 1.6912 - cosine_proximity: -1.0000e+00 - val_loss: 407087546368.0000 - val_mean_squared_error: 407087546368.0000 - val_mean_absolute_error: 26385.8008 - val_mean_absolute_percentage_error: 3.6055 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00156: val_loss did not improve from 403986382848.00000
+Epoch 157/200
+ - 1s - loss: 361741440.0000 - mean_squared_error: 361741440.0000 - mean_absolute_error: 12052.1113 - mean_absolute_percentage_error: 1.8273 - cosine_proximity: -1.0000e+00 - val_loss: 404128432128.0000 - val_mean_squared_error: 404128432128.0000 - val_mean_absolute_error: 24248.3965 - val_mean_absolute_percentage_error: 3.2395 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00157: val_loss did not improve from 403986382848.00000
+Epoch 158/200
+ - 1s - loss: 331297728.0000 - mean_squared_error: 331297728.0000 - mean_absolute_error: 11329.1025 - mean_absolute_percentage_error: 1.6643 - cosine_proximity: -1.0000e+00 - val_loss: 397786906624.0000 - val_mean_squared_error: 397786906624.0000 - val_mean_absolute_error: 22986.8008 - val_mean_absolute_percentage_error: 3.0201 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00158: val_loss improved from 403986382848.00000 to 397786906624.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 159/200
+ - 1s - loss: 348298272.0000 - mean_squared_error: 348298272.0000 - mean_absolute_error: 12031.4023 - mean_absolute_percentage_error: 1.7469 - cosine_proximity: -1.0000e+00 - val_loss: 390415319040.0000 - val_mean_squared_error: 390415319040.0000 - val_mean_absolute_error: 24296.2832 - val_mean_absolute_percentage_error: 3.2747 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00159: val_loss improved from 397786906624.00000 to 390415319040.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 160/200
+ - 1s - loss: 331222784.0000 - mean_squared_error: 331222784.0000 - mean_absolute_error: 11263.3770 - mean_absolute_percentage_error: 1.6854 - cosine_proximity: -1.0000e+00 - val_loss: 382119772160.0000 - val_mean_squared_error: 382119772160.0000 - val_mean_absolute_error: 24360.0742 - val_mean_absolute_percentage_error: 3.2866 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00160: val_loss improved from 390415319040.00000 to 382119772160.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 161/200
+ - 1s - loss: 326917600.0000 - mean_squared_error: 326917600.0000 - mean_absolute_error: 11231.3359 - mean_absolute_percentage_error: 1.6764 - cosine_proximity: -1.0000e+00 - val_loss: 374623535104.0000 - val_mean_squared_error: 374623535104.0000 - val_mean_absolute_error: 22995.6738 - val_mean_absolute_percentage_error: 3.0395 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00161: val_loss improved from 382119772160.00000 to 374623535104.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 162/200
+ - 1s - loss: 335989280.0000 - mean_squared_error: 335989280.0000 - mean_absolute_error: 11857.1250 - mean_absolute_percentage_error: 1.7282 - cosine_proximity: -1.0000e+00 - val_loss: 369720557568.0000 - val_mean_squared_error: 369720557568.0000 - val_mean_absolute_error: 23173.7207 - val_mean_absolute_percentage_error: 3.0943 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00162: val_loss improved from 374623535104.00000 to 369720557568.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 163/200
+ - 1s - loss: 313763104.0000 - mean_squared_error: 313763104.0000 - mean_absolute_error: 10993.0537 - mean_absolute_percentage_error: 1.6233 - cosine_proximity: -1.0000e+00 - val_loss: 365140082688.0000 - val_mean_squared_error: 365140082688.0000 - val_mean_absolute_error: 24452.0410 - val_mean_absolute_percentage_error: 3.3097 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00163: val_loss improved from 369720557568.00000 to 365140082688.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 164/200
+ - 1s - loss: 323865856.0000 - mean_squared_error: 323865856.0000 - mean_absolute_error: 11195.7539 - mean_absolute_percentage_error: 1.6773 - cosine_proximity: -1.0000e+00 - val_loss: 358400589824.0000 - val_mean_squared_error: 358400589824.0000 - val_mean_absolute_error: 22847.9277 - val_mean_absolute_percentage_error: 3.0326 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00164: val_loss improved from 365140082688.00000 to 358400589824.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 165/200
+ - 1s - loss: 315110112.0000 - mean_squared_error: 315110112.0000 - mean_absolute_error: 11306.4170 - mean_absolute_percentage_error: 1.6532 - cosine_proximity: -1.0000e+00 - val_loss: 350525259776.0000 - val_mean_squared_error: 350525259776.0000 - val_mean_absolute_error: 22942.2227 - val_mean_absolute_percentage_error: 3.0548 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00165: val_loss improved from 358400589824.00000 to 350525259776.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 166/200
+ - 1s - loss: 309167776.0000 - mean_squared_error: 309167776.0000 - mean_absolute_error: 11132.4346 - mean_absolute_percentage_error: 1.6308 - cosine_proximity: -1.0000e+00 - val_loss: 342017900544.0000 - val_mean_squared_error: 342017900544.0000 - val_mean_absolute_error: 24221.9062 - val_mean_absolute_percentage_error: 3.2812 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00166: val_loss improved from 350525259776.00000 to 342017900544.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 167/200
+ - 1s - loss: 315050432.0000 - mean_squared_error: 315050432.0000 - mean_absolute_error: 11083.5596 - mean_absolute_percentage_error: 1.6560 - cosine_proximity: -1.0000e+00 - val_loss: 332599525376.0000 - val_mean_squared_error: 332599525376.0000 - val_mean_absolute_error: 22395.5625 - val_mean_absolute_percentage_error: 2.9814 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00167: val_loss improved from 342017900544.00000 to 332599525376.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 168/200
+ - 1s - loss: 301619200.0000 - mean_squared_error: 301619200.0000 - mean_absolute_error: 10890.5859 - mean_absolute_percentage_error: 1.6011 - cosine_proximity: -1.0000e+00 - val_loss: 324391272448.0000 - val_mean_squared_error: 324391272448.0000 - val_mean_absolute_error: 21902.4512 - val_mean_absolute_percentage_error: 2.9015 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00168: val_loss improved from 332599525376.00000 to 324391272448.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 169/200
+ - 1s - loss: 306227552.0000 - mean_squared_error: 306227552.0000 - mean_absolute_error: 11159.6621 - mean_absolute_percentage_error: 1.6350 - cosine_proximity: -1.0000e+00 - val_loss: 317787701248.0000 - val_mean_squared_error: 317787701248.0000 - val_mean_absolute_error: 23122.9434 - val_mean_absolute_percentage_error: 3.1188 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00169: val_loss improved from 324391272448.00000 to 317787701248.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 170/200
+ - 1s - loss: 303734720.0000 - mean_squared_error: 303734720.0000 - mean_absolute_error: 10794.0225 - mean_absolute_percentage_error: 1.6064 - cosine_proximity: -1.0000e+00 - val_loss: 310966812672.0000 - val_mean_squared_error: 310966812672.0000 - val_mean_absolute_error: 22495.7812 - val_mean_absolute_percentage_error: 3.0187 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00170: val_loss improved from 317787701248.00000 to 310966812672.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 171/200
+ - 1s - loss: 295932128.0000 - mean_squared_error: 295932128.0000 - mean_absolute_error: 10695.3125 - mean_absolute_percentage_error: 1.5802 - cosine_proximity: -1.0000e+00 - val_loss: 303658860544.0000 - val_mean_squared_error: 303658860544.0000 - val_mean_absolute_error: 21727.7949 - val_mean_absolute_percentage_error: 2.8910 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00171: val_loss improved from 310966812672.00000 to 303658860544.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 172/200
+ - 1s - loss: 301196032.0000 - mean_squared_error: 301196032.0000 - mean_absolute_error: 11101.7617 - mean_absolute_percentage_error: 1.6281 - cosine_proximity: -1.0000e+00 - val_loss: 296188346368.0000 - val_mean_squared_error: 296188346368.0000 - val_mean_absolute_error: 22609.0586 - val_mean_absolute_percentage_error: 3.0489 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00172: val_loss improved from 303658860544.00000 to 296188346368.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 173/200
+ - 1s - loss: 294177728.0000 - mean_squared_error: 294177728.0000 - mean_absolute_error: 10648.1279 - mean_absolute_percentage_error: 1.5775 - cosine_proximity: -1.0000e+00 - val_loss: 287726960640.0000 - val_mean_squared_error: 287726960640.0000 - val_mean_absolute_error: 22243.5273 - val_mean_absolute_percentage_error: 2.9963 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00173: val_loss improved from 296188346368.00000 to 287726960640.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 174/200
+ - 1s - loss: 291819456.0000 - mean_squared_error: 291819456.0000 - mean_absolute_error: 10596.0908 - mean_absolute_percentage_error: 1.5697 - cosine_proximity: -1.0000e+00 - val_loss: 279062151168.0000 - val_mean_squared_error: 279062151168.0000 - val_mean_absolute_error: 21135.6035 - val_mean_absolute_percentage_error: 2.8157 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00174: val_loss improved from 287726960640.00000 to 279062151168.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 175/200
+ - 1s - loss: 293623840.0000 - mean_squared_error: 293623840.0000 - mean_absolute_error: 10934.9912 - mean_absolute_percentage_error: 1.6068 - cosine_proximity: -1.0000e+00 - val_loss: 271662268416.0000 - val_mean_squared_error: 271662268416.0000 - val_mean_absolute_error: 21669.5332 - val_mean_absolute_percentage_error: 2.9142 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00175: val_loss improved from 279062151168.00000 to 271662268416.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 176/200
+ - 1s - loss: 286629504.0000 - mean_squared_error: 286629504.0000 - mean_absolute_error: 10558.9229 - mean_absolute_percentage_error: 1.5612 - cosine_proximity: -1.0000e+00 - val_loss: 264851767296.0000 - val_mean_squared_error: 264851767296.0000 - val_mean_absolute_error: 21919.2168 - val_mean_absolute_percentage_error: 2.9605 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00176: val_loss improved from 271662268416.00000 to 264851767296.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 177/200
+ - 1s - loss: 286415200.0000 - mean_squared_error: 286415200.0000 - mean_absolute_error: 10531.9844 - mean_absolute_percentage_error: 1.5617 - cosine_proximity: -1.0000e+00 - val_loss: 258135588864.0000 - val_mean_squared_error: 258135588864.0000 - val_mean_absolute_error: 21009.7480 - val_mean_absolute_percentage_error: 2.8103 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00177: val_loss improved from 264851767296.00000 to 258135588864.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 178/200
+ - 1s - loss: 285463776.0000 - mean_squared_error: 285463776.0000 - mean_absolute_error: 10790.7871 - mean_absolute_percentage_error: 1.5857 - cosine_proximity: -1.0000e+00 - val_loss: 252103868416.0000 - val_mean_squared_error: 252103868416.0000 - val_mean_absolute_error: 21501.8555 - val_mean_absolute_percentage_error: 2.8978 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00178: val_loss improved from 258135588864.00000 to 252103868416.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 179/200
+ - 1s - loss: 280880832.0000 - mean_squared_error: 280880832.0000 - mean_absolute_error: 10556.4854 - mean_absolute_percentage_error: 1.5562 - cosine_proximity: -1.0000e+00 - val_loss: 245785264128.0000 - val_mean_squared_error: 245785264128.0000 - val_mean_absolute_error: 21873.0410 - val_mean_absolute_percentage_error: 2.9670 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00179: val_loss improved from 252103868416.00000 to 245785264128.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 180/200
+ - 1s - loss: 281686368.0000 - mean_squared_error: 281686368.0000 - mean_absolute_error: 10486.3018 - mean_absolute_percentage_error: 1.5539 - cosine_proximity: -1.0000e+00 - val_loss: 238543585280.0000 - val_mean_squared_error: 238543585280.0000 - val_mean_absolute_error: 20633.6328 - val_mean_absolute_percentage_error: 2.7709 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00180: val_loss improved from 245785264128.00000 to 238543585280.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 181/200
+ - 1s - loss: 279114368.0000 - mean_squared_error: 279114368.0000 - mean_absolute_error: 10636.7949 - mean_absolute_percentage_error: 1.5666 - cosine_proximity: -1.0000e+00 - val_loss: 231597998080.0000 - val_mean_squared_error: 231597998080.0000 - val_mean_absolute_error: 20705.2363 - val_mean_absolute_percentage_error: 2.7917 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00181: val_loss improved from 238543585280.00000 to 231597998080.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 182/200
+ - 1s - loss: 275807648.0000 - mean_squared_error: 275807648.0000 - mean_absolute_error: 10474.3604 - mean_absolute_percentage_error: 1.5465 - cosine_proximity: -1.0000e+00 - val_loss: 225256833024.0000 - val_mean_squared_error: 225256833024.0000 - val_mean_absolute_error: 21190.2617 - val_mean_absolute_percentage_error: 2.8775 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00182: val_loss improved from 231597998080.00000 to 225256833024.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 183/200
+ - 1s - loss: 276758656.0000 - mean_squared_error: 276758656.0000 - mean_absolute_error: 10393.7393 - mean_absolute_percentage_error: 1.5417 - cosine_proximity: -1.0000e+00 - val_loss: 219375370240.0000 - val_mean_squared_error: 219375370240.0000 - val_mean_absolute_error: 20381.6797 - val_mean_absolute_percentage_error: 2.7480 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00183: val_loss improved from 225256833024.00000 to 219375370240.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 184/200
+ - 1s - loss: 273660928.0000 - mean_squared_error: 273660928.0000 - mean_absolute_error: 10527.9873 - mean_absolute_percentage_error: 1.5522 - cosine_proximity: -1.0000e+00 - val_loss: 214463102976.0000 - val_mean_squared_error: 214463102976.0000 - val_mean_absolute_error: 20392.2344 - val_mean_absolute_percentage_error: 2.7531 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00184: val_loss improved from 219375370240.00000 to 214463102976.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 185/200
+ - 1s - loss: 271352992.0000 - mean_squared_error: 271352992.0000 - mean_absolute_error: 10436.6641 - mean_absolute_percentage_error: 1.5390 - cosine_proximity: -1.0000e+00 - val_loss: 209969217536.0000 - val_mean_squared_error: 209969217536.0000 - val_mean_absolute_error: 20990.1465 - val_mean_absolute_percentage_error: 2.8550 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00185: val_loss improved from 214463102976.00000 to 209969217536.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 186/200
+ - 1s - loss: 271642912.0000 - mean_squared_error: 271642912.0000 - mean_absolute_error: 10325.3809 - mean_absolute_percentage_error: 1.5289 - cosine_proximity: -1.0000e+00 - val_loss: 204835127296.0000 - val_mean_squared_error: 204835127296.0000 - val_mean_absolute_error: 20238.7891 - val_mean_absolute_percentage_error: 2.7367 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00186: val_loss improved from 209969217536.00000 to 204835127296.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 187/200
+ - 1s - loss: 268902304.0000 - mean_squared_error: 268902304.0000 - mean_absolute_error: 10428.1152 - mean_absolute_percentage_error: 1.5374 - cosine_proximity: -1.0000e+00 - val_loss: 199487946752.0000 - val_mean_squared_error: 199487946752.0000 - val_mean_absolute_error: 20081.9258 - val_mean_absolute_percentage_error: 2.7176 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00187: val_loss improved from 204835127296.00000 to 199487946752.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 188/200
+ - 1s - loss: 266936976.0000 - mean_squared_error: 266936976.0000 - mean_absolute_error: 10371.0273 - mean_absolute_percentage_error: 1.5301 - cosine_proximity: -1.0000e+00 - val_loss: 194264317952.0000 - val_mean_squared_error: 194264317952.0000 - val_mean_absolute_error: 20469.1230 - val_mean_absolute_percentage_error: 2.7867 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00188: val_loss improved from 199487946752.00000 to 194264317952.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 189/200
+ - 1s - loss: 266683264.0000 - mean_squared_error: 266683264.0000 - mean_absolute_error: 10252.2588 - mean_absolute_percentage_error: 1.5183 - cosine_proximity: -1.0000e+00 - val_loss: 189311008768.0000 - val_mean_squared_error: 189311008768.0000 - val_mean_absolute_error: 19901.3652 - val_mean_absolute_percentage_error: 2.6978 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00189: val_loss improved from 194264317952.00000 to 189311008768.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 190/200
+ - 1s - loss: 264374704.0000 - mean_squared_error: 264374704.0000 - mean_absolute_error: 10354.1475 - mean_absolute_percentage_error: 1.5278 - cosine_proximity: -1.0000e+00 - val_loss: 185320292352.0000 - val_mean_squared_error: 185320292352.0000 - val_mean_absolute_error: 19792.4121 - val_mean_absolute_percentage_error: 2.6847 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00190: val_loss improved from 189311008768.00000 to 185320292352.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 191/200
+ - 1s - loss: 262716544.0000 - mean_squared_error: 262716544.0000 - mean_absolute_error: 10312.4707 - mean_absolute_percentage_error: 1.5221 - cosine_proximity: -1.0000e+00 - val_loss: 181930033152.0000 - val_mean_squared_error: 181930033152.0000 - val_mean_absolute_error: 20169.1914 - val_mean_absolute_percentage_error: 2.7499 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00191: val_loss improved from 185320292352.00000 to 181930033152.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 192/200
+ - 1s - loss: 262220528.0000 - mean_squared_error: 262220528.0000 - mean_absolute_error: 10182.4805 - mean_absolute_percentage_error: 1.5073 - cosine_proximity: -1.0000e+00 - val_loss: 178271059968.0000 - val_mean_squared_error: 178271059968.0000 - val_mean_absolute_error: 19727.4922 - val_mean_absolute_percentage_error: 2.6798 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00192: val_loss improved from 181930033152.00000 to 178271059968.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 193/200
+ - 1s - loss: 260116848.0000 - mean_squared_error: 260116848.0000 - mean_absolute_error: 10270.4463 - mean_absolute_percentage_error: 1.5153 - cosine_proximity: -1.0000e+00 - val_loss: 174487224320.0000 - val_mean_squared_error: 174487224320.0000 - val_mean_absolute_error: 19682.9941 - val_mean_absolute_percentage_error: 2.6756 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00193: val_loss improved from 178271059968.00000 to 174487224320.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 194/200
+ - 1s - loss: 258765376.0000 - mean_squared_error: 258765376.0000 - mean_absolute_error: 10248.6904 - mean_absolute_percentage_error: 1.5117 - cosine_proximity: -1.0000e+00 - val_loss: 170722115584.0000 - val_mean_squared_error: 170722115584.0000 - val_mean_absolute_error: 19928.8066 - val_mean_absolute_percentage_error: 2.7206 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00194: val_loss improved from 174487224320.00000 to 170722115584.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 195/200
+ - 1s - loss: 258067536.0000 - mean_squared_error: 258067536.0000 - mean_absolute_error: 10132.6514 - mean_absolute_percentage_error: 1.4986 - cosine_proximity: -1.0000e+00 - val_loss: 166922043392.0000 - val_mean_squared_error: 166922043392.0000 - val_mean_absolute_error: 19379.8691 - val_mean_absolute_percentage_error: 2.6363 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00195: val_loss improved from 170722115584.00000 to 166922043392.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 196/200
+ - 1s - loss: 256123632.0000 - mean_squared_error: 256123632.0000 - mean_absolute_error: 10199.0312 - mean_absolute_percentage_error: 1.5054 - cosine_proximity: -1.0000e+00 - val_loss: 163580116992.0000 - val_mean_squared_error: 163580116992.0000 - val_mean_absolute_error: 19312.0898 - val_mean_absolute_percentage_error: 2.6299 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00196: val_loss improved from 166922043392.00000 to 163580116992.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 197/200
+ - 1s - loss: 254897104.0000 - mean_squared_error: 254897104.0000 - mean_absolute_error: 10166.6836 - mean_absolute_percentage_error: 1.5013 - cosine_proximity: -1.0000e+00 - val_loss: 160676904960.0000 - val_mean_squared_error: 160676904960.0000 - val_mean_absolute_error: 19559.9199 - val_mean_absolute_percentage_error: 2.6736 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00197: val_loss improved from 163580116992.00000 to 160676904960.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 198/200
+ - 1s - loss: 254076512.0000 - mean_squared_error: 254076512.0000 - mean_absolute_error: 10064.4043 - mean_absolute_percentage_error: 1.4891 - cosine_proximity: -1.0000e+00 - val_loss: 157838163968.0000 - val_mean_squared_error: 157838163968.0000 - val_mean_absolute_error: 19175.5137 - val_mean_absolute_percentage_error: 2.6127 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00198: val_loss improved from 160676904960.00000 to 157838163968.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 199/200
+ - 1s - loss: 252394944.0000 - mean_squared_error: 252394944.0000 - mean_absolute_error: 10138.5361 - mean_absolute_percentage_error: 1.4961 - cosine_proximity: -1.0000e+00 - val_loss: 155232239616.0000 - val_mean_squared_error: 155232239616.0000 - val_mean_absolute_error: 19208.5234 - val_mean_absolute_percentage_error: 2.6207 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00199: val_loss improved from 157838163968.00000 to 155232239616.00000, saving model to 500tys_1mln-PV.hdf5
+Epoch 200/200
+ - 1s - loss: 251094592.0000 - mean_squared_error: 251094592.0000 - mean_absolute_error: 10097.9795 - mean_absolute_percentage_error: 1.4903 - cosine_proximity: -1.0000e+00 - val_loss: 152626462720.0000 - val_mean_squared_error: 152626462720.0000 - val_mean_absolute_error: 19392.5527 - val_mean_absolute_percentage_error: 2.6547 - val_cosine_proximity: -9.9930e-01
+
+Epoch 00200: val_loss improved from 155232239616.00000 to 152626462720.00000, saving model to 500tys_1mln-PV.hdf5
+First prediction: [957441.6]
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_1 (Dense)              (None, 70)                4970      
+_________________________________________________________________
+dense_2 (Dense)              (None, 50)                3550      
+_________________________________________________________________
+dense_3 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 8,571
+Trainable params: 8,571
+Non-trainable params: 0
+_________________________________________________________________
+
+Process finished with exit code 0
