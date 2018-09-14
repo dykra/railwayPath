@@ -56,7 +56,7 @@ class ModelTrainer:
         model.add(Dense(50, kernel_initializer='normal'))
         model.add(Dense(1, kernel_initializer='normal'))
 
-        model.load_weights("init_weights.hdf5")
+        model.load_weights("resources/init_weights.hdf5")
         logger.info('Weights loaded to model.')
         model.compile(loss=mean_squared_error, optimizer='adam',
                       metrics=['mean_squared_error',
@@ -78,7 +78,6 @@ class ModelTrainer:
         """
 
     def save_checkpoint(self, file_path):
-        # file_path = "500tys_1mln-test.hdf5"
         checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
         return callbacks_list
@@ -93,6 +92,7 @@ class ModelTrainer:
         pyplot.show()
         pyplot.plot(history_object.history['cosine_proximity'])
         pyplot.show()
+
 
 """
     0 bucket: lower_limit = 0, upper_limit = 500000
@@ -136,7 +136,7 @@ def main():
     model_trainer = ModelTrainer()
     model = model_trainer.create_model()
 
-    callbacks_list = model_trainer.save_checkpoint("500tys_1mln-test.hdf5")
+    callbacks_list = model_trainer.save_checkpoint("resources/500tys_1mln-test.hdf5")
 
     #  ----------  Model training
     results = model.fit(x.values, y.values, epochs=200, batch_size=len(x.values), validation_split=0.1,
@@ -150,7 +150,7 @@ def main():
     model_trainer.draw_plots(history_object=results)
 
     #  ----------  Save model
-    saved_model_file_path = '500tys_1mln-test.h5'
+    saved_model_file_path = 'trained_models/500tys_1mln-test.h5'
     model.save(saved_model_file_path)
     logging.info('--= Model saved in {} file. =--'.format(saved_model_file_path))
 
