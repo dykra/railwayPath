@@ -29,10 +29,13 @@ class DatabaseHandler:
             self.cursor = self.conn.cursor()
         self.cursor = self.conn.cursor()
 
-    def execute_statement(self, statement):
-        self.cursor.execute(statement)
+    def execute_query(self, query):
+        # self.cursor.execute(query) jak to odkomentuje, to program wywala blad:
+        # pyodbc.Error: ('HY000', '[HY000] [Microsoft][SQL Server Native Client 11.0]Connection
+        # is busy with results for another command (0) (SQLExecDirectW)
         logger.debug('Execute SQL query')
-        return pd.read_sql(statement, self.conn)
+        return pd.read_sql(query, self.conn)
 
     def close_connection(self):
         self.conn.close()
+
