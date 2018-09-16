@@ -34,12 +34,12 @@ def start():
 
     if mode == 1:
     # you have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager
-    cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
-                      "Server=VIOLA;"
-                      "Database=LosAngelesCounty;"
-                      #"UID=dev;" - TODO
-                      #"PWD=xyz;")
-                      "Trusted_Connection=yes;")
+        cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                          "Server=VIOLA;"
+                          "Database=LosAngelesCounty;"
+                          #"UID=dev;" - TODO
+                          #"PWD=xyz;")
+                          "Trusted_Connection=yes;")
 
 
     # ---------     Load data to DataFrame
