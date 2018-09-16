@@ -1,3 +1,6 @@
+date_limit = 20150000
+excluded_values = [0, 9, 999999999]
+
 
 #  ----------  You have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager.
 

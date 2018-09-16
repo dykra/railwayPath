@@ -1,6 +1,6 @@
 
 import logging
-from src.PriceEstimator.Utils.logger_helper import create_loggers_helper
+from src.priceestimation.utils.logger import create_loggers_helper
 
 
 def create_logger():

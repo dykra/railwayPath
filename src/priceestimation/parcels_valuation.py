@@ -9,20 +9,9 @@ import numpy
 from matplotlib import pyplot
 import logging
 from keras.callbacks import ModelCheckpoint
-from src.PriceEstimator.Utils.logger_helper import create_loggers_helper
-from src.PriceEstimator.Utils.database_handler import DatabaseHandler
-from src.PriceEstimator.constants import connection_string_WindowsAuth, connection_string
-
-""" 
-    Global variables
-"""
-
-date_limit = 20150000
-excluded_values = [0, 9, 999999999]
-basic_query = ("SELECT * FROM PARCEL_VECTORS"
-        " WHERE Sale_Amount < {} and Sale_Amount > {}"
-        " and LS1_Sale_Date > {}" 
-        " and Sale_Amount != {} and Sale_Amount != {} and Sale_Amount != {}")
+from src.priceestimation.utils.logger import create_loggers_helper
+from src.priceestimation.utils.database_handler import DatabaseHandler
+from src.priceestimation.constants import connection_string_WindowsAuth, date_limit, excluded_values
 
 
 def create_logger():
@@ -33,11 +22,15 @@ def create_logger():
 
 logger = create_logger()
 
+# TODO - view in the database
+basic_query = ("SELECT * FROM PARCEL_VECTORS"
+                " WHERE Sale_Amount < {} and Sale_Amount > {}"
+                " and LS1_Sale_Date > {}" 
+                " and Sale_Amount != {} and Sale_Amount != {} and Sale_Amount != {}")
 
-class ModelTrainer:
-    # def __init__(self):
-    #   self.model = "" ?? TODO
 
+# TODO - check whether model exists - mozna wykorzystac dekorator do sprawdzaniu czy model juz istnieje zserializowany
+class PricePredictionModelTrainer:
     """
         Model is defined in this function.
 
@@ -50,20 +43,23 @@ class ModelTrainer:
 
     """
 
-    def create_model(self):
-        model = Sequential()
-        model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
-        model.add(Dense(50, kernel_initializer='normal'))
-        model.add(Dense(1, kernel_initializer='normal'))
+    def __init__(self):
+        self.model = None
+        self.checkpoint = None
 
-        model.load_weights("resources/init_weights.hdf5")
+    def create_model(self):
+        self.model = Sequential()
+        self.model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
+        self.model.add(Dense(50, kernel_initializer='normal'))
+        self.model.add(Dense(1, kernel_initializer='normal'))
+
+        self.model.load_weights("resources/init_weights.hdf5")
         logger.info('Weights loaded to model.')
-        model.compile(loss=mean_squared_error, optimizer='adam',
-                      metrics=['mean_squared_error',
+        self.model.compile(loss=mean_squared_error, optimizer='adam',
+                           metrics=['mean_squared_error',
                                'mean_absolute_error',
                                'mean_absolute_percentage_error'])
         logger.info('Model created')
-        return model
 
     """
             Function to save checkpoints.
@@ -78,8 +74,8 @@ class ModelTrainer:
         """
 
     def save_checkpoint(self, file_path):
-        checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
-        callbacks_list = [checkpoint]
+        self.checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+        callbacks_list = [self.checkpoint]
         return callbacks_list
 
     def draw_plots(self, history_object):
@@ -133,7 +129,7 @@ def main():
     seed = 7
     numpy.random.seed(seed)
 
-    model_trainer = ModelTrainer()
+    model_trainer = PricePredictionModelTrainer()
     model = model_trainer.create_model()
 
     callbacks_list = model_trainer.save_checkpoint("resources/500tys_1mln-test.hdf5")
@@ -150,11 +146,10 @@ def main():
     model_trainer.draw_plots(history_object=results)
 
     #  ----------  Save model
-    saved_model_file_path = 'trained_models/500tys_1mln-test.h5'
+    saved_model_file_path = './trained_models/500tys_1mln-test.h5'
     model.save(saved_model_file_path)
     logging.info('--= Model saved in {} file. =--'.format(saved_model_file_path))
 
-# TODO ... new program... price prediction
 
     #prediction = model.predict(x.values)
     #print('First prediction:', prediction[0])

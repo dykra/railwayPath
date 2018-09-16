@@ -9,5 +9,5 @@ setup(
     author='Kazior,Nowak,Palewicz,Tomasiewicz',
     author_email='railwayPathINZYNIERKA@gmail.com',
     description='',
-    install_requires=['pymssql'],
+    install_requires=['pymssql', 'matplotlib', 'numpy'],
 )
