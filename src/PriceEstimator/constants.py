@@ -17,5 +17,3 @@ connection_string = ("Driver={SQL Server Native Client 11.0};"
 #  ----------  SQL Authentication
 database_password = ""
 create_loggers_helper = ""
-
-# ----------------------------------------------------------------------------------------------------
