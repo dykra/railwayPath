@@ -37,10 +37,10 @@ class DatabaseHandler:
             self.cursor = self.conn.cursor()
         self.cursor = self.conn.cursor()
 
-    def execute_statement(self, statement):
-        self.cursor.execute(statement)
+    def execute_query(self, query):
+        self.cursor.execute(query)
         logger.debug('Reading data from database')
-        return pd.read_sql(statement, self.conn)
+        return pd.read_sql(query, self.conn)
 
     def close_connection(self):
         self.conn.close()
