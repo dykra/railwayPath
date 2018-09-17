@@ -1,6 +1,6 @@
 date_limit = 20150000
 excluded_values = [0, 9, 999999999]
-
+seed = 7
 
 #  ----------  You have to enable TCP/IP connection to SQL Server in SQL Server Configuration Manager.
 
@@ -18,5 +18,8 @@ connection_string = ("Driver={SQL Server Native Client 11.0};"
                           "Trusted_Connection=yes;")
 
 #  ----------  SQL Authentication
-database_password = ""
+database_password = ''
 create_loggers_helper = ""
+
+path_weights = './../../src/resources/init_weights.hdf5'
+prediction_prices_model = './../priceestimation/trained_models/500tys_1mlnn.h5'
