@@ -11,7 +11,7 @@ import logging
 from keras.callbacks import ModelCheckpoint
 from src.priceestimation.utils.logger import create_loggers_helper
 from src.priceestimation.utils.database_handler import DatabaseHandler
-from src.priceestimation.constants import connection_string_WindowsAuth, date_limit, excluded_values
+from src.priceestimation.constants import date_limit, excluded_values, seed, path_weights, prediction_prices_model
 from src.priceestimation.utils.serialization_module import serialization_object_decorate
 
 
@@ -24,13 +24,12 @@ def create_logger():
 logger = create_logger()
 
 # TODO - view in the database
-basic_query = ("SELECT * FROM FILTERED_PARCEL where"
+basic_query = ("SELECT top 1000 * FROM FILTERED_PARCEL where"
                 # " WHERE Sale_Amount < {} and Sale_Amount > {} and "
                 "  LS1_Sale_Date > {}" )
                 # " and Sale_Amount != {} and Sale_Amount != {} and Sale_Amount != {}")
 
 
-# TODO - ujednolicic czy zwrocenie samego modelu wusyarczy do zapisywania tych ceckpoint
 class PricePredictionModelTrainer:
     """
         Model is defined in this function.
@@ -44,9 +43,14 @@ class PricePredictionModelTrainer:
 
     """
 
-    def __init__(self):
+    def __init__(self, weights_path, checkpoint_file_path):
+        self.weights_path = weights_path
+        self.checkpoint_path = checkpoint_file_path
         self.model = None
         self.checkpoint = None
+        self.callback_list = None
+        self.create_model()
+        self.save_callback()
 
     def create_model(self):
         self.model = Sequential()
@@ -54,12 +58,12 @@ class PricePredictionModelTrainer:
         self.model.add(Dense(50, kernel_initializer='normal'))
         self.model.add(Dense(1, kernel_initializer='normal'))
 
-        self.model.load_weights("./../../src/resources/init_weights.hdf5")
+        self.model.load_weights(self.weights_path)
         logger.info('Weights loaded to model.')
         self.model.compile(loss=mean_squared_error, optimizer='adam',
                            metrics=['mean_squared_error',
-                               'mean_absolute_error',
-                               'mean_absolute_percentage_error'])
+                                    'mean_absolute_error',
+                                    'mean_absolute_percentage_error'])
         logger.info('Model created')
 
     """
@@ -74,10 +78,17 @@ class PricePredictionModelTrainer:
 
         """
 
-    def save_checkpoint(self, file_path):
-        self.checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
-        callbacks_list = [self.checkpoint]
-        return callbacks_list
+    def save_callback(self):
+        self.callback_list = [ModelCheckpoint(self.checkpoint_path, monitor='val_loss',
+                                              verbose=1, save_best_only=True, mode='min')]
+
+    def fit_the_model(self, training_x_values, training_y_values,
+                      batch_size, epochs=200, validation_split=0.1, verbose=2):
+        #  ----------  Fix random seed for reproducibility
+        numpy.random.seed(seed)
+        return self.model.fit(training_x_values, training_y_values,
+                              batch_size=batch_size, validation_split=validation_split,
+                              callbacks=self.callback_list, verbose=verbose, epochs=epochs)
 
     def draw_plots(self, history_object):
         logging.info('--= Plot metrics =--')
@@ -99,8 +110,8 @@ class PricePredictionModelTrainer:
 """
 
 
+# TODO - change it into view not building query
 def get_one_bucket_data(database_handler, lower_limit, upper_limit):
-
     query = basic_query.\
         format(upper_limit, lower_limit, date_limit, excluded_values[0], excluded_values[1], excluded_values[2])
     if lower_limit == 0:
@@ -119,47 +130,42 @@ def serialize_price_estimator_model(file_name, model):
 def deserialize_price_estimator_model(file_name):
     logger.info('DESERIALIZE')
     pass
-    # TODO - reload model from file
-    # return model
+    # TODO - reload model from file and return this
 
-
-@serialization_object_decorate(file_path='./../priceestimation/trained_models/500tys_1mln.h5',
-                               serialize_function=serialize_price_estimator_model,
-                               deserialize_function=deserialize_price_estimator_model)
-def prepare_price_estimator_model():
+# TODO - database handler provide as argument while creating model
+# TODO - after few execution change parameter_value
+@serialization_object_decorate(serialize_function=serialize_price_estimator_model,
+                               deserialize_function=deserialize_price_estimator_model,
+                               file_path=prediction_prices_model
+                               )
+def prepare_price_estimator_model(lower_limit=0, upper_limit=500000):
     logger.info('CREATING MODEL')
-    model_trainer = PricePredictionModelTrainer()
-    model_trainer.create_model()
-
-    callbacks_list = model_trainer.save_checkpoint("resources/500tys_1mln-test.hdf5")
+    model_trainer = PricePredictionModelTrainer(weights_path=path_weights,
+                                                checkpoint_file_path='resources/500tys_1mln-test.hdf5')
 
     database_handler = DatabaseHandler(server='localhost', user_name='SA', database_name='LA_County_DB')
 
-    df = get_one_bucket_data(database_handler, 0, 500000)
+    data_frame = get_one_bucket_data(database_handler, lower_limit, upper_limit)
 
+    # TODO - is there a way to automate counting this values?
     # split into X set and Y set
-    x = df.iloc[:, 1:71]
-    y = df.iloc[:, 71]
+    x = data_frame.iloc[:, 1:71]
+    y = data_frame.iloc[:, 71]
 
-    print('--= X set =--')
-    print(x)
-    print('--= Y set =--')
-    print(y)
+    # print('--= X set =--')
+    # print(x)
+    # print('--= Y set =--')
+    # print(y)
 
-    #  ----------  Fix random seed for reproducibility
-    seed = 7
-    numpy.random.seed(seed)
     #  ----------  Model training
-    results = model_trainer.model.fit(x.values, y.values, epochs=200, batch_size=len(x.values), validation_split=0.1,
-                        callbacks=callbacks_list,
-                        verbose=2)
-
-    logging.info('--= Model summary: =--')
-    model_trainer.model.summary()
+    # TODO - move to constants
+    results = model_trainer.fit_the_model(training_x_values=x.values, training_y_values=y.values,
+                                          batch_size=len(x.values), epochs=200, validation_split=0.1, verbose=2)
+    #
+    # logging.info('--= Model summary: =--')
+    # model_trainer.model.summary(results)
 
     return model_trainer
-
-# TODO - database handler provide as argument while creating model
 
 
 def main():

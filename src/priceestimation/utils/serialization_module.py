@@ -23,11 +23,6 @@ def deserialize_class_pickle(file_name):
         logger.debug('Starting file {}  deserialization.'.format(file_name))
         return pickle.load(open(file_name, 'rb'))
 
-#
-# def deserialize_with_keras(file_name):
-#         logger.debug('Starting file {}  deserialization.'.format(file_name))
-#         return pickle.load(open(file_name, 'rb'))
-
 
 def serialization_object_decorate(file_path, serialize_function, deserialize_function):
     def serialization_with_arguments(func):
@@ -43,8 +38,3 @@ def serialization_object_decorate(file_path, serialize_function, deserialize_fun
 
         return func_wrapper
     return serialization_with_arguments
-
-
-# @serialization_object_decorate
-# def prepare_classification_model(data, target_column=target_column_name):
-#     return ClassificationLogisticRegression(data, target_column)
