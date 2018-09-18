@@ -144,7 +144,7 @@ def prepare_price_estimator_model(execute_view_query, database_handler):
     # model_trainer.model.summary(results)
     # draw_plots(history_object=results)
 
-    return model_trainer
+    return model_trainer.model
 
 
 def main():
