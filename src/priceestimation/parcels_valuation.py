@@ -1,7 +1,3 @@
-import sys
-import pyodbc
-import pandas as pd
-import tensorflow as tf
 from keras.losses import mean_squared_error, mean_absolute_percentage_error
 from keras.models import Sequential
 from keras.layers import Dense, K
@@ -11,8 +7,9 @@ import logging
 from keras.callbacks import ModelCheckpoint
 from src.priceestimation.utils.logger import create_loggers_helper
 from src.priceestimation.utils.database_handler import DatabaseHandler
-from src.priceestimation.constants import date_limit, excluded_values, seed, path_weights, prediction_prices_model
-from src.priceestimation.utils.serialization_module import serialization_object_decorate
+from src.priceestimation.configuration_constants import *
+from src.priceestimation.database_connection_constants import *
+from src.priceestimation.utils.serialization_module import serialization_object_decorate, update_bucket_type
 
 
 def create_logger():
@@ -23,11 +20,28 @@ def create_logger():
 
 logger = create_logger()
 
+
+def generate_file_name_with_price_limit(base_name, type, extension='.h5'):
+    return base_name + str(type) + extension
+
+
 # TODO - view in the database
 basic_query = ("SELECT top 1000 * FROM FILTERED_PARCEL where"
                 # " WHERE Sale_Amount < {} and Sale_Amount > {} and "
                 "  LS1_Sale_Date > {}" )
                 # " and Sale_Amount != {} and Sale_Amount != {} and Sale_Amount != {}")
+
+
+def draw_plots(history_object):
+    logging.info('--= Plot metrics =--')
+    pyplot.plot(history_object.history['mean_squared_error'])
+    pyplot.show()
+    pyplot.plot(history_object.history['mean_absolute_error'])
+    pyplot.show()
+    pyplot.plot(history_object.history['mean_absolute_percentage_error'])
+    pyplot.show()
+    pyplot.plot(history_object.history['cosine_proximity'])
+    pyplot.show()
 
 
 class PricePredictionModelTrainer:
@@ -83,71 +97,35 @@ class PricePredictionModelTrainer:
                                               verbose=1, save_best_only=True, mode='min')]
 
     def fit_the_model(self, training_x_values, training_y_values,
-                      batch_size, epochs=200, validation_split=0.1, verbose=2):
+                      batch_size, epochs=epochs_value, validation_split=validation_split_value, verbose=verbose_value):
         #  ----------  Fix random seed for reproducibility
         numpy.random.seed(seed)
         return self.model.fit(training_x_values, training_y_values,
                               batch_size=batch_size, validation_split=validation_split,
                               callbacks=self.callback_list, verbose=verbose, epochs=epochs)
 
-    def draw_plots(self, history_object):
-        logging.info('--= Plot metrics =--')
-        pyplot.plot(history_object.history['mean_squared_error'])
-        pyplot.show()
-        pyplot.plot(history_object.history['mean_absolute_error'])
-        pyplot.show()
-        pyplot.plot(history_object.history['mean_absolute_percentage_error'])
-        pyplot.show()
-        pyplot.plot(history_object.history['cosine_proximity'])
-        pyplot.show()
 
-
-"""
-    0 bucket: lower_limit = 0, upper_limit = 500000
-    1 bucket: lower_limit = 500000, upper_limit = 1000000
-    2 bucket: lower_limit = 1000000, upper_limit = 200000000
-
-"""
-
-
-# TODO - change it into view not building query
-def get_one_bucket_data(database_handler, lower_limit, upper_limit):
-    query = basic_query.\
-        format(upper_limit, lower_limit, date_limit, excluded_values[0], excluded_values[1], excluded_values[2])
-    if lower_limit == 0:
-        result = database_handler.execute_query(query=query)  #    + " and Price_Per_Single_Area_Unit >= 1")
-    else:
-        result = database_handler.execute_query(query)
-    logging.info('--= Data loaded =--')
-    return result
-
-
-def serialize_price_estimator_model(file_name, model):
-    model.save(file_name)
+def serialize_price_estimator_model(file_name, model_trainer):
+    model_trainer.model.save(file_name)
     logging.info('--= Model saved in {} file. =--'.format(file_name))
 
 
+# TODO - reload model from file and return this
 def deserialize_price_estimator_model(file_name):
-    logger.info('DESERIALIZE')
+    logger.info('Model ' + file_name + ' is being deserialized.')
     pass
-    # TODO - reload model from file and return this
 
-# TODO - database handler provide as argument while creating model
-# TODO - after few execution change parameter_value
+
 @serialization_object_decorate(serialize_function=serialize_price_estimator_model,
                                deserialize_function=deserialize_price_estimator_model,
-                               file_path=prediction_prices_model
                                )
-def prepare_price_estimator_model(lower_limit=0, upper_limit=500000):
+def prepare_price_estimator_model(execute_view_query, database_handler):
     logger.info('CREATING MODEL')
-    model_trainer = PricePredictionModelTrainer(weights_path=path_weights,
-                                                checkpoint_file_path='resources/500tys_1mln-test.hdf5')
+    model_trainer = PricePredictionModelTrainer(weights_path=weights_file_path,
+                                                checkpoint_file_path=checkpoint_file_path)
 
-    database_handler = DatabaseHandler(server='localhost', user_name='SA', database_name='LA_County_DB')
+    data_frame = database_handler.execute_query(execute_view_query)# get_one_bucket_data(database_handler, lower_limit, upper_limit)
 
-    data_frame = get_one_bucket_data(database_handler, lower_limit, upper_limit)
-
-    # TODO - is there a way to automate counting this values?
     # split into X set and Y set
     x = data_frame.iloc[:, 1:71]
     y = data_frame.iloc[:, 71]
@@ -158,29 +136,30 @@ def prepare_price_estimator_model(lower_limit=0, upper_limit=500000):
     # print(y)
 
     #  ----------  Model training
-    # TODO - move to constants
     results = model_trainer.fit_the_model(training_x_values=x.values, training_y_values=y.values,
-                                          batch_size=len(x.values), epochs=200, validation_split=0.1, verbose=2)
+                                          batch_size=len(x.values), epochs=epochs_value,
+                                          validation_split=validation_split_value, verbose=verbose_value)
     #
     # logging.info('--= Model summary: =--')
     # model_trainer.model.summary(results)
+    # draw_plots(history_object=results)
 
     return model_trainer
 
 
 def main():
-    model = prepare_price_estimator_model()
+    database_handler = DatabaseHandler(server=server, user_name=user_name, database_name=database_name)
+    for set_type in classification_buckets:
+        update_bucket_type(bucket_type=generate_file_name_with_price_limit(base_name=prediction_prices_model_file_path,
+                                                                           type=set_type))
+        # TODO - procedure query execute with parameter
+        model = prepare_price_estimator_model(execute_view_query='SELECT * FROM PROCEDURE(' + set_type + ')',
+                                              database_handler=database_handler)
 
-    #  ----------  Draw plots
-    # model.draw_plots(history_object=results)
-
-    #  ----------  Save model
-    # saved_model_file_path = './trained_models/500tys_1mln-test.h5'
-    # model.save(saved_model_file_path)
-
-
-    #prediction = model.predict(x.values)
-    #print('First prediction:', prediction[0])
+        # prediction = model.predict(x.values)
+        # print('First prediction:', prediction[0])
+        # TODO - save predictions to the database (in other program)
+        # TODO - predict for all rows from database (in other program)
 
 
 if __name__ == '__main__':

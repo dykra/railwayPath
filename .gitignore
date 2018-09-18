@@ -113,7 +113,7 @@ venv.bak/
 .idea/vcs.xml
 .idea/webResources.xml
 .idea/inspectionProfiles/Project_Default.xml
-
+.idea/profile_settings.xml
 # User-specific stuff:
 .idea/**/workspace.xml
 .idea/**/tasks.xml
