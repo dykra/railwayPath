@@ -6,9 +6,7 @@ import logging
 import sys
 from keras.callbacks import ModelCheckpoint
 from src.priceestimation.utils.logger import create_loggers_helper
-from src.priceestimation.utils.database_handler import DatabaseHandler
 from src.priceestimation.configuration_constants import *
-from src.priceestimation.database_connection_constants import *
 from src.priceestimation.utils.serialization_module import serialization_object_decorate, update_bucket_type
 
 
@@ -22,7 +20,7 @@ logger = create_logger()
 
 
 def generate_file_name_with_price_limit(base_name, bucket_type, extension='.h5'):
-    return base_name + '1mln_200mln.h5'#str(bucket_type) + extension
+    return base_name + str(bucket_type) + extension
 
 
 class PricePredictionModelTrainer:
@@ -118,26 +116,3 @@ def prepare_price_estimator_model(execute_view_query, database_handler, bucket_t
     return model_trainer.model
 
 
-def main():
-    database_handler = DatabaseHandler(server=server, user_name=user_name, database_name=database_name)
-    for set_type in classification_buckets:
-        update_bucket_type(bucket_type=generate_file_name_with_price_limit(base_name=prediction_prices_model_file_path,
-                                                                           bucket_type=set_type))
-        model = prepare_price_estimator_model(execute_view_query="EXEC dbo.getTrainingDataPriceEstimation "
-                                                                 "@LimitDate = {}, "
-                                                                 "@BucketType={}, "
-                                                                 "@ExcludedList='{}'"
-                                              .format(date_limit,
-                                                      set_type,
-                                                      excluded_values),
-                                              database_handler=database_handler,
-                                              bucket_type=set_type)
-
-        # prediction = model.predict(x.values)
-        # print('First prediction:', prediction[0])
-        # TODO - save predictions to the database (in other program)
-        # TODO - predict for all rows from database (in other program)
-
-
-if __name__ == '__main__':
-    main()
