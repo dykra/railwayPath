@@ -13,12 +13,12 @@ def create_logger():
 logger = create_logger()
 
 
-_current_type_global = ""
+_current_bucket_type_global = ""
 
 
 def update_bucket_type(bucket_type):
-    global _current_type_global
-    _current_type_global = bucket_type
+    global _current_bucket_type_global
+    _current_bucket_type_global = bucket_type
 
 
 def serialize_class_pickle(file_name, class_object):
@@ -36,14 +36,10 @@ def serialization_object_decorate(
         serialize_function, deserialize_function):
     def serialization_with_arguments(func):
         def func_wrapper(*args, **kwargs):
-            file_path = _current_type_global
-            logger.info('Wrapper')
-            if os.path.exists(_current_type_global):
-                logger.debug('Loading file ' + file_path)
-                return deserialize_function(file_name=file_path)
+            if os.path.exists(_current_bucket_type_global):
+                return deserialize_function(file_name=_current_bucket_type_global)
             result = func(*args, **kwargs)
-            serialize_function(file_path, result)
+            serialize_function(_current_bucket_type_global, result)
             return result
-
         return func_wrapper
     return serialization_with_arguments
