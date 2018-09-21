@@ -6,7 +6,7 @@ setup(
     packages=[''],
     url='',
     license='',
-    author='Kazior,Nowak,Palewicz,Tomasiewicz',
+    author='Nowak,Palewicz',
     author_email='railwayPathINZYNIERKA@gmail.com',
     description='',
     install_requires=['pymssql', 'matplotlib', 'numpy', 'pandas', 'keras'],

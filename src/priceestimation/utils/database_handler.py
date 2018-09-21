@@ -19,22 +19,16 @@ class DatabaseHandler:
     def __init__(self,
                  server='',
                  user_name='',
-                 database_name='',
-                 connection_string=''):
-        if connection_string != '':
-            logger.debug('Connecting to the database with connection string.')
-            self.conn = pymssql.connect(connection_string)
-        else:
-            try:
-                self.conn = pymssql.connect(server=server,
-                                            user=user_name,
-                                            password=database_password,
-                                            database=database_name)
-            except pymssql.OperationalError:
-                logger.error('Not all parameters to '
-                             'connect with database are provided.')
-                sys.exit(1)
-            self.cursor = self.conn.cursor()
+                 database_name=''):
+        try:
+            self.conn = pymssql.connect(server=server,
+                                        user=user_name,
+                                        password=database_password,
+                                        database=database_name)
+        except pymssql.OperationalError:
+            logger.error('Not all parameters to '
+                         'connect with database are provided.')
+            sys.exit(1)
         self.cursor = self.conn.cursor()
 
     def execute_query(self, query):
