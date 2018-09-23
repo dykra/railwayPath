@@ -2,7 +2,7 @@
 -- Procedure to get training data
 -- ===============================================
 
-ALTER PROCEDURE dbo.getTrainingDataPriceEstimation
+CREATE PROCEDURE dbo.getTrainingDataPriceEstimation
     @LimitDate nvarchar(30),
     @BucketType nvarchar(30),
     @ExcludedList nvarchar(MAX)
@@ -29,9 +29,9 @@ SELECT  OBJECTID, PERIMETER, LOT, UNIT, SUBDTYPE, TRACT, PARCEL_TYP, GlobalID, C
         MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
         Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int,	Sale_Amount
 FROM PARCEL_VECTORS
-WHERE LS1_Sale_Date > @LimitDate
-      AND Price_Group LIKE @BucketType AND
-      LS1_Sale_Amount not in (SELECT value FROM STRING_SPLIT(@ExcludedList, ';'))
+WHERE Price_Group LIKE @BucketType
+      AND LS1_Sale_Date > @LimitDate
+      AND LS1_Sale_Amount not in (SELECT value FROM STRING_SPLIT(@ExcludedList, ';'))
 GO
 
 
@@ -42,7 +42,7 @@ GO
 -- Procedure to get data to calculate
 -- ===============================================
 
-ALTER PROCEDURE dbo.getDataForPriceCalculation
+CREATE PROCEDURE dbo.getDataForPriceCalculation
     @LimitDate nvarchar(30),
     @BucketType nvarchar(30),
     @ExcludedList nvarchar(MAX)
@@ -69,7 +69,22 @@ SELECT  OBJECTID, PERIMETER, LOT, UNIT, SUBDTYPE, TRACT, PARCEL_TYP, GlobalID, C
         MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
         Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int,	Sale_Amount
 FROM PARCEL_VECTORS
-WHERE ( LS1_Sale_Date <= @LimitDate OR
-      ( LS1_Sale_Amount IN (SELECT value FROM STRING_SPLIT(@ExcludedList, ';'))) )
-      AND Price_Group LIKE @BucketType
+WHERE Price_Group LIKE @BucketType
+      AND ( LS1_Sale_Date <= @LimitDate
+            OR
+            LS1_Sale_Amount IN (SELECT value FROM STRING_SPLIT(@ExcludedList, ';')))
+GO
+
+-- ===============================================
+-- Procedure to update table with calculated value
+-- ===============================================
+
+
+CREATE PROCEDURE dbo.UpdateParcelVectors
+    @L1_Sale_Amount int,
+    @ObjectID int
+AS
+UPDATE PARCEL_VECTORS
+  SET LS1_Sale_Amount = @L1_Sale_Amount--, RowVersionCount = RowVersionCount + 1
+  WHERE OBJECTID = @ObjectID
 GO

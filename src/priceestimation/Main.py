@@ -7,6 +7,7 @@ from src.priceestimation.utils.database_handler import DatabaseHandler
 if __name__ == '__main__':
     database_handler = DatabaseHandler(server=server, user_name=user_name, database_name=database_name)
     for set_type in classification_buckets:
+        print('Set type ' + set_type)
         update_bucket_type(bucket_type=generate_file_name_with_price_limit(base_name=prediction_prices_model_file_path,
                                                                            bucket_type=set_type))
         model = prepare_price_estimator_model(execute_view_query="EXEC dbo.getTrainingDataPriceEstimation "
@@ -18,8 +19,13 @@ if __name__ == '__main__':
                                                       excluded_values),
                                               database_handler=database_handler,
                                               bucket_type=set_type)
-        # prediction = model.predict(x.values)
-        # print('First prediction:', prediction[0])
-        # TODO - save predictions to the database (in other program)
-        # TODO - predict for all rows from database (in other program)
+        df_values_to_predict = database_handler.execute_query("EXEC dbo.getDataForPriceCalculation "
+                                                              "@LimitDate = {}, "
+                                                              "@BucketType={}, "
+                                                              "@ExcludedList='{}'"
+                                                              .format(date_limit, set_type, excluded_values))
+        prediction = model.predict(df_values_to_predict)
+        for (prediction_value, object_id) in zip(prediction, df_values_to_predict['OBJECTID']):
+            database_handler.execute_query("EXEC dbo.UpdateParcelVectors @L1_Sale_Amount = {} @ObjectID = {} ".
+                                           format(prediction_value, object_id))
     database_handler.close_connection()

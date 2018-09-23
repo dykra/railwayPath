@@ -19,6 +19,7 @@ _current_bucket_type_global = ""
 def update_bucket_type(bucket_type):
     global _current_bucket_type_global
     _current_bucket_type_global = bucket_type
+    print(_current_bucket_type_global)
 
 
 def serialize_class_pickle(file_name, class_object):
