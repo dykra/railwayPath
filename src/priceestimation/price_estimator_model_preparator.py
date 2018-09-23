@@ -58,7 +58,6 @@ class PricePredictionModelTrainer:
                            metrics=['mean_squared_error',
                                     'mean_absolute_error',
                                     'mean_absolute_percentage_error'])
-        logger.info('Model is created.')
 
     """
         Function to save checkpoints.
