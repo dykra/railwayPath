@@ -1,6 +1,6 @@
 import argparse
-from src.priceestimation.configuration_constants import *
-from src.priceestimation.database_connection_constants import *
+from src.priceestimation.constants.configuration_constants import *
+from src.priceestimation.constants.database_connection_constants import *
 from src.priceestimation.price_estimator_model_preparator import generate_file_name_with_price_limit, update_bucket_type, prepare_price_estimator_model
 from src.priceestimation.utils.database_handler import DatabaseHandler
 
@@ -19,6 +19,7 @@ def main():
     for set_type in classification_buckets:
         print('Set type ' + set_type)
         update_bucket_type(bucket_type=generate_file_name_with_price_limit(base_name=prediction_prices_model_file_path,
+                                                                           limit_date=date_limit,
                                                                            bucket_type=set_type))
         model = prepare_price_estimator_model(execute_view_query="EXEC dbo.getTrainingDataPriceEstimation "
                                                                  "@LimitDate = {}, "

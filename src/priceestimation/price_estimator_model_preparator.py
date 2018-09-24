@@ -1,12 +1,12 @@
-from keras.losses import mean_squared_error, mean_absolute_percentage_error
+from keras.losses import mean_squared_error
 from keras.models import Sequential, load_model
-from keras.layers import Dense, K
+from keras.layers import Dense
 import numpy
 import logging
 import sys
 from keras.callbacks import ModelCheckpoint
 from src.priceestimation.utils.logger import create_loggers_helper
-from src.priceestimation.configuration_constants import *
+from src.priceestimation.constants.configuration_constants import *
 from src.priceestimation.utils.serialization_module import serialization_object_decorate, update_bucket_type
 
 
@@ -19,8 +19,8 @@ def create_logger():
 logger = create_logger()
 
 
-def generate_file_name_with_price_limit(base_name, bucket_type, extension='.h5'):
-    return base_name + str(bucket_type) + extension
+def generate_file_name_with_price_limit(base_name, limit_date, bucket_type, extension='.h5'):
+    return base_name + '_' + limit_date + str(bucket_type) + extension
 
 
 class PricePredictionModelTrainer:
@@ -98,7 +98,8 @@ def prepare_price_estimator_model(execute_view_query, database_handler, bucket_t
     logger.info('CREATING MODEL')
     model_trainer = PricePredictionModelTrainer(weights_path=weights_file_path,
                                                 checkpoint_file_path_input=generate_file_name_with_price_limit(
-                                                    checkpoint_file_path, extension='.hdf5', bucket_type=bucket_type))
+                                                    checkpoint_file_path, limit_date=date_limit,
+                                                    extension='.hdf5', bucket_type=bucket_type))
 
     data_frame = database_handler.execute_query(execute_view_query)
 

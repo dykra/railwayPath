@@ -2,7 +2,7 @@ import pymssql
 import pandas as pd
 import logging
 import sys
-from src.priceestimation.database_connection_constants import database_password
+from src.priceestimation.constants.database_connection_constants import database_password
 from src.priceestimation.utils.logger import create_loggers_helper
 
 
