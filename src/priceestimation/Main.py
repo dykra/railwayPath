@@ -1,20 +1,10 @@
-import argparse
 from src.priceestimation.constants.configuration_constants import *
 from src.priceestimation.constants.database_connection_constants import *
 from src.priceestimation.price_estimator_model_preparator import generate_file_name_with_price_limit, update_bucket_type, prepare_price_estimator_model
 from src.priceestimation.utils.database_handler import DatabaseHandler
 
-#
-# def parse_args():
-#     parser = argparse.ArgumentParser(description='Program to predict lands prices.')
-#     parser.add_argument('--database', help='Database name.')
-#     parser.add_argument('--server', help='Server address.')
-#     parser.add_argument('--database_user', help='Database user name.')
-#     return parser.parse_args()
-
 
 def main():
-    # args = parse_args()
     database_handler = DatabaseHandler(server=server, user_name=user_name, database_name=database_name)
     for set_type in classification_buckets:
         print('Set type ' + set_type)
