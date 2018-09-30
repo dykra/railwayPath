@@ -13,7 +13,7 @@ END
 
 SELECT  
 	OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, 
-	LAND_Curr_Roll_Yr, LAND_Curr_Value, IMPROVE_Curr_Roll_YR, IMPROVE_Curr_Value, 
+	Land_Curr_Roll_Yr, Land_Curr_Value, IMPROVE_Curr_Roll_YR, IMPROVE_Curr_Value, 
 	SA_House_Number, SA_Direction, SA_Street_Name, SA_City_and_State, SA_Zip_Cde,
 	MA_House_Number, MA_Direction, MA_Street_Name, MA_City_and_State, MA_Zip_Cde, 
 	Recording_Date, Zoning_Code, Hmownr_Exempt_Number, Hmownr_Exempt_Value, --22
@@ -74,9 +74,9 @@ GO
 
 -- =============================================
 -- ADD NEW COLUMNS FOR BASIC AREAS TYPES
--- ============================================= to jest dodatkowe
+-- =============================================
 
---IF (NOT EXISTS (select * from information_schema.COLUMNS where TABLE_NAME = 'PARCEL_VECTORS' and COLUMN_NAME =))
+IF (NOT EXISTS (SELECT * FROM information_schema.COLUMNS WHERE TABLE_NAME = 'PARCEL_VECTORS' and COLUMN_NAME = 'Residential'))
 BEGIN
 	ALTER TABLE PARCEL_VECTORS
   ADD 
@@ -84,10 +84,10 @@ BEGIN
 	Special_Purposes_Plan SMALLINT, 
 	Agricultural SMALLINT, 
 	Commercial SMALLINT,
-	Manufacturing SMALLINT
+	Manufacturing SMALLINT,
+	Price_Group VARCHAR(50)
 END
 GO
-
 
 -- =============================================
 -- Parse Zoning codes
@@ -108,27 +108,26 @@ UPDATE PARCEL_VECTORS
 				WHEN '4' THEN 'R4'
               END
 	END
-	WHERE Simple_Zoning_Code is null
+	WHERE Simple_Zoning_Code IS NULL
 GO
 
 
 -- for SCUR1, SCUR2, SCUR3, SCUR4, SCUR5 
 UPDATE PARCEL_VECTORS
   SET Simple_Zoning_Code = substring(Zoning_Code, 4, 2)
-    WHERE Zoning_Code like 'SCUR%'
+    WHERE Zoning_Code LIKE 'SCUR%'
 GO
 
 
 UPDATE PARCEL_VECTORS
   SET Simple_Zoning_Code = 'R2'
-	WHERE Zoning_Code like 'LAMR2'
+	WHERE Zoning_Code LIKE 'LAMR2'
 GO
 
 UPDATE PARCEL_VECTORS
     SET Residential = (CASE
                        WHEN Simple_Zoning_code IN ('R1', 'R2', 'R3', 'R4', 'R5') THEN 1 ELSE 0 END)
 GO
-
 
 -- =============================================
 -- AGRICULTURAL
@@ -174,7 +173,7 @@ UPDATE PARCEL_VECTORS
                 WHEN '3' THEN 'M3'
               END
     END
-WHERE Simple_Zoning_Code is null;
+WHERE Simple_Zoning_Code IS NULL;
 
 
 UPDATE PARCEL_VECTORS
@@ -264,36 +263,45 @@ UPDATE PARCEL_VECTORS
     WHERE Zoning_Code like '__R%'
            and Simple_Zoning_Code is null;
 
+-- =============================================
+-- SPECIFY PRICE GROUPS DEPENDS ON THE PRICE
+-- =============================================
 
+ UPDATE PARCEL_VECTORS
+ SET Price_Group='cheap'
+   WHERE LS1_Sale_Amount <= 500000
+ UPDATE FILTERED_PARCEL
+ SET Price_Group='medium'
+   WHERE ( LS1_Sale_Amount > 500000 and LS1_Sale_Amount < 1000000 )
+ UPDATE FILTERED_PARCEL
+ SET Price_Group = 'expensive'
+    WHERE LS1_Sale_Amount >= 1000000
 
+-- =============================================
+-- STREET and STATE CONCATENATIONS
+-- New column to PARCEL_VECTORS to concatenate MA_Street_Name and MA_City_and_State
+-- New column to PARCEL_VECTORS to concatenate SA_Street_Name and SA_City_and_State
+-- =============================================
 
------------					Street and State concatenations			------------------------------------------------------------------------------------------
-
------New column to PARCEL_VECTORS to concatenate MA_Street_Name and MA_City_and_State
------New column to PARCEL_VECTORS to concatenate SA_Street_Name and SA_City_and_State
-ALTER table PARCEL_VECTORS
-add MA_Street_and_City_and_State nvarchar(100), SA_Street_and_City_and_State nvarchar(100)
+ALTER TABLE PARCEL_VECTORS
+ADD MA_Street_and_City_and_State nvarchar(100), SA_Street_and_City_and_State nvarchar(100)
 GO
 
 UPDATE PARCEL_VECTORS
-set MA_Street_and_City_and_State = MA_Street_Name + ' '+ MA_City_and_State,
+SET MA_Street_and_City_and_State = MA_Street_Name + ' '+ MA_City_and_State,
 	SA_Street_and_City_and_State = SA_Street_Name + ' '+ SA_City_and_State;
 
-
-
--------------------------					TEMP TABLES	TO MAPPING			-----------------------------------------------------------------
-
---------------------------------
---Mapping tables:
---Simple_Zones_Mapping +
---Directions_Mapping +
---Localization_SA_Mapping +
---Localization_MA_Mapping +
---Zoning_Codes_Mapping
---BD_LINE_1_Quality__Class___Shap_Mapping
---City_Mapping
-
------------------------------
+-- =============================================
+-- TEMP TABLES	TO MAPPING
+-- Mapping tables:
+-- Simple_Zones_Mapping +
+-- Directions_Mapping +
+-- Localization_SA_Mapping +
+-- Localization_MA_Mapping +
+-- Zoning_Codes_Mapping
+-- BD_LINE_1_Quality__Class___Shap_Mapping
+-- City_Mapping
+-- =============================================
 
 --1
 ---Table to map simple_zone
@@ -308,17 +316,16 @@ END
 
 ELSE
 BEGIN
-	insert into Simple_Zones_Mapping (Simple_Zoning_Code)
-	select DISTINCT P.Simple_Zoning_Code 
-	from PARCEL_VECTORS P
-	where P.Simple_Zoning_Code not in (
-		select DISTINCT P.Simple_Zoning_Code from PARCEL_VECTORS P
+	INSERT INTO Simple_Zones_Mapping (Simple_Zoning_Code)
+	SELECT DISTINCT P.Simple_Zoning_Code 
+	SELECT PARCEL_VECTORS P
+	WHERE P.Simple_Zoning_Code not in (
+		SELECT DISTINCT P.Simple_Zoning_Code FROM PARCEL_VECTORS P
 		inner join Simple_Zones_Mapping L
-		on L.Simple_Zoning_Code = P.Simple_Zoning_Code
+		ON L.Simple_Zoning_Code = P.Simple_Zoning_Code
 	)
 
 END
-
 
 --2
 ----Table to map SA_Direction and MA_Direction---
@@ -332,23 +339,22 @@ BEGIN
 END
 ELSE
 BEGIN
-	insert into Directions_Mapping (Direction)
-	select DISTINCT P.SA_Direction 
-	from PARCEL_VECTORS P
-	where P.SA_Direction not in (
-	select DISTINCT P.SA_Direction from PARCEL_VECTORS P
-	inner join Directions_Mapping D
-	on D.Direction = P.SA_Direction)
+	INSERT INTO Directions_Mapping (Direction)
+	SELECT DISTINCT P.SA_Direction 
+	SELECT PARCEL_VECTORS P
+	WHERE P.SA_Direction NOT IN (
+	SELECT DISTINCT P.SA_Direction FROM PARCEL_VECTORS P
+	INNER JOIN Directions_Mapping D
+	ON D.Direction = P.SA_Direction)
 
-	insert into Directions_Mapping (Direction)
-	select DISTINCT P.MA_Direction 
-	from PARCEL_VECTORS P
-	where P.MA_Direction not in (
-	select DISTINCT P.MA_Direction from PARCEL_VECTORS P
-	inner join Directions_Mapping D
-	on D.Direction = P.MA_Direction
+	INSERT INTO Directions_Mapping (Direction)
+	SELECT DISTINCT P.MA_Direction 
+	FROM PARCEL_VECTORS P
+	WHERE P.MA_Direction NOT IN (
+	SELECT DISTINCT P.MA_Direction FROM PARCEL_VECTORS P
+	INNER JOIN Directions_Mapping D
+	ON D.Direction = P.MA_Direction
 	)
-
 END
 
 --3
@@ -361,17 +367,15 @@ BEGIN
 END
 ELSE
 BEGIN
-	insert into Localization_SA_Mapping (SA_Street_and_City_and_State)
-	select DISTINCT P.SA_Street_and_City_and_State 
-	from Lands_Vectors P
-	where P.SA_Street_and_City_and_State not in (
-	select DISTINCT P.SA_Street_and_City_and_State from Lands_Vectors P
-	inner join Localization_SA_Mapping L
-	on L.SA_Street_and_City_and_State = P.SA_Street_and_City_and_State
+	INSERT INTO Localization_SA_Mapping (SA_Street_and_City_and_State)
+	SELECT DISTINCT P.SA_Street_and_City_and_State 
+	FROM Lands_Vectors P
+	WHERE P.SA_Street_and_City_and_State NOT IN (
+	SELECT DISTINCT P.SA_Street_and_City_and_State FROM Lands_Vectors P
+	INNER JOIN Localization_SA_Mapping L
+	ON L.SA_Street_and_City_and_State = P.SA_Street_and_City_and_State
 	)
-
 END
-
 
 --4
 ----Table to map MA_Street-and_City-and_State---
@@ -383,16 +387,15 @@ BEGIN
 END
 ELSE
 BEGIN
-	insert into Localization_MA_Mapping (MA_Street_and_City_and_State)
-	select DISTINCT P.MA_Street_and_City_and_State 
-	from PARCEL_VECTORS P
-	where P.MA_Street_and_City_and_State not in (
-	select DISTINCT P.MA_Street_and_City_and_State from PARCEL_VECTORS P
-	inner join Localization_MA_Mapping L
-	on L.MA_Street_and_City_and_State = P.MA_Street_and_City_and_State
+	INSERT INTO Localization_MA_Mapping (MA_Street_and_City_and_State)
+	SELECT DISTINCT P.MA_Street_and_City_and_State 
+	FROM PARCEL_VECTORS P
+	WHERE P.MA_Street_and_City_and_State NOT IN (
+	SELECT DISTINCT P.MA_Street_and_City_and_State FROM PARCEL_VECTORS P
+	INNER JOIN Localization_MA_Mapping L
+	ON L.MA_Street_and_City_and_State = P.MA_Street_and_City_and_State
 	)
 END
-
 
 --5
 ----Table to map Zoning_Code---
@@ -405,17 +408,15 @@ END
 ELSE
 BEGIN
 	
-	insert into Zoning_Codes_Mapping (Zoning_Code)
-	select DISTINCT P.Zoning_Code 
-	from PARCEL_VECTORS P
-	where P.Zoning_Code not in (
-	select DISTINCT P.Zoning_Code from PARCEL_VECTORS P
-	inner join Zoning_Codes_Mapping L
-	on L.Zoning_Code = P.Zoning_Code
+	INSERT INTO Zoning_Codes_Mapping (Zoning_Code)
+	SELECT DISTINCT P.Zoning_Code 
+	FROM PARCEL_VECTORS P
+	WHERE P.Zoning_Code NOT IN (
+	SELECT DISTINCT P.Zoning_Code FROM PARCEL_VECTORS P
+	INNER JOIN Zoning_Codes_Mapping L
+	ON L.Zoning_Code = P.Zoning_Code
 	)
-
 END
-
 
 --6
 ----Table to map BD_LINE_1_Quality---
@@ -428,17 +429,15 @@ END
 ELSE
 BEGIN
 
-	insert into BD_LINE_1_Quality__Class___Shap_Mapping (BD_LINE_1_Quality__Class___Shap)
-	select DISTINCT P.BD_LINE_1_Quality__Class___Shap 
-	from PARCEL_VECTORS P
-	where P.BD_LINE_1_Quality__Class___Shap not in (
-	select DISTINCT P.BD_LINE_1_Quality__Class___Shap from PARCEL_VECTORS P
-	inner join BD_LINE_1_Quality__Class___Shap_Mapping M
-	on M.BD_LINE_1_Quality__Class___Shap = P.BD_LINE_1_Quality__Class___Shap
+	INSERT INTO BD_LINE_1_Quality__Class___Shap_Mapping (BD_LINE_1_Quality__Class___Shap)
+	SELECT DISTINCT P.BD_LINE_1_Quality__Class___Shap 
+	FROM PARCEL_VECTORS P
+	WHERE P.BD_LINE_1_Quality__Class___Shap NOT IN (
+	SELECT DISTINCT P.BD_LINE_1_Quality__Class___Shap FROM PARCEL_VECTORS P
+	INNER JOIN BD_LINE_1_Quality__Class___Shap_Mapping M
+	ON M.BD_LINE_1_Quality__Class___Shap = P.BD_LINE_1_Quality__Class___Shap
 	)
-
 END
-
 
 --7
 ----Table to map City---
@@ -451,19 +450,16 @@ BEGIN
 END
 ELSE
 BEGIN
-	insert into City_Mapping (City)
-	select DISTINCT P.City 
-	from PARCEL_VECTORS P
-	where P.City not in (
-	select DISTINCT P.City from PARCEL_VECTORS P
-	inner join City_Mapping M
-	on M.City = P.City
+	INSERT INTO City_Mapping (City)
+	SELECT DISTINCT P.City 
+	FROM PARCEL_VECTORS P
+	WHERE P.City NOT IN (
+	SELECT DISTINCT P.City FROM PARCEL_VECTORS P
+	INNER JOIN City_Mapping M
+	ON M.City = P.City
 	)
-
 END
-
---------------------------------------------------------------------------------------
-
+-- =============================================
 
 ALTER TABLE PARCEL_VECTORS
 ADD SA_Localization_int int, 
@@ -477,125 +473,125 @@ ADD SA_Localization_int int,
 
 
 ---Rewriting mapping from mapping tables into Lands_Vector table----------
-
 --1
-update l set l.SA_Direction_int = d.Direction_int
-from PARCEL_VECTORS l
-inner join Directions_Mapping d on l.SA_Direction = d.Direction
+UPDATE l SET l.SA_Direction_int = d.Direction_int
+FROM PARCEL_VECTORS l
+INNER JOIN Directions_Mapping d ON l.SA_Direction = d.Direction
 GO
 
-update PARCEL_VECTORS
-set SA_Direction_int = 1 
-where SA_Direction is null
+UPDATE PARCEL_VECTORS
+SET SA_Direction_int = 1 
+WHERE SA_Direction IS NULL
 GO
 
 --2
-update l set l.MA_Direction_int = d.Direction_int
-from PARCEL_VECTORS l
-inner join Directions_Mapping d on l.MA_Direction = d.Direction
+UPDATE l SET l.MA_Direction_int = d.Direction_int
+FROM PARCEL_VECTORS l
+INNER JOIN Directions_Mapping d ON l.MA_Direction = d.Direction
 GO
 
-update PARCEL_VECTORS
-set MA_Direction_int = 1 
-where MA_Direction is null
+UPDATE PARCEL_VECTORS
+SET MA_Direction_int = 1 
+WHERE MA_Direction IS NULL
 GO
 
 
 --3
-update l set l.Zoning_Code_int = z.Zoning_Code_int
-from PARCEL_VECTORS l
-inner join Zoning_Codes_Mapping z on l.Zoning_Code = z.Zoning_Code
+UPDATE l SET l.Zoning_Code_int = z.Zoning_Code_int
+FROM PARCEL_VECTORS l
+INNER JOIN Zoning_Codes_Mapping z ON l.Zoning_Code = z.Zoning_Code
 GO
 
 --Zoning Code = NULL -> Zoning_Code_int = 0
-update PARCEL_VECTORS
-set Zoning_Code_int = 0 
-where Zoning_Code_int is null
+UPDATE PARCEL_VECTORS
+SET Zoning_Code_int = 0 
+WHERE Zoning_Code_int IS NULL
 GO
 
 --4
-update l set l.SA_Localization_int = lm.SA_Street_and_City_and_State_int
-from PARCEL_VECTORS l
-inner join Localization_SA_Mapping lm on l.SA_Street_and_City_and_State = lm.SA_Street_and_City_and_State
+UPDATE l SET l.SA_Localization_int = lm.SA_Street_and_City_and_State_int
+FROM PARCEL_VECTORS l
+INNER JOIN Localization_SA_Mapping lm ON l.SA_Street_and_City_and_State = lm.SA_Street_and_City_and_State
 GO
 
-update PARCEL_VECTORS
-set SA_Localization_int = 0 
-where SA_Localization_int is null
+UPDATE PARCEL_VECTORS
+SET SA_Localization_int = 0 
+WHERE SA_Localization_int IS NULL
 GO
 
 
 --5
-update l set l.MA_Localization_int = lm.MA_Street_and_City_and_State_int
-from PARCEL_VECTORS l
-inner join Localization_MA_Mapping lm on l.MA_Street_and_City_and_State = lm.MA_Street_and_City_and_State
+UPDATE l SET l.MA_Localization_int = lm.MA_Street_and_City_and_State_int
+FROM PARCEL_VECTORS l
+INNER JOIN Localization_MA_Mapping lm ON l.MA_Street_and_City_and_State = lm.MA_Street_and_City_and_State
 GO
 
-update PARCEL_VECTORS
-set MA_Localization_int = 0 
-where MA_Localization_int is null
+UPDATE PARCEL_VECTORS
+SET MA_Localization_int = 0 
+WHERE MA_Localization_int IS NULL
 GO
 
 
 --6
-update l set l.Simple_Zone_int = s.Simple_Zone_int
-from PARCEL_VECTORS l
-inner join Simple_Zones_Mapping s on l.Simple_Zoning_Code = s.Simple_Zoning_Code
+UPDATE l SET l.Simple_Zone_int = s.Simple_Zone_int
+FROM PARCEL_VECTORS l
+INNER JOIN Simple_Zones_Mapping s ON l.Simple_Zoning_Code = s.Simple_Zoning_Code
 GO
 
-update PARCEL_VECTORS
-set Simple_Zone_int = 1 
-where Simple_Zone_int is null
+UPDATE PARCEL_VECTORS
+SET Simple_Zone_int = 1 
+WHERE Simple_Zone_int IS NULL
 GO
 
 --7
-update l set l.BD_LINE_1_Quality__Class___Shap_int = m.BD_LINE_1_Quality__Class___Shap_int
-from PARCEL_VECTORS l
-inner join BD_LINE_1_Quality__Class___Shap_Mapping m on l.BD_LINE_1_Quality__Class___Shap = m.BD_LINE_1_Quality__Class___Shap
+UPDATE l SET l.BD_LINE_1_Quality__Class___Shap_int = m.BD_LINE_1_Quality__Class___Shap_int
+FROM PARCEL_VECTORS l
+INNER JOIN BD_LINE_1_Quality__Class___Shap_Mapping m ON l.BD_LINE_1_Quality__Class___Shap = m.BD_LINE_1_Quality__Class___Shap
 GO
 
-update PARCEL_VECTORS
-set BD_LINE_1_Quality__Class___Shap_int = 0 
-where BD_LINE_1_Quality__Class___Shap_int is null
+UPDATE PARCEL_VECTORS SET BD_LINE_1_Quality__Class___Shap_int = 0 
+WHERE BD_LINE_1_Quality__Class___Shap_int IS NULL
 GO
 
 --8
-update l set l.City_int = c.City_int
-from PARCEL_VECTORS l
-inner join City_Mapping c on l.City = c.City
+UPDATE l SET l.City_int = c.City_int
+FROM PARCEL_VECTORS l
+INNER JOIN City_Mapping c ON l.City = c.City
 GO
 
 --City = NULL -> City_int = 0
-update PARCEL_VECTORS
-set City_int = 0 
-where City_int is null
+UPDATE PARCEL_VECTORS
+SET City_int = 0 
+WHERE City_int IS NULL
 GO
 
-
-------Droping columns with string values from Lands_Vectors -----
+-- =============================================
+-- Droping columns with string values from Lands_Vectors
+-- =============================================
 ALTER TABLE PARCEL_VECTORS
 DROP COLUMN 
 SA_Direction, SA_Street_Name, SA_City_and_State, 
 MA_Direction, MA_Street_Name, MA_City_and_State,
 Zoning_Code, BD_LINE_1_Quality__Class___Shap,
-SA_Street_and_City_and_State, MA_Street_and_City_and_State, City, Simple_Zoning_Code, Shape
+SA_Street_and_City_and_State, MA_Street_and_City_and_State, City, Simple_Zoning_Code
 
+-- =============================================
+-- Mapping NULL values into numbers
+-- =============================================
 
-------Mapping NULL values into numbers----------
+EXEC UpdateNullValues
 
-exec UpdateNullValues
+EXEC GetColumnsWithNullValues
 
-exec GetColumnsWithNullValues
+-- =============================================
+-- Move LS1_Sale_Amount column to the end and rename it
+-- =============================================
 
-
----Move LS1_Sale_Amount column to the end and rename it
-
-alter table PARCEL_VECTORS
-add Sale_Amount int 
+ALTER TABLE PARCEL_VECTORS
+ADD Sale_Amount int 
 GO
 
-update PARCEL_VECTORS set Sale_Amount = LS1_Sale_Amount
+UPDATE PARCEL_VECTORS SET Sale_Amount = LS1_Sale_Amount
 GO
-
-alter table PARCEL_VECTORS
-drop column LS1_Sale_Amount
+ALTER TABLE PARCEL_VECTORS
+DROP COLUMN LS1_Sale_Amount

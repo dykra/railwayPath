@@ -1,6 +1,4 @@
 
---Konstruujemy sql, ktory jest dla kazdej kolumny oddzielnym insertem 
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,23 +16,23 @@ BEGIN
 	
 	SET NOCOUNT ON;
 
-    if object_id('tempdb..#COLUMNS_WITH_NULL') is not null  --Columns with at least one NULL value.
-       drop table #COLUMNS_WITH_NULL
+    IF object_id('tempdb..#COLUMNS_WITH_NULL') IS NOT NULL  --Columns with at least one NULL value.
+       DROP TABLE #COLUMNS_WITH_NULL
 	
-	DECLARE @sql as nvarchar(max)=''	
+	DECLARE @sqlInsertString as nvarchar(max)=''	
 
-	SELECT @sql+='SET NOCOUNT ON; IF EXISTS (select * from ' + c.TABLE_NAME + ' where ' + 
+	SELECT @sqlInsertString +='SET NOCOUNT ON; IF EXISTS (select * from ' + c.TABLE_NAME + ' where ' + 
 	c.COLUMN_NAME + ' is null) INSERT #COLUMNS_WITH_NULL (TABLE_NAME, COLUMN_NAME) VALUES(' + 
 	QUOTENAME(c.TABLE_NAME, '''') + ',' + QUOTENAME(c.COLUMN_NAME, '''') + ') ' + CHAR(13)
-	FROM information_schema.columns c where table_name = @Table_Name
+	FROM information_schema.columns c WHERE table_name = @Table_Name
 
 	CREATE TABLE #COLUMNS_WITH_NULL (TABLE_NAME nvarchar(2000), COLUMN_NAME nvarchar(2000));
-	EXEC sp_executesql @sql
+	EXEC sp_executesql @sqlInsertString
 
-	select * from #COLUMNS_WITH_NULL
+	SELECT * FROM #COLUMNS_WITH_NULL
 
-	drop table #COLUMNS_WITH_NULL
+	DROP TABLE #COLUMNS_WITH_NULL
 END
 GO
 
-exec GetColumnsWithNullValues @Table_Name = 'PARCEL_VECTORS' 
+-- EXEC GetColumnsWithNullValues @Table_Name = 'PARCEL_VECTORS' 
