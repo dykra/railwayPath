@@ -12,6 +12,10 @@ require([
   Draw, Graphic,
   Polyline, geometryEngine
 ) {
+
+  const minimalRadius = 1000.0;
+
+
   var map = new Map({
     basemap: "gray"
   });
@@ -117,27 +121,35 @@ require([
     }
   }
 
+  //TODO: refactor
   // function that checks if the line intersects itself
   function isSelfIntersecting(polyline) {
     if (polyline.paths[0].length < 3) {
       return false
     }
+
+
     let line = polyline.clone();
 
     //get the last segment from the polyline that is being drawn
-    let lastSegment = getLastSegment(polyline);
-    line.removePoint(0, line.paths[0].length - 1);
+    let lastSegment = getLastSegment(polyline, 3);
+
+    const A = lastSegment.paths[0][0];
+    const B = lastSegment.paths[0][1];
+    const C = lastSegment.paths[0][2];
+    const area = Math.abs(((B.x-A.x)*(C.y-A.y))-((B.y-A.y)*(C.x-A.x)))/2;
+    const perimeter = (Math.sqrt(Math.pow(A.x-B.x, 2)+Math.pow(A.y-B.y, 2)))*(Math.sqrt(Math.pow(B.x-C.x, 2)+Math.pow(B.y-C.y, 2)))*(Math.sqrt(Math.pow(C.x-A.x, 2)+Math.pow(C.y-A.y, 2)));
+    const radius = perimeter/(4*area);
+    console.log({radius,perimeter,area});
 
 
     // returns true if the line intersects itself, false otherwise
-    return geometryEngine.crosses(lastSegment, line);
+    return radius<=minimalRadius;
   }
 
   // Checks if the line intersects itself. If yes, changes the last
   // segment's symbol giving a visual feedback to the user.
   function getIntersectingFeature(polyline) {
-    window.xd1=polyline;
-    window.xd2=geometryEngine;
     if (isSelfIntersecting(polyline)) {
       return new Graphic({
         geometry: getLastSegment(polyline),
@@ -153,20 +165,25 @@ require([
   }
 
   // Get the last segment of the polyline that is being drawn
-  function getLastSegment(polyline) {
-    let line = polyline.clone();
-    let lastXYPoint = line.getPoint(0, line.paths[0].length - 1);
-    let existingLineFinalPoint = line.getPoint(0, line.paths[0].length - 2);
+  function getLastSegment(polyline, points = 3) {
+    const line = polyline.clone();
 
-    return new Polyline({
+    let paths = [];
+
+    if(line.paths[0].length<points)
+      return line;
+
+    for(let i=1;i<=points;i++){
+      paths.push(line.getPoint(0, line.paths[0].length-i));
+    }
+
+    return {
+      type: "polyline",
       spatialReference: view.spatialReference,
       hasZ: false,
       paths: [
-        [
-          [existingLineFinalPoint.x, existingLineFinalPoint.y],
-          [lastXYPoint.x, lastXYPoint.y]
-        ]
+        paths
       ]
-    });
+    };
   }
 });
