@@ -1,7 +1,7 @@
 """
     SQL server authentication data.
 """
-database_password = ''
-server = ''
-user_name = ''
+server_name = ''
 database_name = ''
+user_name = ''
+database_password = ''

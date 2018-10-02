@@ -101,11 +101,12 @@ def prepare_price_estimator_model(execute_view_query, database_handler, bucket_t
                                                     checkpoint_file_path, limit_date=date_limit,
                                                     extension='.hdf5', bucket_type=bucket_type))
 
-    data_frame = database_handler.execute_query(execute_view_query)
+    # data frame type
+    data_to_train_model = database_handler.execute_query(execute_view_query)
 
     # split into X set and Y set
-    x = data_frame.iloc[:, 1:71]
-    y = data_frame.iloc[:, 71]
+    x = data_to_train_model.iloc[:, 1:71]
+    y = data_to_train_model.iloc[:, 71]
 
     results = model_trainer.fit_the_model(training_x_values=x.values, training_y_values=y.values,
                                           batch_size=len(x.values), epochs=epochs_value,
