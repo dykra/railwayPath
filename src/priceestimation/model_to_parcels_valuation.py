@@ -6,7 +6,7 @@ import logging
 import sys
 from keras.callbacks import ModelCheckpoint
 from src.priceestimation.utils.logger import create_loggers_helper
-from src.priceestimation.constants.configuration_constants import *
+from src.priceestimation.configuration.configuration_constants import *
 from src.priceestimation.utils.serialization_module import serialization_object_decorate, update_bucket_type
 
 
