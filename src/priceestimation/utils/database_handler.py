@@ -17,11 +17,12 @@ logger = create_logger()
 
 class DatabaseHandler:
     def __init__(self,
-                 server='',
-                 user_name='',
-                 database_name=''):
+                 server_name='',
+                 database_name='',
+                 user_name=''
+                 ):
         try:
-            self.conn = pymssql.connect(server=server,
+            self.conn = pymssql.connect(server=server_name,
                                         user=user_name,
                                         password=database_password,
                                         database=database_name)
