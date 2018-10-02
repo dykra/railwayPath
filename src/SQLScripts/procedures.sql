@@ -2,7 +2,7 @@
 -- Procedure to get training data
 -- ===============================================
 
-CREATE PROCEDURE dbo.getTrainingDataPriceEstimation
+CREATE PROCEDURE dbo.GetDateToTrainModel
     @LimitDate nvarchar(30),
     @BucketType nvarchar(30),
     @ExcludedList nvarchar(MAX)
@@ -37,7 +37,7 @@ GO
 -- Procedure to get data to calculate
 -- ===============================================
 
-CREATE PROCEDURE dbo.getDataForPriceCalculation
+CREATE PROCEDURE dbo.GetDataToParcelsValuation
     @LimitDate nvarchar(30),
     @BucketType nvarchar(30),
     @ExcludedList nvarchar(MAX)
@@ -57,7 +57,8 @@ SELECT  OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr, LAND_Curr_Val
         BD_LINE_4_Year_Changed, Landlord_Reappraisal_Year, Landlord_Number_of_Units, Recorders_Document_Number,
         Price_Per_Single_Area_Unit, Parcel_Area, Residential, Special_Purposes_Plan, Agricultural, Commercial,
         Manufacturing, SA_Localization_int, MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
-        Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_AmountFROM PARCEL_VECTORS
+        Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount
+FROM PARCEL_VECTORS
 WHERE Price_Group LIKE @BucketType
       AND ( LS1_Sale_Date <= @LimitDate
             OR
@@ -69,11 +70,11 @@ GO
 -- ===============================================
 
 
-CREATE PROCEDURE dbo.UpdateParcelVectors
-    @L1_Sale_Amount int,
+CREATE PROCEDURE dbo.UpdateEstimated_Amount
+    @NEW_Estimated_Amount int,
     @ObjectID int
 AS
 UPDATE PARCEL_VECTORS
-  SET LS1_Sale_Amount = @L1_Sale_Amount--, RowVersionCount = RowVersionCount + 1
+  SET Estimated_Amount = @NEW_Estimated_Amount, RowVersionStamp = RowVersionStamp + 1
   WHERE OBJECTID = @ObjectID
 GO
