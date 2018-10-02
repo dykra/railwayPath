@@ -2,8 +2,11 @@ import pymssql
 import pandas as pd
 import logging
 import sys
-from src.priceestimation.constants.database_connection_constants import database_password
+from dotenv import load_dotenv
 from src.priceestimation.utils.logger import create_loggers_helper
+import os
+
+load_dotenv()
 
 
 def create_logger():
@@ -17,9 +20,10 @@ logger = create_logger()
 
 class DatabaseHandler:
     def __init__(self,
-                 server_name='',
-                 database_name='',
-                 user_name=''
+                 server_name=os.getenv("server_name"),
+                 database_name=os.getenv("database_name"),
+                 user_name=os.getenv("user_name"),
+                 database_password=os.getenv("database_password")
                  ):
         try:
             self.conn = pymssql.connect(server=server_name,
