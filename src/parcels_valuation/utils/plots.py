@@ -1,6 +1,6 @@
 import logging
 from matplotlib import pyplot
-from src.priceestimation.utils.logger import  create_loggers_helper
+from src.parcels_valuation.utils.logger import  create_loggers_helper
 
 
 def create_logger():

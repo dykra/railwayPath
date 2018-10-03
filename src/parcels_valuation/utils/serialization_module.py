@@ -1,7 +1,7 @@
 import pickle
 import logging
 import os
-from src.priceestimation.utils.logger import create_loggers_helper
+from src.parcels_valuation.utils.logger import create_loggers_helper
 
 
 def create_logger():
@@ -13,13 +13,13 @@ def create_logger():
 logger = create_logger()
 
 
-_current_bucket_type_global = ""
+model_filename = ""
 
 
-def update_bucket_type(bucket_type):
-    global _current_bucket_type_global
-    _current_bucket_type_global = bucket_type
-    print(_current_bucket_type_global)
+def set_model_filename(_model_filename):
+    global model_filename
+    model_filename = _model_filename
+    print(model_filename)
 
 
 def serialize_class_pickle(file_name, class_object):
@@ -38,10 +38,10 @@ def serialization_object_decorate(
         serialize_function, deserialize_function):
     def serialization_with_arguments(func):
         def func_wrapper(*args, **kwargs):
-            if os.path.exists(_current_bucket_type_global):
-                return deserialize_function(file_name=_current_bucket_type_global)
+            if os.path.exists(model_filename):
+                return deserialize_function(file_name=model_filename)
             result = func(*args, **kwargs)
-            serialize_function(_current_bucket_type_global, result)
+            serialize_function(model_filename, result)
             return result
         return func_wrapper
     return serialization_with_arguments
