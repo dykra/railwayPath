@@ -5,9 +5,9 @@ import numpy
 import logging
 import sys
 from keras.callbacks import ModelCheckpoint
-from src.priceestimation.utils.logger import create_loggers_helper
-from src.priceestimation.configuration.configuration_constants import *
-from src.priceestimation.utils.serialization_module import serialization_object_decorate, update_bucket_type
+from src.parcels_valuation.utils.logger import create_loggers_helper
+from src.parcels_valuation.configuration.configuration_constants import *
+from src.parcels_valuation.utils.serialization_module import serialization_object_decorate, set_model_filename
 
 
 def create_logger():
@@ -19,7 +19,7 @@ def create_logger():
 logger = create_logger()
 
 
-def generate_file_name_with_price_limit(base_name, limit_date, bucket_type, extension='.h5'):
+def make_file_name(base_name, limit_date, bucket_type, extension='.h5'):
     return base_name + '_' + limit_date + str(bucket_type) + extension
 
 
@@ -94,15 +94,15 @@ def deserialize_price_estimator_model(file_name):
 @serialization_object_decorate(serialize_function=serialize_price_estimator_model,
                                deserialize_function=deserialize_price_estimator_model,
                                )
-def prepare_price_estimator_model(execute_view_query, database_handler, bucket_type):
+def prepare_price_estimator_model(sp_get_date_to_train_model, database_handler, bucket_type):
     logger.info('CREATING MODEL')
     model_trainer = PricePredictionModelTrainer(weights_path=weights_file_path,
-                                                checkpoint_file_path_input=generate_file_name_with_price_limit(
+                                                checkpoint_file_path_input=make_file_name(
                                                     checkpoint_file_path, limit_date=date_limit,
                                                     extension='.hdf5', bucket_type=bucket_type))
 
-    # data frame type
-    data_to_train_model = database_handler.execute_query(execute_view_query)
+    # type: dataframe
+    data_to_train_model = database_handler.execute_query(sp_get_date_to_train_model)
 
     # split into X set and Y set
     x = data_to_train_model.iloc[:, 1:71]
