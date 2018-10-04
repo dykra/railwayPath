@@ -34,7 +34,6 @@ SELECT
 	Recorders_Document_Number, Shape --5
 INTO PARCEL_VECTORS FROM PARCEL;
 
-
 -- =============================================
 -- Get data from Zoning_Code column
 -- Adding and filling new column Simple_Zoning_Code
@@ -112,7 +111,7 @@ UPDATE PARCEL_VECTORS
 GO
 
 
--- for SCUR1, SCUR2, SCUR3, SCUR4, SCUR5 
+-- For SCUR1, SCUR2, SCUR3, SCUR4, SCUR5 
 UPDATE PARCEL_VECTORS
   SET Simple_Zoning_Code = substring(Zoning_Code, 4, 2)
     WHERE Zoning_Code LIKE 'SCUR%'
@@ -306,7 +305,6 @@ SET MA_Street_and_City_and_State = MA_Street_Name + ' '+ MA_City_and_State,
 --1
 ---Table to map simple_zone
 
-
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'Simple_Zones_Mapping'))
@@ -328,8 +326,8 @@ BEGIN
 END
 
 --2
-----Table to map SA_Direction and MA_Direction---
---only possible values are NULL, W, E, N, S - so this table do not need updates when the data set is growing
+-- Table to map SA_Direction and MA_Direction
+-- only possible values are NULL, W, E, N, S - so this table do not need updates when the data set is growing
 
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
@@ -358,7 +356,7 @@ BEGIN
 END
 
 --3
-----Table to map SA_Street-and_City-and_State---
+-- Table to map SA_Street-and_City-and_State 
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'Localization_SA_Mapping'))
@@ -378,7 +376,7 @@ BEGIN
 END
 
 --4
-----Table to map MA_Street-and_City-and_State---
+-- Table to map MA_Street-and_City-and_State
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'Localization_MA_Mapping'))
@@ -398,7 +396,7 @@ BEGIN
 END
 
 --5
-----Table to map Zoning_Code---
+-- Table to map Zoning_Code
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'Zoning_Codes_Mapping'))
@@ -419,7 +417,7 @@ BEGIN
 END
 
 --6
-----Table to map BD_LINE_1_Quality---
+-- Table to map BD_LINE_1_Quality
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'BD_LINE_1_Quality__Class___Shap_Mapping'))
@@ -440,8 +438,7 @@ BEGIN
 END
 
 --7
-----Table to map City---
-
+-- Table to map City
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'City_Mapping'))
@@ -472,7 +469,7 @@ ADD SA_Localization_int int,
 	City_int int
 
 
----Rewriting mapping from mapping tables into Lands_Vector table----------
+-- Rewriting mapping from mapping tables into Lands_Vector table
 --1
 UPDATE l SET l.SA_Direction_int = d.Direction_int
 FROM PARCEL_VECTORS l
@@ -495,14 +492,13 @@ SET MA_Direction_int = 1
 WHERE MA_Direction IS NULL
 GO
 
-
 --3
 UPDATE l SET l.Zoning_Code_int = z.Zoning_Code_int
 FROM PARCEL_VECTORS l
 INNER JOIN Zoning_Codes_Mapping z ON l.Zoning_Code = z.Zoning_Code
 GO
 
---Zoning Code = NULL -> Zoning_Code_int = 0
+-- Zoning Code = NULL -> Zoning_Code_int = 0
 UPDATE PARCEL_VECTORS
 SET Zoning_Code_int = 0 
 WHERE Zoning_Code_int IS NULL
@@ -519,7 +515,6 @@ SET SA_Localization_int = 0
 WHERE SA_Localization_int IS NULL
 GO
 
-
 --5
 UPDATE l SET l.MA_Localization_int = lm.MA_Street_and_City_and_State_int
 FROM PARCEL_VECTORS l
@@ -530,7 +525,6 @@ UPDATE PARCEL_VECTORS
 SET MA_Localization_int = 0 
 WHERE MA_Localization_int IS NULL
 GO
-
 
 --6
 UPDATE l SET l.Simple_Zone_int = s.Simple_Zone_int
@@ -559,7 +553,7 @@ FROM PARCEL_VECTORS l
 INNER JOIN City_Mapping c ON l.City = c.City
 GO
 
---City = NULL -> City_int = 0
+-- City = NULL -> City_int = 0
 UPDATE PARCEL_VECTORS
 SET City_int = 0 
 WHERE City_int IS NULL
@@ -588,10 +582,13 @@ EXEC GetColumnsWithNullValues
 -- =============================================
 
 ALTER TABLE PARCEL_VECTORS
-ADD Sale_Amount int 
+ADD Sale_Amount int,
+	Estimated_Amount int,
+	Row_Version_Stamp int  
 GO
 
-UPDATE PARCEL_VECTORS SET Sale_Amount = LS1_Sale_Amount
+UPDATE PARCEL_VECTORS SET Sale_Amount = LS1_Sale_Amount, 
+						  Row_Version_Stamp = 0
 GO
 ALTER TABLE PARCEL_VECTORS
 DROP COLUMN LS1_Sale_Amount
