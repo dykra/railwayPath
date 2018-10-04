@@ -121,7 +121,40 @@ require([
     }
   }
 
-  //TODO: refactor
+  function createPolylineFromPoints(points){
+    return new Polyline({
+      type: "polyline",
+      spatialReference: view.spatialReference,
+      hasZ: false,
+      paths: [
+        points
+      ]
+    });
+  }
+
+  // function that calculate center of circle for further validation
+  function calculateCenterOfCircuscribedCircle(A,B,C) {
+    // I have no idea how to write it more human readable, so in case of bug rewrite whole function
+    let point = A.clone;
+    point.x = (-((A.x * (A.x - B.x)) / (2 * (A.y - B.y))) - ((B.x * (A.x - B.x)) / (2 * (A.y - B.y))) + ((B.x * (B.x - C.x)) / (2 * (B.y - C.y))) + ((C.x * (B.x - C.x)) / (2 * (B.y - C.y))) - (A.y / 2) + (C.y / 2)) / (((B.x - C.x) / (B.y - C.y)) - ((A.x - B.x) / (A.y - B.y)));
+    point.y = ((A.x - B.x) / (B.y - A.y)) * (point.x - (A.x + B.x) / 2) + (A.y + B.y) / 2;
+    return point;
+  }
+
+
+  function calculateCircuscribedCircleRadius(A,B,C){
+    let O = calculateCenterOfCircuscribedCircle(A,B,C);
+
+    //TODO: remove debug logging
+    console.log({"name":"A","x":A.x,"y":A.y, "A":A});
+    console.log({"name":"B","x":B.x,"y":B.y, "B":B});
+    console.log({"name":"C","x":C.x,"y":C.y, "C":C});
+    console.log({"name":"O","x":O.x,"y":O.y, "O":O});
+    console.log(view.spatialReference);
+    // return getDistanceFromLatLonInM(A,O);
+    return Math.sqrt(Math.pow(A.x-O.x,2)+Math.pow(A.y-O.y,2));
+  }
+
   // function that checks if the line intersects itself
   function isSelfIntersecting(polyline) {
     if (polyline.paths[0].length < 3) {
@@ -129,7 +162,6 @@ require([
     }
 
 
-    let line = polyline.clone();
 
     //get the last segment from the polyline that is being drawn
     let lastSegment = getLastSegment(polyline, 3);
@@ -137,13 +169,12 @@ require([
     const A = lastSegment.paths[0][0];
     const B = lastSegment.paths[0][1];
     const C = lastSegment.paths[0][2];
-    const area = Math.abs(((B.x-A.x)*(C.y-A.y))-((B.y-A.y)*(C.x-A.x)))/2;
-    const perimeter = (Math.sqrt(Math.pow(A.x-B.x, 2)+Math.pow(A.y-B.y, 2)))*(Math.sqrt(Math.pow(B.x-C.x, 2)+Math.pow(B.y-C.y, 2)))*(Math.sqrt(Math.pow(C.x-A.x, 2)+Math.pow(C.y-A.y, 2)));
-    const radius = perimeter/(4*area);
-    console.log({radius,perimeter,area});
+
+    const radius = calculateCircuscribedCircleRadius(A,B,C);
 
 
     // returns true if the line intersects itself, false otherwise
+    console.log(radius);
     return radius<=minimalRadius;
   }
 
