@@ -19,11 +19,11 @@ def create_logger():
 logger = create_logger()
 
 
-def make_file_name(base_name, limit_date, bucket_type, extension='.h5'):
-    return base_name + '_' + limit_date + str(bucket_type) + extension
+def make_file_name(base_name, _limit_date, bucket, extension='.h5'):
+    return base_name + '_' + _limit_date + str(bucket) + extension
 
 
-class PricePredictionModelTrainer:
+class ModelTrainer:
 
     def __init__(self, weights_path, checkpoint_file_path_input):
         self.weights_path = weights_path
@@ -42,6 +42,7 @@ class PricePredictionModelTrainer:
         the activation function using the activation argument.
 
     """
+
     def create_model(self):
         self.model = Sequential()
         self.model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
@@ -68,6 +69,7 @@ class PricePredictionModelTrainer:
         for witch the results were the best.
 
     """
+
     def save_callback(self):
         self.callback_list = [ModelCheckpoint(self.checkpoint_path, monitor='val_loss',
                                               verbose=1, save_best_only=True, mode='min')]
@@ -92,14 +94,14 @@ def deserialize_price_estimator_model(file_name):
 
 
 @serialization_object_decorate(serialize_function=serialize_price_estimator_model,
-                               deserialize_function=deserialize_price_estimator_model,
+                               deserialize_function=deserialize_price_estimator_model
                                )
-def prepare_price_estimator_model(sp_get_date_to_train_model, database_handler, bucket_type):
+def get_model(sp_get_date_to_train_model, database_handler):
     logger.info('CREATING MODEL')
-    model_trainer = PricePredictionModelTrainer(weights_path=weights_file_path,
-                                                checkpoint_file_path_input=make_file_name(
-                                                    checkpoint_file_path, limit_date=date_limit,
-                                                    extension='.hdf5', bucket_type=bucket_type))
+    model_trainer = ModelTrainer(weights_path=weights_file_path,
+                                 checkpoint_file_path_input=make_file_name(
+                                     checkpoint_file_path, _limit_date=limit_date,
+                                     extension='.hdf5'))
 
     # type: dataframe
     data_to_train_model = database_handler.execute_query(sp_get_date_to_train_model)
@@ -115,5 +117,3 @@ def prepare_price_estimator_model(sp_get_date_to_train_model, database_handler, 
     logging.info('Model summary:')
     model_trainer.model.summary(results)
     return model_trainer.model
-
-

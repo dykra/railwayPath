@@ -20,10 +20,10 @@ logger = create_logger()
 
 class DatabaseHandler:
     def __init__(self,
-                 server_name=os.getenv("server_name"),
-                 database_name=os.getenv("database_name"),
-                 user_name=os.getenv("user_name"),
-                 database_password=os.getenv("database_password")
+                 server_name=os.getenv("SERVER_NAME"),
+                 database_name=os.getenv("DATABASE_NAME"),
+                 user_name=os.getenv("USER_NAME"),
+                 database_password=os.getenv("DATABASE_PASSWORD")
                  ):
         try:
             self.conn = pymssql.connect(server=server_name,

@@ -9,5 +9,5 @@ setup(
     author='Nowak,Palewicz',
     author_email='railwayPathINZYNIERKA@gmail.com',
     description='',
-    install_requires=['pymssql', 'matplotlib', 'numpy', 'pandas', 'keras'],
+    install_requires=['pymssql', 'matplotlib', 'numpy', 'pandas', 'keras', 'python-dotenv'],
 )

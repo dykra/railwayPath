@@ -2,7 +2,7 @@
     Lower limit date to filter data in order to train the model
     provided in format 'YYYYMMDD'.
 """
-date_limit = 20150000
+limit_date = 20150000
 
 """
     Price values excluded from training the model.
@@ -30,6 +30,6 @@ classification_buckets = ['cheap', 'medium', 'expensive']
     - best results from one training iteration
 """
 weights_file_path = './../resources/init_weights.hdf5'
-prediction_prices_model_file_path = './trained_models/'
+path_to_trained_models = './trained_models/'
 checkpoint_file_path = './../resources/'
 
