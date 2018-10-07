@@ -4,29 +4,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>Draw polyline - 4.8</title>
+  <title>Sketch temporary geometries - 4.9</title>
 
-  <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
-  <script src="https://js.arcgis.com/4.8/"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.9/"></script>
+  <link rel="stylesheet" href="stylesheets/style.css">
 
-  <style>
-    html,
-    body,
-    #viewDiv {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-  <script src="javascript/map.js"></script>
+  <script src="../javascript/map.js" type="module"></script>
 </head>
 
 <body>
 <div id="viewDiv">
-  <div id="line-button" class="esri-widget esri-widget--button esri-interactive"
-       title="Draw polyline">
-    <span class="esri-icon-polyline"></span>
+  <div id="topbar">
+    <button class="action-button esri-icon-blank-map-pin" id="pointButton"
+            type="button" title="Draw point"></button>
+    <button class="action-button esri-icon-polyline" id="polylineButton" type="button"
+            title="Draw polyline"></button>
+    <button class="action-button esri-icon-polygon" id="polygonButton" type="button"
+            title="Draw polygon"></button>
+    <button class="action-button esri-icon-checkbox-unchecked" id="rectangleButton"
+            type="button" title="Draw rectangle"></button>
+    <button class="action-button esri-icon-radio-unchecked" id="circleButton"
+            type="button" title="Draw circle"></button>
+    <button class="action-button esri-icon-trash" id="resetBtn" type="button"
+            title="Clear graphics"></button>
   </div>
 </div>
 </body>
