@@ -23,13 +23,23 @@
 
 <!-- Header -->
 <header class="title_on_image" id="home">
-    <div class="display-middle center">
-        <h1><div class="padding black">
-            <img id = "pen" src ="resource/pen.jpg">
-            <b>Draw</b></div>
-            <div class="hide-on-small-screen subtitle">Railway Path</div></h1>
-        <input> Enter radius </input>
-        <input type="submit" value="Run">
+    <div id="content">
+        <div class="display-middle center">
+            <h1 style="display: flex ">
+                <div class="padding black">
+                    <img id = "pen" src ="resource/pen.jpg">
+                    <b>Draw</b>
+                </div>
+                <div class="hide-on-small-screen subtitle">Railway Path</div>
+            </h1>
+        </div>
+        <div class="inputs">
+            <input placeholder="Design speed">
+            <input placeholder="Minimum radius of curvature">
+            <input placeholder="Maximal fall in the area">
+            <input placeholder="Width of the road under the railway">
+            <button id="run_button">Run</button>
+        </div>
     </div>
 </header>
 
