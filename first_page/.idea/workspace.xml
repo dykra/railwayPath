@@ -12,30 +12,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
-              <folding>
-                <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+      <file leaf-file-name="globus.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resource/globus.jpg">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
-      <file leaf-file-name="index.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/index.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
-            </state>
-          </provider>
+      <file leaf-file-name="p9.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resource/p9.jpg">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
-      <file leaf-file-name="earth.jpeg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/resource/earth.jpeg">
+      <file leaf-file-name="p7.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resource/p7.jpg">
           <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
@@ -44,8 +32,23 @@
           <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
+      <file leaf-file-name="p1.jpg" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/resource/p1.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
       <file leaf-file-name="test.jpg" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/resource/test.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="p4.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resource/p4.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="p5.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resource/p5.jpg">
           <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
@@ -232,12 +235,12 @@
       <workItem from="1534162329234" duration="2352000" />
       <workItem from="1538688369675" duration="1150000" />
       <workItem from="1538689640610" duration="1147000" />
-      <workItem from="1539275000988" duration="8826000" />
+      <workItem from="1539275000988" duration="9171000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51718000" />
+    <option name="totallyTimeSpent" value="52063000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="949" y="139" width="945" height="910" extended-state="0" />
@@ -279,26 +282,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="40" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="40" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/globe.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/globus.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/earthCopyrightFree.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/resource/earth.jpeg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -477,27 +460,6 @@
     <entry file="file://$USER_HOME$/OneDrive/Desktop/poprawione_przez_Marka/Kawiarnia/index.html" />
     <entry file="file://$PROJECT_DIR$/src/resource/alt.png" />
     <entry file="file://$PROJECT_DIR$/src/resource/GIS.png" />
-    <entry file="file://$PROJECT_DIR$/src/resource/test.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/earth.jpeg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/pen.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/p1.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/earthCopyrightFree.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/globus.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resource/globe.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/web-forms2.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -516,12 +478,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/earth.jpeg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p2.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p3.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p7.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p8.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/globe.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p4.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/earthCopyrightFree.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p5.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/globus.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/test.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/pen.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p9.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resource/p1.jpg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
   <component name="masterDetails">
