@@ -596,5 +596,3 @@ GO
 UPDATE PARCEL_VECTORS SET Sale_Amount = LS1_Sale_Amount, 
 						  Row_Version_Stamp = 0
 GO
-ALTER TABLE PARCEL_VECTORS
-DROP COLUMN LS1_Sale_Amount
