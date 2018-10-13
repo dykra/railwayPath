@@ -1,4 +1,10 @@
 ﻿-- =============================================
+-- Author:		Magdalena Nowak, Joanna Palewicz
+-- Create date: 01.05.2018
+-- Description:	Preparation of the table Parcel_Vectors
+-- =============================================
+
+-- =============================================
 -- CREATE NEW TABLE PARCEL_VECTORS
 -- not interested values are dropped
 -- =============================================
@@ -590,5 +596,3 @@ GO
 UPDATE PARCEL_VECTORS SET Sale_Amount = LS1_Sale_Amount, 
 						  Row_Version_Stamp = 0
 GO
-ALTER TABLE PARCEL_VECTORS
-DROP COLUMN LS1_Sale_Amount
