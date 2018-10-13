@@ -269,10 +269,10 @@ UPDATE PARCEL_VECTORS
  UPDATE PARCEL_VECTORS
  SET Price_Group='cheap'
    WHERE LS1_Sale_Amount <= 500000
- UPDATE FILTERED_PARCEL
+ UPDATE PARCEL_VECTORS
  SET Price_Group='medium'
    WHERE ( LS1_Sale_Amount > 500000 and LS1_Sale_Amount < 1000000 )
- UPDATE FILTERED_PARCEL
+ UPDATE PARCEL_VECTORS
  SET Price_Group = 'expensive'
     WHERE LS1_Sale_Amount >= 1000000
 
@@ -316,7 +316,7 @@ ELSE
 BEGIN
 	INSERT INTO Simple_Zones_Mapping (Simple_Zoning_Code)
 	SELECT DISTINCT P.Simple_Zoning_Code 
-	SELECT PARCEL_VECTORS P
+	FROM PARCEL_VECTORS P
 	WHERE P.Simple_Zoning_Code not in (
 		SELECT DISTINCT P.Simple_Zoning_Code FROM PARCEL_VECTORS P
 		inner join Simple_Zones_Mapping L
@@ -339,7 +339,7 @@ ELSE
 BEGIN
 	INSERT INTO Directions_Mapping (Direction)
 	SELECT DISTINCT P.SA_Direction 
-	SELECT PARCEL_VECTORS P
+	FROM PARCEL_VECTORS P
 	WHERE P.SA_Direction NOT IN (
 	SELECT DISTINCT P.SA_Direction FROM PARCEL_VECTORS P
 	INNER JOIN Directions_Mapping D
@@ -367,9 +367,9 @@ ELSE
 BEGIN
 	INSERT INTO Localization_SA_Mapping (SA_Street_and_City_and_State)
 	SELECT DISTINCT P.SA_Street_and_City_and_State 
-	FROM Lands_Vectors P
+	FROM PARCEL_VECTORS P
 	WHERE P.SA_Street_and_City_and_State NOT IN (
-	SELECT DISTINCT P.SA_Street_and_City_and_State FROM Lands_Vectors P
+	SELECT DISTINCT P.SA_Street_and_City_and_State FROM PARCEL_VECTORS P
 	INNER JOIN Localization_SA_Mapping L
 	ON L.SA_Street_and_City_and_State = P.SA_Street_and_City_and_State
 	)
@@ -467,7 +467,7 @@ ADD SA_Localization_int int,
 	Zoning_Code_int int,
 	BD_LINE_1_Quality__Class___Shap_int int,
 	City_int int
-
+GO
 
 -- Rewriting mapping from mapping tables into Lands_Vector table
 --1

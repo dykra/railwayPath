@@ -19,9 +19,10 @@ BEGIN
     DECLARE @sql as nvarchar(max)=''	
 
 	SELECT @sql+='SET NOCOUNT ON; IF EXISTS (select * from ' + c.TABLE_NAME + ' where ' + 
-	c.COLUMN_NAME + ' is null) UPDATE ' + c.TABLE_NAME +' SET ' + c.COLUMN_NAME +' = 0 WHERE '+ 
-	c.COLUMN_NAME +' is null '+ + CHAR(13)
-	FROM information_schema.columns c where table_name = @Table_Name
+	c.COLUMN_NAME + ' is null)' + 
+	'UPDATE ' + c.TABLE_NAME +' SET ' + c.COLUMN_NAME +' = 0 WHERE '+ 
+	c.COLUMN_NAME +' is null' + CHAR(13)
+	FROM information_schema.columns c where table_name = @Table_Name and c.COLUMN_NAME != 'Shape'
 
 	EXEC sp_executesql @sql
 
