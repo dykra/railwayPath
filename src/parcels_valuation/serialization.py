@@ -1,6 +1,6 @@
 import pickle
 import logging
-from src.PriceEstimatorComponent.Utils.logger import create_loggers_helper
+from src.parcels_valuation.utils.logger import create_loggers_helper
 
 
 def create_logger():

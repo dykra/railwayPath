@@ -2,13 +2,12 @@ import os.path
 from sklearn import model_selection
 import sys
 import logging
-
-from src.PriceEstimatorComponent.Utils.database_handler import DatabaseHandler
-from src.PriceEstimatorComponent.Utils.logger import create_loggers_helper
+from src.parcels_valuation.utils.database_handler import DatabaseHandler
+from src.parcels_valuation.utils.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from src.PriceEstimatorComponent.serialization import serialize_class, deserialize_class
-from src.PriceEstimatorComponent.constants import target_column_name
+from src.parcels_valuation.serialization import serialize_class, deserialize_class
+from src.parcels_valuation.configuration.configuration_constants import target_column_name
 
 
 def create_logger():
@@ -52,9 +51,9 @@ def prepare_classification_model(data, target_column=target_column_name):
     return ClassificationLogisticRegression(data, target_column)
 
 
-def classification_regression(server, user_name, database_name):
-    database_handler = DatabaseHandler(server=server, user_name=user_name, database_name=database_name)
-    data_frame = database_handler.execute_statement(statement='select '
+def classification_regression():
+    database_handler = DatabaseHandler()
+    data_frame = database_handler.execute_query(query='select '
                                                               'Price_Group, '
                                                               'Residential,'
                                                               'Special_Purposes_Plan, '
@@ -116,4 +115,4 @@ class ClassificationLogisticRegression:
 
 
 if __name__ == '__main__':
-    classification_regression(server=sys.argv[1], user_name=sys.argv[2], database_name=sys.argv[3])
+    classification_regression()
