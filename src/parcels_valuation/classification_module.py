@@ -6,8 +6,10 @@ from src.parcels_valuation.utils.database_handler import DatabaseHandler
 from src.parcels_valuation.utils.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from src.parcels_valuation.serialization import serialize_class, deserialize_class
+from src.parcels_valuation.utils.serialization_module import *
 from src.parcels_valuation.configuration.configuration_constants import target_column_name
+from src.parcels_valuation.configuration.configuration_constants import *
+from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
 
 
 def create_logger():
@@ -17,6 +19,17 @@ def create_logger():
 
 
 logger = create_logger()
+
+
+def serialize_class_pickle(file_name, class_object):
+    with open(file_name, mode='wb') as binary_file:
+        pickle.dump(class_object, binary_file, protocol=pickle.HIGHEST_PROTOCOL)
+    logger.info('Serialized object to {} '.format(file_name))
+
+
+def deserialize_class_pickle(file_name):
+    logger.debug('Starting file {}  deserialization.'.format(file_name))
+    return pickle.load(open(file_name, 'rb'))
 
 
 class CalculateValue:
@@ -33,58 +46,15 @@ class CalculateValue:
         return y_predicted
 
 
-def serialization_object_decorate(func, file_path="./index.pickle"):
-    def func_wrapper(*args, **kwargs):
-        logger.info('Wrapper')
-        if os.path.exists(file_path):
-            logger.debug('Loading file ' + file_path)
-            return deserialize_class(file_name=file_path)
-        result = func(*args, **kwargs)
-        serialize_class(file_path, result)
-        return result
-
-    return func_wrapper
-
-
-@serialization_object_decorate
-def prepare_classification_model(data, target_column=target_column_name):
-    return ClassificationLogisticRegression(data, target_column)
-
-
-def classification_regression():
-    database_handler = DatabaseHandler()
-    data_frame = database_handler.execute_query(query='select '
-                                                              'Price_Group, '
-                                                              'Residential,'
-                                                              'Special_Purposes_Plan, '
-                                                              'Agricultural, Commercial,  '
-                                                              'Manufacturing, '
-                                                              'Price_Per_Single_Area_Unit, '
-                                                              'IMPROVE_Curr_Value, PARCEL_TYP, '
-                                                              'LAND_Curr_Value, '
-                                                              'PERIMETER,'
-                                                              'PARCEL_TYP,'
-                                                              'CENTER_X,'
-                                                              'CENTER_Y,'
-                                                              'CENTER_LAT,'
-                                                              'CENTER_LON,'
-                                                              'Parcel_Area,'
-                                                              'LAND_Curr_Roll_Yr,'
-                                                              'IMPROVE_Curr_Roll_YR,'
-                                                              'BD_LINE_1_Yr_Built,'
-                                                              'BD_LINE_1_Sq_Ft_of_Main_Improve,'
-                                                              'City_int,'
-                                                              'Current_improvement_base_value,'
-                                                              'cluster_location,'
-                                                              'cluster_type '
-                                                              'FROM FILTERED_PARCEL '
-                                                              'WHERE Price_Group IS NOT NULL')
-    database_handler.close_connection()
-    train, test = train_test_split(data_frame, test_size=0.2)
-    logger.debug('Data is split for training and test.')
-    model = prepare_classification_model(train, 'Price_Group')
-    print(CalculateValue(model).predict(data_to_predict=test))
-    logger.info('Prediction is done.')
+@serialization_object_decorate(serialize_function=serialize_class_pickle,
+                               deserialize_function=deserialize_class_pickle
+                               )
+def get_model(query, model_file_name, target_column, database_handler):
+    logger.info('Creation of model.')
+    data_to_train_the_model = database_handler.execute_query(query)
+    classification_regression_model = ClassificationLogisticRegression(data_to_train_the_model, target_column)
+    logger.info('Model is trained.')
+    return classification_regression_model
 
 
 class ClassificationLogisticRegression:
@@ -101,6 +71,7 @@ class ClassificationLogisticRegression:
         logger.debug('Logistic regression model is computed.')
         return logistic_reg
 
+# TODO moze na to cross_validation_regression trzeba to przerobic? ? ?
     def cross_validation_regression(self):
         k_fold = model_selection.KFold(n_splits=10, random_state=7)
         model_cv = LogisticRegression()
@@ -112,7 +83,3 @@ class ClassificationLogisticRegression:
                                                   scoring=scoring)
         logger.info("10-fold cross validation average accuracy: %.3f" % (results.mean()))
         return model_cv
-
-
-if __name__ == '__main__':
-    classification_regression()

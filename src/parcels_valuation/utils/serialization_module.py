@@ -13,15 +13,8 @@ def create_logger():
 logger = create_logger()
 
 
-def serialize_class_pickle(file_name, class_object):
-    with open(file_name, mode='wb') as binary_file:
-        pickle.dump(class_object, binary_file, protocol=pickle.HIGHEST_PROTOCOL)
-    logger.info('Serialized object to {} '.format(file_name))
-
-
-def deserialize_class_pickle(file_name):
-    logger.debug('Starting file {}  deserialization.'.format(file_name))
-    return pickle.load(open(file_name, 'rb'))
+def make_file_name(base_name, _limit_date, bucket='', extension='.h5'):
+    return base_name + str(_limit_date) + '_' + bucket + extension
 
 
 def serialization_object_decorate(
