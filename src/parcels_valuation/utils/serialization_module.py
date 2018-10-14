@@ -24,7 +24,6 @@ def deserialize_class_pickle(file_name):
     return pickle.load(open(file_name, 'rb'))
 
 
-# file cache, 3 argumenty powinno przyjmować, do jakiego pliku to jest zapisywane
 def serialization_object_decorate(
         serialize_function, deserialize_function):
     def serialization_with_arguments(func):

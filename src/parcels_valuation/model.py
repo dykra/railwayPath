@@ -1,13 +1,13 @@
-from keras.losses import mean_squared_error
-from keras.models import Sequential, load_model
-from keras.layers import Dense
 import numpy
 import logging
 import sys
+from keras.models import Sequential, load_model
+from keras.layers import Dense
+from keras.losses import mean_squared_error
 from keras.callbacks import ModelCheckpoint
 from src.parcels_valuation.utils.logger import create_loggers_helper
 from src.parcels_valuation.configuration.configuration_constants import *
-from src.parcels_valuation.utils.serialization_module import serialization_object_decorate, set_model_filename
+from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
 
 
 def create_logger():
@@ -20,7 +20,7 @@ logger = create_logger()
 
 
 def make_file_name(base_name, _limit_date, bucket, extension='.h5'):
-    return base_name + '_' + _limit_date + str(bucket) + extension
+    return base_name + str(_limit_date) + '_' + bucket + extension
 
 
 class ModelTrainer:
@@ -96,12 +96,10 @@ def deserialize_price_estimator_model(file_name):
 @serialization_object_decorate(serialize_function=serialize_price_estimator_model,
                                deserialize_function=deserialize_price_estimator_model
                                )
-def get_model(sp_get_date_to_train_model, database_handler):
-    logger.info('CREATING MODEL')
+def get_model(sp_get_date_to_train_model, database_handler, model_file_name):
+    logger.info('Creation of model.')
     model_trainer = ModelTrainer(weights_path=weights_file_path,
-                                 checkpoint_file_path_input=make_file_name(
-                                     checkpoint_file_path, _limit_date=limit_date,
-                                     extension='.hdf5'))
+                                 checkpoint_file_path_input=model_file_name)
 
     # type: dataframe
     data_to_train_model = database_handler.execute_query(sp_get_date_to_train_model)
