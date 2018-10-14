@@ -1,4 +1,4 @@
-﻿-- =============================================
+-- =============================================
 -- Author:		Magdalena Nowak, Joanna Palewicz
 -- Create date: 01.05.2018
 -- Description:	Preparation of the table Parcel_Vectors
@@ -37,7 +37,8 @@ SELECT
 	BD_LINE_2_Year_Changed,	BD_LINE_2_Unit_Cost_Main, BD_LINE_2_RCN_Main, 
 	BD_LINE_3_Year_Changed, BD_LINE_3_Unit_Cost_Main,BD_LINE_3_RCN_Main,	--20
 	BD_LINE_4_Year_Changed,	Landlord_Reappraisal_Year,	Landlord_Number_of_Units,	
-	Recorders_Document_Number, Shape --5
+	Recorders_Document_Number, Shape, --5,
+	CENTER_X, CENTER_Y, CENTER_LAT, CENTER_LON
 INTO PARCEL_VECTORS FROM PARCEL;
 
 -- =============================================
@@ -67,7 +68,6 @@ GO
 -- Get data from connected to parcel area
 -- data from Shape geometry column
 -- =============================================
-
 
 UPDATE PARCEL_VECTORS
   SET Parcel_Area=Shape.STArea()
