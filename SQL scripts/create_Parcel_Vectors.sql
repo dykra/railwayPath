@@ -477,9 +477,9 @@ GO
 
 -- Rewriting mapping from mapping tables into Lands_Vector table
 --1
-UPDATE l SET l.SA_Direction_int = d.Direction_int
-FROM PARCEL_VECTORS l
-INNER JOIN Directions_Mapping d ON l.SA_Direction = d.Direction
+UPDATE P SET P.SA_Direction_int = D.Direction_int
+FROM PARCEL_VECTORS P
+INNER JOIN Directions_Mapping D ON P.SA_Direction = D.Direction
 GO
 
 UPDATE PARCEL_VECTORS
@@ -488,9 +488,9 @@ WHERE SA_Direction IS NULL
 GO
 
 --2
-UPDATE l SET l.MA_Direction_int = d.Direction_int
-FROM PARCEL_VECTORS l
-INNER JOIN Directions_Mapping d ON l.MA_Direction = d.Direction
+UPDATE P SET P.MA_Direction_int = D.Direction_int
+FROM PARCEL_VECTORS P
+INNER JOIN Directions_Mapping D ON P.MA_Direction = D.Direction
 GO
 
 UPDATE PARCEL_VECTORS
@@ -499,9 +499,9 @@ WHERE MA_Direction IS NULL
 GO
 
 --3
-UPDATE l SET l.Zoning_Code_int = z.Zoning_Code_int
-FROM PARCEL_VECTORS l
-INNER JOIN Zoning_Codes_Mapping z ON l.Zoning_Code = z.Zoning_Code
+UPDATE P SET P.Zoning_Code_int = Z.Zoning_Code_int
+FROM PARCEL_VECTORS P
+INNER JOIN Zoning_Codes_Mapping Z ON P.Zoning_Code = Z.Zoning_Code
 GO
 
 -- Zoning Code = NULL -> Zoning_Code_int = 0
@@ -511,9 +511,9 @@ WHERE Zoning_Code_int IS NULL
 GO
 
 --4
-UPDATE l SET l.SA_Localization_int = lm.SA_Street_and_City_and_State_int
-FROM PARCEL_VECTORS l
-INNER JOIN Localization_SA_Mapping lm ON l.SA_Street_and_City_and_State = lm.SA_Street_and_City_and_State
+UPDATE P SET P.SA_Localization_int = LM.SA_Street_and_City_and_State_int
+FROM PARCEL_VECTORS P
+INNER JOIN Localization_SA_Mapping LM ON P.SA_Street_and_City_and_State = LM.SA_Street_and_City_and_State
 GO
 
 UPDATE PARCEL_VECTORS
@@ -522,9 +522,9 @@ WHERE SA_Localization_int IS NULL
 GO
 
 --5
-UPDATE l SET l.MA_Localization_int = lm.MA_Street_and_City_and_State_int
-FROM PARCEL_VECTORS l
-INNER JOIN Localization_MA_Mapping lm ON l.MA_Street_and_City_and_State = lm.MA_Street_and_City_and_State
+UPDATE P SET P.MA_Localization_int = LM.MA_Street_and_City_and_State_int
+FROM PARCEL_VECTORS P
+INNER JOIN Localization_MA_Mapping LM ON P.MA_Street_and_City_and_State = LM.MA_Street_and_City_and_State
 GO
 
 UPDATE PARCEL_VECTORS
@@ -533,9 +533,9 @@ WHERE MA_Localization_int IS NULL
 GO
 
 --6
-UPDATE l SET l.Simple_Zone_int = s.Simple_Zone_int
-FROM PARCEL_VECTORS l
-INNER JOIN Simple_Zones_Mapping s ON l.Simple_Zoning_Code = s.Simple_Zoning_Code
+UPDATE P SET P.Simple_Zone_int = S.Simple_Zone_int
+FROM PARCEL_VECTORS P
+INNER JOIN Simple_Zones_Mapping S ON P.Simple_Zoning_Code = S.Simple_Zoning_Code
 GO
 
 UPDATE PARCEL_VECTORS
@@ -544,9 +544,9 @@ WHERE Simple_Zone_int IS NULL
 GO
 
 --7
-UPDATE l SET l.BD_LINE_1_Quality__Class___Shap_int = m.BD_LINE_1_Quality__Class___Shap_int
-FROM PARCEL_VECTORS l
-INNER JOIN BD_LINE_1_Quality__Class___Shap_Mapping m ON l.BD_LINE_1_Quality__Class___Shap = m.BD_LINE_1_Quality__Class___Shap
+UPDATE P SET P.BD_LINE_1_Quality__Class___Shap_int = M.BD_LINE_1_Quality__Class___Shap_int
+FROM PARCEL_VECTORS P
+INNER JOIN BD_LINE_1_Quality__Class___Shap_Mapping M ON P.BD_LINE_1_Quality__Class___Shap = M.BD_LINE_1_Quality__Class___Shap
 GO
 
 UPDATE PARCEL_VECTORS SET BD_LINE_1_Quality__Class___Shap_int = 0 
@@ -554,9 +554,9 @@ WHERE BD_LINE_1_Quality__Class___Shap_int IS NULL
 GO
 
 --8
-UPDATE l SET l.City_int = c.City_int
-FROM PARCEL_VECTORS l
-INNER JOIN City_Mapping c ON l.City = c.City
+UPDATE P SET P.City_int = C.City_int
+FROM PARCEL_VECTORS P
+INNER JOIN City_Mapping C ON P.City = C.City
 GO
 
 -- City = NULL -> City_int = 0
