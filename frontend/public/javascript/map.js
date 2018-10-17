@@ -21,12 +21,16 @@ require([
 
   // GraphicsLayer to hold graphics created via sketch view model
   const graphicsLayer = new GraphicsLayer({
-    id: "tempGraphics"
+    id: "drawGraphic"
+  });
+
+  const tempLayer = new GraphicsLayer({
+    id: "tempGraphic"
   });
 
   let map = new Map({
     basemap: "gray",
-    layers: [graphicsLayer]
+    layers: [graphicsLayer, tempLayer]
   });
   console.log(map);
 
@@ -126,7 +130,7 @@ require([
           if (results.length > 0) {
             for (var i = 0; i < results.length; i++) {
               // Check if we're already editing a graphic
-              if (!editGraphic && results[i].graphic.layer.id === "tempGraphics") {
+              if (!editGraphic && results[i].graphic.layer.id === "drawGraphic") {
                 // Save a reference to the graphic we intend to update
                 editGraphic = results[i].graphic;
 
@@ -220,7 +224,7 @@ require([
         geometry: polygon,
         symbol: polygonSymbol
       });
-      graphicsLayer.add(graphic);
+      tempLayer.add(graphic);
 
     }
 
@@ -267,8 +271,8 @@ require([
     }
 
     function getCenterPolygonPoints(A, B, C, distance){
-      let vectorBC = [C[0]-B[0],C[1]-B[1]];
-      let vectorBA = [A[0]-B[0],A[1]-B[1]];
+      let vectorBC = scaleVectorToDistance([C[0]-B[0],C[1]-B[1]],distance);
+      let vectorBA = scaleVectorToDistance([A[0]-B[0],A[1]-B[1]],distance);
       let vector = [vectorBA[0]+vectorBC[0],vectorBA[1]+vectorBC[1]];
       let points = {first:[], second:[]};
       let sinusSign = (vectorBC[0]*vectorBA[1]-vectorBC[1]*vectorBA[0]);
@@ -277,7 +281,7 @@ require([
         vector[1] = -vector[1];
       }
       if(vector[0]===0 && vector[1] ===0){
-        points = getEdgePolygonPoints(B,C,distance);
+        points = getEdgePolygonPoints(B,C,B,distance);
       } else{
         vector = scaleVectorToDistance(vector, distance);
         points.first = [B[0] + vector[0], B[1] +vector[1]];
