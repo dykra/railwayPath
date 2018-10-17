@@ -1,3 +1,5 @@
-export function test() {
-  console.log("test working");
-}
+(function blop() {
+  function test(){
+    console.log("asdasd");
+  }
+})();

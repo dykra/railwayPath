@@ -7,7 +7,6 @@ import "esri/layers/GraphicsLayer";
 import "dojo/domReady!javascript/map";
 import "esri/geometry/Polyline"
 
-test();
 
 let editGraphic;
 let minimalRadius = 1000.0;
