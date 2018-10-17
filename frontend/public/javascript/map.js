@@ -1,5 +1,5 @@
-let railwaySize = 1000;
-let minimalRadius = 1000;
+let railwaySize = 100;
+let minimalRadius = 500;
 require([
   "esri/views/MapView",
   "esri/Map",
