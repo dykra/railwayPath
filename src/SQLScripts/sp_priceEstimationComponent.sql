@@ -82,6 +82,6 @@ CREATE PROCEDURE dbo.UpdateEstimated_Amount
     @ObjectID int
 AS
 UPDATE PARCEL_VECTORS
-  SET Estimated_Amount = @NEW_Estimated_Amount, RowVersionStamp = RowVersionStamp + 1
+  SET Estimated_Amount = @NEW_Estimated_Amount, Row_Version_Stamp = Row_Version_Stamp + 1
   WHERE OBJECTID = @ObjectID
 GO
