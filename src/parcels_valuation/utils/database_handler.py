@@ -38,7 +38,7 @@ class DatabaseHandler:
 
     def execute_query(self, query):
         self.cursor.execute(query)
-        logger.debug('Reading data from database')
+        logger.debug('Reading data from database, executing: {}'.format(query))
         return pd.read_sql(query, self.conn)
 
     def close_connection(self):

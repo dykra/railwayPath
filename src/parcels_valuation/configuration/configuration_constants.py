@@ -24,12 +24,25 @@ verbose_value = 2
 classification_buckets = ['cheap', 'medium', 'expensive']
 
 """
-   Paths:
+    Name of bucket currently using to train neural network model.
+"""
+current_bucket = 'cheap'
+
+"""
+   Paths to:
     - initial weights for neural network before start training the model
-    - trained models
-    - best results from one training iteration
+    - folder to save trained models files
+    - folder to save files with best results from one training iteration
+    - names convention for trained models and checkpoints files
 """
 weights_file_path = './../resources/init_weights.hdf5'
-path_to_trained_models = './trained_models/'
-checkpoint_file_path = './../resources/'
+model_target_folder = './trained_models/'
+checkpoint_file_target_folder = './../resources/best_result'
+file_names_convention = str(limit_date) + '_' + current_bucket
+
+"""
+  Variable to set if overwrite file with neural network model or not. 
+  Warning! If set to True, previous model would be lost. 
+"""
+model_overwrite = False
 

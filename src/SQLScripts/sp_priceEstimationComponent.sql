@@ -9,7 +9,7 @@
 -- Procedure to get training data
 -- ===============================================
 
-CREATE PROCEDURE dbo.GetDateToTrainModel
+CREATE OR ALTER PROCEDURE dbo.GetDateToTrainModel
     @LimitDate nvarchar(30),
     @BucketType nvarchar(30),
     @ExcludedList nvarchar(MAX)
@@ -44,7 +44,7 @@ GO
 -- Procedure to get data to calculate
 -- ===============================================
 
-CREATE PROCEDURE dbo.GetDataToParcelsValuation
+CREATE OR ALTER PROCEDURE dbo.GetDataToParcelsValuation
     @LimitDate nvarchar(30),
     @BucketType nvarchar(30),
     @ExcludedList nvarchar(MAX)
@@ -77,7 +77,7 @@ GO
 -- ===============================================
 
 
-CREATE PROCEDURE dbo.UpdateEstimated_Amount
+CREATE OR ALTER PROCEDURE dbo.UpdateEstimated_Amount
     @NEW_Estimated_Amount int,
     @ObjectID int
 AS
