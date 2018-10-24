@@ -163,3 +163,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Big Data
+src/resources/EstimatedAmountQuery.txt
+
