@@ -2,7 +2,7 @@ import csv
 import os
 
 from keras.engine.saving import load_model
-
+import numpy as np
 from src.parcels_valuation.configuration.configuration_constants import *
 from src.parcels_valuation.file_names_builder import get_model_filename
 from src.parcels_valuation.utils.database_handler import DatabaseHandler
@@ -32,36 +32,43 @@ def main():
     database_handler = DatabaseHandler()
     try:
         query = ''
-        with open('estimated_prices.csv', mode='w') as estimated_prices_file:
+        with open('estimated_prices.csv', mode='a') as estimated_prices_file:
             estimated_prices_writer = csv.writer(estimated_prices_file, delimiter=',', quotechar='"',
                                                  quoting=csv.QUOTE_MINIMAL)
+            for bucket in classification_buckets:
+                model_filename = get_model_filename()
 
-            # examples: employee_writer.writerow(['John Smith', 'Accounting', 'November'])
-            # employee_writer.writerow(['Erica Meyers', 'IT', 'March'])
+                model = keras_load_model(model_filename)
 
+                df_parcels_to_valuation = database_handler.execute_query("EXEC dbo.GetDataToParcelsValuation "
+                                                                         "@LimitDate = {}, "
+                                                                         "@BucketType={}, "
+                                                                         "@ExcludedList='{}'"
+                                                                         .format(limit_date, bucket, excluded_values))
+                # print('size data to insert ' + df_parcels_to_valuation.size.)
+                x = df_parcels_to_valuation.iloc[:, 1:71]
+                prediction = model.predict(x)
+                print('wycena')
+                print(len(df_parcels_to_valuation))
+                print('predykcja')
+                print(len(prediction))
+                print(prediction)
 
-        for bucket in classification_buckets:
-            model_filename = get_model_filename()
+                for (prediction_value, object_id) in zip(prediction, df_parcels_to_valuation['OBJECTID']):
+                    # query += "EXEC dbo.UpdateEstimated_Amount @NEW_Estimated_Amount = {}, @ObjectID = {}; "\
+                    #    .format(prediction_value[0], object_id)
+                    if prediction_value[0] < 0:
+                        prediction_value[0] = np.absolute(prediction_value[0])
 
-            model = keras_load_model(model_filename)
+                    estimated_prices_writer.writerow([object_id, round(prediction_value[0], 0)])
+                    # database_handler.execute_query("EXEC dbo.UpdateEstimated_Amount @NEW_Estimated_Amount = {}, @ObjectID = {}; "\
+                    #    .format(prediction_value[0], object_id))
 
-            df_parcels_to_valuation = database_handler.execute_query("EXEC dbo.GetDataToParcelsValuation "
-                                                                     "@LimitDate = {}, "
-                                                                     "@BucketType={}, "
-                                                                     "@ExcludedList='{}'"
-                                                                     .format(limit_date, bucket, excluded_values))
-            x = df_parcels_to_valuation.iloc[:, 1:71]
-            prediction = model.predict(x)
-            print(prediction)
-
-            for (prediction_value, object_id) in zip(prediction, df_parcels_to_valuation['OBJECTID']):
-                query += "EXEC dbo.UpdateEstimated_Amount @NEW_Estimated_Amount = {}, @ObjectID = {}; "\
-                    .format(prediction_value[0], object_id)
-        path = './../resources/EstimatedAmountQuery.txt'
-        file_with_query = open(path, 'w')
-        file_with_query.write(query)
-        file_with_query.close()
-        #database_handler.execute_query(query)
+        # path = './../resources/EstimatedAmountQuery.txt'
+        # file_with_query = open(path, 'w')
+        # file_with_query.write(query)
+        # file_with_query.close()
+        # database_handler.execute_query(query)
 
     finally:
         database_handler.close_connection()
