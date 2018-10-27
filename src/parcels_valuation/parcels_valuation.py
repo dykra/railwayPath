@@ -50,7 +50,7 @@ def main():
                     if prediction_value[0] < 0:
                         prediction_value[0] = 0
 
-                    estimated_prices_writer.writerow([object_id, round(prediction_value[0], 0)])
+                    estimated_prices_writer.writerow([object_id, np.uint64(round(prediction_value[0], 0))])
     finally:
         database_handler.close_connection()
 
