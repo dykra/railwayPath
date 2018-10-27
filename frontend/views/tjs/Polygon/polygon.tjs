@@ -1,5 +1,5 @@
 function(errorLayer, tempLayer, polygonStack, polygonSymbol){
-  console.log("object created");
+  // console.log("object created");
 
   var polygonEditGraphic;
 
@@ -25,6 +25,8 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol){
     tempLayer.add(graphic);
     polygonStack[polygonEditGraphic.graphicId] = graphic;
 
+
+
   }
 
   function updateRailwayPolygon(event) {
@@ -32,11 +34,22 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol){
       return;
     }
     getImpossibleSegment(event.geometry);
+    // console.log(oldPolygon);
+    addRailwayPolygon(event);
+  }
+
+  function removeRailwayPolygon(event) {
+    if (event.geometry.type !== "polyline") {
+      return;
+    }
+    getImpossibleSegment(event.geometry);
     let oldPolygon = polygonStack[polygonEditGraphic.graphicId];
     // console.log(oldPolygon);
-    polygonStack[polygonEditGraphic.graphicId] = null;
+    const index = polygonStack.indexOf(polygonEditGraphic);
+    if(index >= 0){
+      polygonStack.splice(index,1);
+    }
     tempLayer.remove(oldPolygon);
-    addRailwayPolygon(event);
   }
 
   function getPolygonPointsFromPolylinePoints(points) {
@@ -129,7 +142,7 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol){
     // console.log(paths);
     for(let i=0;i<paths.length-2;i++){
       const radius = calculateCircuscribedCircleRadius(paths[i],paths[i+1],paths[i+2]);
-      console.log(radius);
+      // console.log(radius);
       if(radius<minimalRadius){
         let points = [paths[i],paths[i+1],paths[i+2]];
         return createPolylineFromPoints(points);
@@ -198,6 +211,10 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol){
     },
     setEditGraphic: function(editGraphic){
       polygonEditGraphic = editGraphic;
+    },
+    removePolygon: function(editGraphic){
+      console.log(polygonStack);
+      return removeRailwayPolygon(editGraphic)
     }
   };
 }

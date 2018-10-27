@@ -1,4 +1,4 @@
-function (map, view) {
+function (map, view, layerStack) {
   showRectangle = function () {
     document.getElementById("rectangle").style.display = 'block';
     document.getElementById("paral").style.display = 'none';
@@ -75,7 +75,8 @@ function (map, view) {
     });
     connectorLayer.definitionExpression = defExpr;
     map.layers.add(connectorLayer);
-    window.testlayer=connectorLayer;
+    layerStack.push(connectorLayer);
+    window.layerStack = layerStack;
     view.popup.clear();
     view.popup.close();
   };
