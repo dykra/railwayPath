@@ -1,6 +1,6 @@
 ﻿
---drop table PARCEL_LAYOUTS_3
-CREATE TABLE PARCEL_LAYOUTS_3
+
+CREATE TABLE PARCEL_LAYOUT
 (
 	OBJECTID INT NOT NULL UNIQUE,
 	CENTER_LAT numeric(38,8),
@@ -17,7 +17,7 @@ CREATE TABLE PARCEL_LAYOUTS_3
 )
 GO
 
-BULK INSERT PARCEL_LAYOUTS_3
+BULK INSERT PARCEL_LAYOUT
     FROM 'C:\Magdalena\INZYNIERKA\Parcel_Layout_withoutShape.csv' --tu zmien sciezkę
     WITH
     (
@@ -27,4 +27,6 @@ BULK INSERT PARCEL_LAYOUTS_3
     ERRORFILE = 'C:\Magdalena\INZYNIERKA\plS_errors.txt', -- tu zmien sciezki
     TABLOCK
     )
-select * from PARCEL_LAYOUTS_3
+
+CREATE CLUSTERED INDEX center_lat_index ON dbo.Parcel_Layout(CENTER_LAT)
+CREATE NONCLUSTERED INDEX center_lon_index ON dbo.Parcel_Layout(CENTER_LON)
