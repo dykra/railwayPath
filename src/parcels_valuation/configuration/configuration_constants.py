@@ -1,5 +1,5 @@
 """ Price classification module configuration constants """
-target_column_name = 'Price_Group'
+target_column_name = 'Price_Group_int'
 
 """
     Lower limit date to filter data in order to train the model
