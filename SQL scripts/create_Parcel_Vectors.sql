@@ -119,7 +119,7 @@ BEGIN
 	Agricultural SMALLINT, 
 	Commercial SMALLINT,
 	Manufacturing SMALLINT,
-	Price_Group VARCHAR(50)
+	Price_Group_int INT
 END
 GO
 
@@ -302,13 +302,13 @@ UPDATE PARCEL_VECTORS
 -- =============================================
 
  UPDATE PARCEL_VECTORS
- SET Price_Group='cheap'
+ SET Price_Group_int = 0
    WHERE LS1_Sale_Amount <= 500000
  UPDATE PARCEL_VECTORS
- SET Price_Group='medium'
+ SET Price_Group_int = 1
    WHERE ( LS1_Sale_Amount > 500000 and LS1_Sale_Amount < 1000000 )
  UPDATE PARCEL_VECTORS
- SET Price_Group = 'expensive'
+ SET Price_Group_int = 2
     WHERE LS1_Sale_Amount >= 1000000
 
 -- =============================================
