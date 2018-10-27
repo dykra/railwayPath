@@ -1,20 +1,25 @@
 let railwaySize = 100;
 let minimalRadius = 500;
 require([
-  "esri/views/MapView",
   "esri/Map",
+  "esri/views/MapView",
+  "esri/layers/FeatureLayer",
   "esri/widgets/Sketch/SketchViewModel",
   "esri/Graphic",
   "esri/layers/GraphicsLayer",
-  "esri/layers/MapImageLayer",
-  "esri/layers/FeatureLayer",
   "esri/geometry/Polygon",
-  "esri/geometry/Polyline"
+  "esri/geometry/Polyline",
+  "esri/layers/MapImageLayer",
 ], function (
-  MapView, Map,
-  SketchViewModel, Graphic, GraphicsLayer,
-  FeatureLayer, MapImageLayer,
-  Polygon, Polyline
+  Map,
+  MapView,
+  FeatureLayer,
+  SketchViewModel,
+  Graphic,
+  GraphicsLayer,
+  Polygon,
+  Polyline,
+  MapImageLayer,
 ) {
 
   let editGraphic;
@@ -45,8 +50,12 @@ require([
   const view = new MapView({
     container: "viewDiv",
     map: map,
-    zoom: 3
+    center: [-118.352, 33.883],
+    scale: 50000,
   });
+
+  const connectorClass = {{reglue:"Connector/connector"}};
+  connectorClass(map,view);
 
   const pointSymbol = {
     type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
