@@ -1,4 +1,4 @@
-function(errorLayer, tempLayer, polygonStack, polygonSymbol){
+function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack){
   // console.log("object created");
 
   var polygonEditGraphic;
@@ -24,6 +24,8 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol){
     });
     tempLayer.add(graphic);
     polygonStack[polygonEditGraphic.graphicId] = graphic;
+    var priceCheckerClass = {{reglue:"Connector/priceChecker"}};
+    var priceChecker = priceCheckerClass(polygonStack, layerStack);
 
 
 

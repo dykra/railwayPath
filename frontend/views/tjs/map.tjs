@@ -10,6 +10,7 @@ require([
   "esri/geometry/Polygon",
   "esri/geometry/Polyline",
   "esri/layers/MapImageLayer",
+  "esri/geometry/geometryEngine"
 ], function (
   Map,
   MapView,
@@ -20,6 +21,7 @@ require([
   Polygon,
   Polyline,
   MapImageLayer,
+  geometryEngine
 ) {
 
   let editGraphic;
@@ -27,6 +29,7 @@ require([
   let polygonStack = [];
   let parcelLayersStack = [];
   let id = 0;
+  let parcelMap = {};
 
   // m.test();
 
@@ -106,7 +109,7 @@ require([
 
     //add polygon object
     const polygonClass = {{reglue:"Polygon/polygon"}};
-    var polygonGenerator = polygonClass(errorLayer, tempLayer,  polygonStack, polygonSymbol);
+    var polygonGenerator = polygonClass(errorLayer, tempLayer,  polygonStack, polygonSymbol, parcelLayersStack);
 
     setUpClickHandler();
 

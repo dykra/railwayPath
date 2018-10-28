@@ -76,7 +76,6 @@ function (map, view, layerStack) {
     connectorLayer.definitionExpression = defExpr;
     map.layers.add(connectorLayer);
     layerStack.push(connectorLayer);
-    window.layerStack = layerStack;
     view.popup.clear();
     view.popup.close();
   };
