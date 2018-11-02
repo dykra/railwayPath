@@ -1,0 +1,11 @@
+function(layerStack){
+  let parcelMap = [];
+  let promiseStack = [];
+  while(layerStack.length>0){
+    promiseStack.push(layerStack.pop().queryFeatures());
+  }
+  return {
+    promiseStack: promiseStack
+  }
+
+}
