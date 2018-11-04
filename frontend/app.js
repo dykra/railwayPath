@@ -7,6 +7,7 @@ var reglue = require('reglue');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var javascriptRouter = require('./routes/javascript');
+var htmlRouter = require('./routes/html');
 
 var app = express();
 
@@ -16,9 +17,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.engine('tjs', reglue.build);
-
+app.engine('html', reglue.build);
 app.use('/', indexRouter);
 app.use('/javascript', javascriptRouter);
+app.use('/html', htmlRouter);
 app.use('/users', usersRouter);
 app.get('/test', function(req, res){
   res.send('test');

@@ -1,0 +1,13 @@
+function(){
+  let url = new URL(location.href);
+  let designSpeed = url.searchParams.get('designSpeed');
+  let minCurvatureRadius = url.searchParams.get('curvatureRadius');
+  let maxFall = url.searchParams.get('maxFall');
+  let roadWidth = url.searchParams.get('roadWidth');
+  return {
+    designSpeed: designSpeed,
+    minCurvatureRadius: minCurvatureRadius,
+    maxFall: maxFall,
+    roadWidth: roadWidth
+  };
+}();

@@ -1,0 +1,45 @@
+function(){
+  const pointSymbol = {
+    type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+    style: "square",
+    color: "#8A2BE2",
+    size: "16px",
+    outline: { // autocasts as new SimpleLineSymbol()
+      color: [255, 255, 255],
+      width: 3
+    }
+  };
+
+  const polylineSymbol = {
+    type: "simple-line", // autocasts as new SimpleLineSymbol()
+    color: "#8A2BE2",
+    width: "4",
+    style: "dash"
+  };
+
+
+  const polylineErrorSymbol = {
+    type: "simple-line", // autocasts as new SimpleLineSymbol()
+    color: "#FF0000",
+    width: "5",
+    style: "solid"
+  };
+
+  const polygonSymbol = {
+    type: "simple-fill", // autocasts as new SimpleFillSymbol()
+    color: "#999900",
+    style: "solid",
+    outline: {
+      color: "white",
+      width: 1
+    }
+  };
+
+  return{
+    polyline: polylineSymbol,
+    polylineError: polylineErrorSymbol,
+    polygon: polygonSymbol,
+    point: pointSymbol
+  }
+
+}();
