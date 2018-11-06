@@ -31,3 +31,10 @@ def parse_result_string_to_map(result_string):
 
     result_map = {"points": result_list}
     return result_map
+
+def create_select_for_ids_list(ids_list):
+    list_string = "("
+    for id in ids_list[:-1]:
+        list_string += str(id['objectid']) + ","
+    list_string += str(ids_list[len(ids_list) - 1]['objectid']) + ")"
+    return "select ObjectID, LS1_Sale_Amount, Zoning_Code from dbo.Parcel where OBJECTID IN {}".format(list_string)
