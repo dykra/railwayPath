@@ -1,15 +1,14 @@
-import os.path
 from sklearn import model_selection
-import sys
-import logging
-from src.parcels_valuation.utils.database_handler import DatabaseHandler
-from src.parcels_valuation.utils.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+# from sklearn.linear_model import LogisticRegressionCV as LogisticRegression
+# from sklearn.neighbors import KNeighborsClassifier as LogisticRegression
+# from sklearn.tree import DecisionTreeClassifier as LogisticRegression
 from src.parcels_valuation.utils.serialization_module import *
-from src.parcels_valuation.configuration.configuration_constants import target_column_name
-from src.parcels_valuation.configuration.configuration_constants import *
 from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
+
+# ToDO - zapytac sie czy to mozliwe ze mamy 1.0 dokladnosc
+# TODO - zamienic pickle na inny modul :) bo nie z kazdym sobie daje rade a chyba sa lepsze niz on xd
+# TODO - opcja do wpisywania updateow do csv a nie tylko przez pythona
 
 
 def create_logger():
@@ -38,10 +37,12 @@ class CalculateValue:
         self.target_column = trained_model.target_column
 
     def predict(self, data_to_predict):
+        from sklearn.model_selection import cross_val_score
         y = data_to_predict[self.model.target_column]
         X = data_to_predict[self.model.X_columns]
         y_predicted = self.model.model.predict(X)
-        logger.info('Accuracy of logistic regression classifier on test set: {:.2f}'
+        # y_predicted = cross_val_score(self.model.model, X, y, cv=5)
+        logger.info('Accuracy of logistic regression: {:.2f}'
                     .format(self.model.model.score(X, y)))
         return y_predicted
 
@@ -66,20 +67,58 @@ class ClassificationLogisticRegression:
         self.model = self.logistic_regression()
 
     def logistic_regression(self):
-        logistic_reg = LogisticRegression()
+        logistic_reg = LogisticRegression(solver='liblinear', multi_class='auto')#dual=False, class_weight={'LAND_Curr_Value': 2})
         logistic_reg.fit(self.data_final[self.X_columns], self.data_final[self.y_column].values.ravel())
         logger.debug('Logistic regression model is computed.')
         return logistic_reg
 
-# TODO moze na to cross_validation_regression trzeba to przerobic? ? ?
+    # def kfold(self):
+    #     from sklearn.model_selection import KFold
+    #     kf = RepeatedKFold(n_splits=5, n_repeats=10, random_state=None)
+    #     for train_index, test_index in kf.split(self.data_final):
+    #         print("Train:", train_index, "Validation:", test_index)
+    #         X_train, X_test = self.data_final[self.X_columns][train_index],\
+    #                           self.data_final[self.y_column][test_index]
+    #         y_train, y_test = self.data_final[self.y_column][train_index], self.data_final[self.y_column][test_index]
+
     def cross_validation_regression(self):
-        k_fold = model_selection.KFold(n_splits=10, random_state=7)
-        model_cv = LogisticRegression()
-        scoring = 'accuracy'
-        results = model_selection.cross_val_score(model_cv,
-                                                  self.data_final[self.X_columns],
-                                                  self.data_final[self.y_column].values.ravel(),
-                                                  cv=k_fold,
-                                                  scoring=scoring)
-        logger.info("10-fold cross validation average accuracy: %.3f" % (results.mean()))
+        # k_fold = model_selection.KFold(n_splits=10, random_state=7)
+        model_cv = LogisticRegression(solver='liblinear', multi_class='auto')
+        # scoring = 'accuracy'
+        # results = model_selection.cross_val_score(model_cv,
+        #                                           self.data_final[self.X_columns],
+        #                                           self.data_final[self.y_column].values.ravel(),
+        #                                           cv=k_fold,
+        #                                           scoring=scoring)
+        # logger.info("10-fold cross validation average accuracy: %.3f" % (results.mean()))
+        model_cv.fit(self.data_final[self.X_columns], self.data_final[self.y_column].values.ravel())
         return model_cv
+
+#L2 chyba lepiej
+
+# solver='liblinear', multi_class='ovr'  0.976
+# z multi_class='auto' 0.977
+# a dopasowanie do modelu to 0.98
+
+# The ‘newton-cg’, ‘sag’, and ‘lbfgs’ solvers support only L2 regularization with primal formulation.
+# The ‘liblinear’ solver supports both L1 and L2 regularization, with a dual formulation only for the L2 penalty.
+#
+# newtton-cg
+# 2018-10-28 14:02:23,054 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
+# 0.976932692683308
+
+#sag
+# 2018-10-28 14:05:26,249 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
+# 0.9760342200867221
+
+#lbfgs
+# 2018-10-28 14:06:54,364 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
+# 0.9760146880737529
+
+#liblinear
+# 2018-10-28 14:08:53,059 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
+# 0.9756240478143677
+
+
+# tak na prawde to jest bez cross_validation model teraz xd
+# LogisticRegressionCV jako z cross_validation -> cy: 0.977; wiec w zasadzie to samo z i bez tego :)

@@ -1,9 +1,30 @@
 from src.parcels_valuation.utils.database_handler import DatabaseHandler
 from src.parcels_valuation.utils.serialization_module import *
 from src.parcels_valuation.configuration.configuration_constants import *
-from src.parcels_valuation.classification_module import CalculateValue, get_model
+from src.parcels_valuation.classification_module import CalculateValue, get_model, ClassificationLogisticRegression
+from sklearn.model_selection import train_test_split
 
 query_step_iterate = 200000
+
+
+def classification_regression_with_test_set():
+    database_handler = DatabaseHandler()
+    query = "EXEC dbo.GetDateToTrainClassificationModel @LimitDate = {}, @ExcludedList ='{}'".format(limit_date,
+                                                                                                     excluded_values)
+    data = database_handler.execute_query(query)
+    train, test = train_test_split(data, test_size=0.3)
+    model = ClassificationLogisticRegression(input_data=train, target_column_name=target_column_name)
+    prediction = CalculateValue(model).predict(data_to_predict=test)
+    from sklearn.metrics import accuracy_score
+    print(accuracy_score(y_true=test[target_column_name], y_pred=prediction))
+    database_handler.close_connection()
+    for predictionItem, realItem in zip(prediction, test[target_column_name]):
+        if predictionItem != realItem:
+            print(predictionItem)
+            print(realItem)
+            print("\n")
+    # print(prediction)
+    # print(test[target_column_name])
 
 
 def classification_regression():
@@ -35,6 +56,7 @@ def classification_regression():
             "@LimitDate = {}, @ExcludedList='{}', @ObjectIdMin = {}, @ObjectIdMax = {}"
             .format(limit_date, excluded_values, tmp_min, tmp_max))
         prediction = CalculateValue(model).predict(data_to_predict=df_parcels_to_estimate_price_group)
+        print(prediction)
         for (prediction_value, object_id) in zip(prediction, df_parcels_to_estimate_price_group['OBJECTID']):
             query = ("EXEC dbo.UpdateEstimatedPriceLevelGroup "
                      "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
@@ -49,3 +71,4 @@ def classification_regression():
 
 if __name__ == '__main__':
     classification_regression()
+    # classification_regression_with_test_set()
