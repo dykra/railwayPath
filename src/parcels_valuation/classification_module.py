@@ -1,9 +1,10 @@
+import logging
+from src.parcels_valuation.utils.logger import create_loggers_helper
 from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 # from sklearn.linear_model import LogisticRegressionCV as LogisticRegression
 # from sklearn.neighbors import KNeighborsClassifier as LogisticRegression
 # from sklearn.tree import DecisionTreeClassifier as LogisticRegression
-from src.parcels_valuation.utils.serialization_module import *
 from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
 
 from sklearn.externals import joblib
