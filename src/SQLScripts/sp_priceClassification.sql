@@ -1,7 +1,7 @@
 -- =============================================
 -- Author:  Joanna Palewicz
 -- Create date: 01.09.2018
--- Description: Procedures which needs to be run before running price estimation component
+-- Description: Procedures to created before running the price estimation component
 -- =============================================
 
 

@@ -6,8 +6,9 @@ from sklearn.linear_model import LogisticRegression
 from src.parcels_valuation.utils.serialization_module import *
 from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
 
+from sklearn.externals import joblib
+
 # ToDO - zapytac sie czy to mozliwe ze mamy 1.0 dokladnosc
-# TODO - zamienic pickle na inny modul :) bo nie z kazdym sobie daje rade a chyba sa lepsze niz on xd
 # TODO - opcja do wpisywania updateow do csv a nie tylko przez pythona
 
 
@@ -20,15 +21,14 @@ def create_logger():
 logger = create_logger()
 
 
-def serialize_class_pickle(file_name, class_object):
-    with open(file_name, mode='wb') as binary_file:
-        pickle.dump(class_object, binary_file, protocol=pickle.HIGHEST_PROTOCOL)
-    logger.info('Serialized object to {} '.format(file_name))
+def serialize_model(file_name, model):
+    joblib.dump(model, file_name)
+    logger.info('Model serialized to {} '.format(file_name))
 
 
-def deserialize_class_pickle(file_name):
-    logger.debug('Starting file {}  deserialization.'.format(file_name))
-    return pickle.load(open(file_name, 'rb'))
+def deserialize_model(file_name):
+    logger.debug('Model {}  deserialization.'.format(file_name))
+    return joblib.load(file_name)
 
 
 class CalculateValue:
@@ -37,18 +37,16 @@ class CalculateValue:
         self.target_column = trained_model.target_column
 
     def predict(self, data_to_predict):
-        from sklearn.model_selection import cross_val_score
         y = data_to_predict[self.model.target_column]
         X = data_to_predict[self.model.X_columns]
         y_predicted = self.model.model.predict(X)
-        # y_predicted = cross_val_score(self.model.model, X, y, cv=5)
-        logger.info('Accuracy of logistic regression: {:.2f}'
+        logger.info('Accuracy of logistic regression: {:.4f}'
                     .format(self.model.model.score(X, y)))
         return y_predicted
 
 
-@serialization_object_decorate(serialize_function=serialize_class_pickle,
-                               deserialize_function=deserialize_class_pickle
+@serialization_object_decorate(serialize_function=serialize_model,
+                               deserialize_function=deserialize_model
                                )
 def get_model(query, model_file_name, target_column, database_handler):
     logger.info('Creation of model.')
@@ -72,17 +70,7 @@ class ClassificationLogisticRegression:
         logger.debug('Logistic regression model is computed.')
         return logistic_reg
 
-    # def kfold(self):
-    #     from sklearn.model_selection import KFold
-    #     kf = RepeatedKFold(n_splits=5, n_repeats=10, random_state=None)
-    #     for train_index, test_index in kf.split(self.data_final):
-    #         print("Train:", train_index, "Validation:", test_index)
-    #         X_train, X_test = self.data_final[self.X_columns][train_index],\
-    #                           self.data_final[self.y_column][test_index]
-    #         y_train, y_test = self.data_final[self.y_column][train_index], self.data_final[self.y_column][test_index]
-
     def cross_validation_regression(self):
-        # k_fold = model_selection.KFold(n_splits=10, random_state=7)
         model_cv = LogisticRegression(solver='liblinear', multi_class='auto')
         # scoring = 'accuracy'
         # results = model_selection.cross_val_score(model_cv,
