@@ -43,9 +43,9 @@ class CalculateValue:
 
 
 @serialization_object_decorate(serialize_function=serialize_classification_model,
-                               deserialize_function=deserialize_classification_model
+                               deserialize_function=deserialize_classification_model,
                                )
-def get_model(query, model_file_name, target_column, database_handler):
+def get_model(query, model_file_name, target_column, database_handler, overwrite=False):
     logger.info('Creation of model.')
     data_to_train_the_model = database_handler.execute_query(query)
     classification_regression_model = ClassificationLogisticRegression(data_to_train_the_model, target_column)

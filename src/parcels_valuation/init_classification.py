@@ -14,7 +14,11 @@ parser = argparse.ArgumentParser(description='Program to predict category of lan
 parser.add_argument('--save_to_database',
                     action='store_true',
                     default=False,
-                    help='Specify whether to save the values into the database')
+                    help='Specify whether to save the values into the database.')
+parser.add_argument('--model_overwrite',
+                    action='store_true',
+                    default=False,
+                    help='Specify whether to override the model.')
 
 
 def classification_regression_with_test_set():
@@ -35,7 +39,7 @@ def classification_regression_with_test_set():
             print("\n")
 
 
-def classification_regression(save_to_database=False):
+def classification_regression(save_to_database=False, overwrite_model=False):
     database_handler = DatabaseHandler()
     model_file_name = make_file_name(base_name=path_to_trained_models + "classification_",
                                      _limit_date=limit_date,
@@ -45,7 +49,8 @@ def classification_regression(save_to_database=False):
                       .format(limit_date, excluded_values),
                       target_column=target_column_name,
                       model_file_name=abspath(model_file_name),
-                      database_handler=database_handler)
+                      database_handler=database_handler,
+                      overwrite=overwrite_model)
 
     min_max_object_id = \
         database_handler.execute_query("EXEC dbo.GetMinimumAndMaxumimObjectID_ParcelVectors "
@@ -89,5 +94,5 @@ def classification_regression(save_to_database=False):
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    classification_regression(save_to_database=args.save_to_database)
+    classification_regression(save_to_database=args.save_to_database, overwrite_model=args.model_overwrite)
     # classification_regression_with_test_set()
