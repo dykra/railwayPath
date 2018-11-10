@@ -22,7 +22,7 @@ classification_buckets = ['cheap', 'medium', 'expensive']
 """
     Name of the csv file to save the predicted bucket values
 """
-file_name_predicted_bucket_values = "estimated_buckets"
+file_name_predicted_price_categories_values = "estimated_buckets"
 
 
 """

@@ -33,8 +33,6 @@ def classification_regression_with_test_set():
             print(predictionItem)
             print(realItem)
             print("\n")
-    # print(prediction)
-    # print(test[target_column_name])
 
 
 def classification_regression(save_to_database=False):
@@ -50,12 +48,13 @@ def classification_regression(save_to_database=False):
                       database_handler=database_handler)
 
     min_max_object_id = \
-        database_handler.execute_query("EXEC dbo.GetMinimumAndMaxumimObjectID @LimitDate = {}, @ExcludedList ='{}'"
+        database_handler.execute_query("EXEC dbo.GetMinimumAndMaxumimObjectID_ParcelVectors "
+                                       "@LimitDate = {}, @ExcludedList ='{}'"
                                        .format(limit_date, excluded_values))
     min_object_id = min_max_object_id.iloc[0]["MinimumObjectID"]
     max_object_id = min_max_object_id.iloc[0]["MaximumObjectID"]
     try:
-        with open(make_file_name(file_name_predicted_bucket_values, extension='.csv'), mode='a') as estimated_bucket_values:
+        with open(make_file_name(file_name_predicted_price_categories_values, extension='.csv'), mode='a') as estimated_bucket_values:
             estimated_bucket_writer = csv.writer(estimated_bucket_values,
                                                  delimiter=',',
                                                  quotechar='"',
@@ -72,10 +71,9 @@ def classification_regression(save_to_database=False):
                     "@LimitDate = {}, @ExcludedList='{}', @ObjectIdMin = {}, @ObjectIdMax = {}"
                     .format(limit_date, excluded_values, tmp_min, tmp_max))
                 prediction = CalculateValue(model).predict(data_to_predict=df_parcels_to_estimate_price_group)
-                print(prediction)
                 for (prediction_value, object_id) in zip(prediction, df_parcels_to_estimate_price_group['OBJECTID']):
                     if save_to_database:
-                        query = ("EXEC dbo.UpdateEstimatedPriceLevelGroup "
+                        query = ("EXEC dbo.UpdateEstimatedPriceCategoryGroup "
                                  "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
                                  .format(prediction_value, object_id))
                         database_handler.cursor.execute(query)

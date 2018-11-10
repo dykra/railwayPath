@@ -10,7 +10,7 @@
 -- ===============================================
 
 CREATE PROCEDURE [dbo].[GetDateToTrainClassificationModel]
-    @LimitDate nvarchar(30),
+    @LimitDate nvarchar(8),
     @ExcludedList nvarchar(MAX)
 AS
 SELECT OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr,
@@ -43,7 +43,7 @@ GO
 -- ============================================================================
 
 
-CREATE PROCEDURE dbo.GetMinimumAndMaxumimObjectID
+CREATE PROCEDURE dbo.GetMinimumAndMaxumimObjectID_ParcelVectors
     @LimitDate nvarchar(30),
     @ExcludedList nvarchar(MAX)
 AS
@@ -94,7 +94,7 @@ GO
 -- ===============================================
 -- Procedure to update table with new value
 -- ===============================================
-CREATE PROCEDURE dbo.UpdateEstimatedPriceLevelGroup
+CREATE PROCEDURE dbo.UpdateEstimatedPriceCategoryGroup
     @NEW_Estimated_Price_Group varchar(20),
     @ObjectID int
 AS

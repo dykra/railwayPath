@@ -62,7 +62,7 @@ class ClassificationLogisticRegression:
         self.model = self.logistic_regression()
 
     def logistic_regression(self):
-        logistic_reg = LogisticRegression(solver='liblinear', multi_class='auto')#dual=False, class_weight={'LAND_Curr_Value': 2})
+        logistic_reg = LogisticRegression(solver='liblinear', multi_class='auto')
         logistic_reg.fit(self.data_final[self.X_columns], self.data_final[self.y_column].values.ravel())
         logger.debug('Logistic regression model is computed.')
         return logistic_reg
@@ -71,32 +71,3 @@ class ClassificationLogisticRegression:
         model_cv = LogisticRegression(solver='liblinear', multi_class='auto')
         model_cv.fit(self.data_final[self.X_columns], self.data_final[self.y_column].values.ravel())
         return model_cv
-
-#L2 chyba lepiej
-
-# solver='liblinear', multi_class='ovr'  0.976
-# z multi_class='auto' 0.977
-# a dopasowanie do modelu to 0.98
-
-# The ‘newton-cg’, ‘sag’, and ‘lbfgs’ solvers support only L2 regularization with primal formulation.
-# The ‘liblinear’ solver supports both L1 and L2 regularization, with a dual formulation only for the L2 penalty.
-#
-# newtton-cg
-# 2018-10-28 14:02:23,054 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
-# 0.976932692683308
-
-#sag
-# 2018-10-28 14:05:26,249 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
-# 0.9760342200867221
-
-#lbfgs
-# 2018-10-28 14:06:54,364 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
-# 0.9760146880737529
-
-#liblinear
-# 2018-10-28 14:08:53,059 - src.parcels_valuation.classification_module - INFO - Accuracy of logistic regression: 0.98
-# 0.9756240478143677
-
-
-# tak na prawde to jest bez cross_validation model teraz xd
-# LogisticRegressionCV jako z cross_validation -> cy: 0.977; wiec w zasadzie to samo z i bez tego :)
