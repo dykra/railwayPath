@@ -1,6 +1,5 @@
 import logging
 from src.parcels_valuation.utils.logger import create_loggers_helper
-from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 # from sklearn.linear_model import LogisticRegressionCV as LogisticRegression
 # from sklearn.neighbors import KNeighborsClassifier as LogisticRegression
@@ -8,9 +7,6 @@ from sklearn.linear_model import LogisticRegression
 from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
 
 from sklearn.externals import joblib
-
-# ToDO - zapytac sie czy to mozliwe ze mamy 1.0 dokladnosc
-# TODO - opcja do wpisywania updateow do csv a nie tylko przez pythona
 
 
 def create_logger():
@@ -73,13 +69,6 @@ class ClassificationLogisticRegression:
 
     def cross_validation_regression(self):
         model_cv = LogisticRegression(solver='liblinear', multi_class='auto')
-        # scoring = 'accuracy'
-        # results = model_selection.cross_val_score(model_cv,
-        #                                           self.data_final[self.X_columns],
-        #                                           self.data_final[self.y_column].values.ravel(),
-        #                                           cv=k_fold,
-        #                                           scoring=scoring)
-        # logger.info("10-fold cross validation average accuracy: %.3f" % (results.mean()))
         model_cv.fit(self.data_final[self.X_columns], self.data_final[self.y_column].values.ravel())
         return model_cv
 

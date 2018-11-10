@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(description='Program to predict category of lan
 parser.add_argument('--save_to_database',
                     action='store_true',
                     default=False,
-                    help='Specify whether save the values into the database')
+                    help='Specify whether to save the values into the database')
 
 
 def classification_regression_with_test_set():
