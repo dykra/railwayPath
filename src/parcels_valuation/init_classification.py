@@ -1,3 +1,4 @@
+import argparse
 import csv
 
 from src.parcels_valuation.utils.database_handler import DatabaseHandler
@@ -7,6 +8,12 @@ from src.parcels_valuation.classification_module import CalculateValue, get_mode
 from sklearn.model_selection import train_test_split
 
 query_step_iterate = 200000
+
+parser = argparse.ArgumentParser(description='Program to predict category of land price.')
+parser.add_argument('--save_to_database',
+                    action='store_true',
+                    default=False,
+                    help='Specify whether save the values into the database')
 
 
 def classification_regression_with_test_set():
@@ -29,7 +36,7 @@ def classification_regression_with_test_set():
     # print(test[target_column_name])
 
 
-def classification_regression():
+def classification_regression(save_to_database=False):
     database_handler = DatabaseHandler()
     model_file_name = make_file_name(base_name=path_to_trained_models + "classification_",
                                      _limit_date=limit_date,
@@ -66,11 +73,12 @@ def classification_regression():
                 prediction = CalculateValue(model).predict(data_to_predict=df_parcels_to_estimate_price_group)
                 print(prediction)
                 for (prediction_value, object_id) in zip(prediction, df_parcels_to_estimate_price_group['OBJECTID']):
-                    # query = ("EXEC dbo.UpdateEstimatedPriceLevelGroup "
-                    #          "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
-                    #          .format(prediction_value, object_id))
-                    # database_handler.cursor.execute(query)
-                    # database_handler.conn.commit()
+                    if save_to_database:
+                        query = ("EXEC dbo.UpdateEstimatedPriceLevelGroup "
+                                 "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
+                                 .format(prediction_value, object_id))
+                        database_handler.cursor.execute(query)
+                        database_handler.conn.commit()
 
                     estimated_bucket_writer.writerow([object_id, prediction_value])
 
@@ -81,5 +89,6 @@ def classification_regression():
 
 
 if __name__ == '__main__':
-    classification_regression()
+    args = parser.parse_args()
+    classification_regression(save_to_database=args.save_to_database)
     # classification_regression_with_test_set()
