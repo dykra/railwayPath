@@ -1,10 +1,11 @@
 import argparse
 import csv
+from os.path import abspath
 
-from src.parcels_valuation.utils.database_handler import DatabaseHandler
-from src.parcels_valuation.utils.serialization_module import *
-from src.parcels_valuation.configuration.configuration_constants import *
-from src.parcels_valuation.classification_module import CalculateValue, get_model, ClassificationLogisticRegression
+from utils.database_handler import DatabaseHandler
+from utils.serialization_module import *
+from configuration.configuration_constants import *
+from classification_module import CalculateValue, get_model, ClassificationLogisticRegression
 from sklearn.model_selection import train_test_split
 
 query_step_iterate = 200000
@@ -45,7 +46,7 @@ def classification_regression(save_to_database=False):
     model = get_model("EXEC dbo.GetDateToTrainClassificationModel @LimitDate = {}, @ExcludedList ='{}'"
                       .format(limit_date, excluded_values),
                       target_column=target_column_name,
-                      model_file_name=model_file_name,
+                      model_file_name=abspath(model_file_name),
                       database_handler=database_handler)
 
     min_max_object_id = \

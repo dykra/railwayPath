@@ -3,7 +3,7 @@ import pandas as pd
 import logging
 import sys
 from dotenv import load_dotenv
-from src.parcels_valuation.utils.logger import create_loggers_helper
+from utils.logger import create_loggers_helper
 import os
 
 load_dotenv()

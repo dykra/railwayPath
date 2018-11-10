@@ -1,6 +1,6 @@
 import logging
 import os
-from src.parcels_valuation.utils.logger import create_loggers_helper
+from utils.logger import create_loggers_helper
 
 
 def create_logger():

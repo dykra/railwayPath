@@ -1,10 +1,10 @@
 import logging
-from src.parcels_valuation.utils.logger import create_loggers_helper
+from utils.logger import create_loggers_helper
 from sklearn.linear_model import LogisticRegression
 # from sklearn.linear_model import LogisticRegressionCV as LogisticRegression
 # from sklearn.neighbors import KNeighborsClassifier as LogisticRegression
 # from sklearn.tree import DecisionTreeClassifier as LogisticRegression
-from src.parcels_valuation.utils.serialization_module import serialization_object_decorate
+from utils.serialization_module import serialization_object_decorate
 
 from sklearn.externals import joblib
 
@@ -18,12 +18,12 @@ def create_logger():
 logger = create_logger()
 
 
-def serialize_model(file_name, model):
+def serialize_classification_model(file_name, model):
     joblib.dump(model, file_name)
     logger.info('Model serialized to {} '.format(file_name))
 
 
-def deserialize_model(file_name):
+def deserialize_classification_model(file_name):
     logger.debug('Model {}  deserialization.'.format(file_name))
     return joblib.load(file_name)
 
@@ -42,8 +42,8 @@ class CalculateValue:
         return y_predicted
 
 
-@serialization_object_decorate(serialize_function=serialize_model,
-                               deserialize_function=deserialize_model
+@serialization_object_decorate(serialize_function=serialize_classification_model,
+                               deserialize_function=deserialize_classification_model
                                )
 def get_model(query, model_file_name, target_column, database_handler):
     logger.info('Creation of model.')
