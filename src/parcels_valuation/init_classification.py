@@ -1,3 +1,5 @@
+import csv
+
 from src.parcels_valuation.utils.database_handler import DatabaseHandler
 from src.parcels_valuation.utils.serialization_module import *
 from src.parcels_valuation.configuration.configuration_constants import *
@@ -44,28 +46,37 @@ def classification_regression():
                                        .format(limit_date, excluded_values))
     min_object_id = min_max_object_id.iloc[0]["MinimumObjectID"]
     max_object_id = min_max_object_id.iloc[0]["MaximumObjectID"]
+    try:
+        with open(make_file_name(file_name_predicted_bucket_values, extension='.csv'), mode='a') as estimated_bucket_values:
+            estimated_bucket_writer = csv.writer(estimated_bucket_values,
+                                                 delimiter=',',
+                                                 quotechar='"',
+                                                 quoting=csv.QUOTE_MINIMAL)
 
-    tmp_min = min_object_id
-    while tmp_min < max_object_id:
-        if tmp_min + query_step_iterate < max_object_id:
-            tmp_max = tmp_min + query_step_iterate
-        else:
-            tmp_max = max_object_id
-        df_parcels_to_estimate_price_group = database_handler.execute_query(
-            "EXEC dbo.GetDataToParcelClassification "
-            "@LimitDate = {}, @ExcludedList='{}', @ObjectIdMin = {}, @ObjectIdMax = {}"
-            .format(limit_date, excluded_values, tmp_min, tmp_max))
-        prediction = CalculateValue(model).predict(data_to_predict=df_parcels_to_estimate_price_group)
-        print(prediction)
-        for (prediction_value, object_id) in zip(prediction, df_parcels_to_estimate_price_group['OBJECTID']):
-            query = ("EXEC dbo.UpdateEstimatedPriceLevelGroup "
-                     "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
-                     .format(prediction_value, object_id))
-            database_handler.cursor.execute(query)
-        #     database_handler.conn.commit()
-        tmp_min = tmp_max
+            tmp_min = min_object_id
+            while tmp_min < max_object_id:
+                if tmp_min + query_step_iterate < max_object_id:
+                    tmp_max = tmp_min + query_step_iterate
+                else:
+                    tmp_max = max_object_id
+                df_parcels_to_estimate_price_group = database_handler.execute_query(
+                    "EXEC dbo.GetDataToParcelClassification "
+                    "@LimitDate = {}, @ExcludedList='{}', @ObjectIdMin = {}, @ObjectIdMax = {}"
+                    .format(limit_date, excluded_values, tmp_min, tmp_max))
+                prediction = CalculateValue(model).predict(data_to_predict=df_parcels_to_estimate_price_group)
+                print(prediction)
+                for (prediction_value, object_id) in zip(prediction, df_parcels_to_estimate_price_group['OBJECTID']):
+                    # query = ("EXEC dbo.UpdateEstimatedPriceLevelGroup "
+                    #          "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
+                    #          .format(prediction_value, object_id))
+                    # database_handler.cursor.execute(query)
+                    # database_handler.conn.commit()
 
-    database_handler.close_connection()
+                    estimated_bucket_writer.writerow([object_id, prediction_value])
+
+                tmp_min = tmp_max
+    finally:
+        database_handler.close_connection()
     logger.info('Classification prediction is done.')
 
 

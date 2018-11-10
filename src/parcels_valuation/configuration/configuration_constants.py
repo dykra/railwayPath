@@ -19,6 +19,11 @@ excluded_values = '0;9;999999999'
 """
 classification_buckets = ['cheap', 'medium', 'expensive']
 
+"""
+    Name of the csv file to save the predicted bucket values
+"""
+file_name_predicted_bucket_values = "estimated_buckets"
+
 
 """
     Neural Network model parameters
