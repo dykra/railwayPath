@@ -31,7 +31,7 @@ def classification_regression():
     database_handler = DatabaseHandler()
     model_file_name = make_file_name(base_name=path_to_trained_models + "classification_",
                                      _limit_date=limit_date,
-                                     extension='.pickle')
+                                     extension='.sav')
 
     model = get_model("EXEC dbo.GetDateToTrainClassificationModel @LimitDate = {}, @ExcludedList ='{}'"
                       .format(limit_date, excluded_values),
@@ -62,7 +62,7 @@ def classification_regression():
                      "@NEW_Estimated_Price_Group = {}, @ObjectID = {} "
                      .format(prediction_value, object_id))
             database_handler.cursor.execute(query)
-            database_handler.conn.commit()
+        #     database_handler.conn.commit()
         tmp_min = tmp_max
 
     database_handler.close_connection()
