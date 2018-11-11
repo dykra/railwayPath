@@ -1,4 +1,4 @@
-import pymssql
+import pymssql as pymssql
 
 
 class DatabaseHandler:
@@ -13,4 +13,3 @@ class DatabaseHandler:
 
     def close_connection(self):
         self.conn.close()
-
