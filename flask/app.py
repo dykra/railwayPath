@@ -55,7 +55,7 @@ def get_area_price():
     parcels = cursor.fetchall()
     result_list = []
     for p in parcels:
-        result_list.append({'objectid': p[0], 'price': p[1], 'zoning_code': p[2]})
+        result_list.append({'objectid': p[0], 'zoning_code': p[1], 'price': p[2]})
     return jsonify(result_list)
 
 

@@ -37,4 +37,4 @@ def create_select_for_ids_list(ids_list):
     for id in ids_list[:-1]:
         list_string += str(id['objectid']) + ","
     list_string += str(ids_list[len(ids_list) - 1]['objectid']) + ")"
-    return "select ObjectID, LS1_Sale_Amount, Zoning_Code from dbo.Parcel where OBJECTID IN {}".format(list_string)
+    return "select OBJECTID, simple_code, price from dbo.estimated_prices where OBJECTID IN {}".format(list_string)
