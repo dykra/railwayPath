@@ -20,5 +20,3 @@ def draw_plots(history_object):
     pyplot.show()
     pyplot.plot(history_object.history['mean_absolute_percentage_error'])
     pyplot.show()
-    pyplot.plot(history_object.history['cosine_proximity'])
-    pyplot.show()

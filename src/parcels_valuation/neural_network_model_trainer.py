@@ -9,6 +9,7 @@ from src.parcels_valuation.configuration.configuration_constants import limit_da
     model_target_folder, validation_split_value, verbose_value, epochs_value, current_bucket, model_overwrite, \
     file_names_convention
 from src.parcels_valuation.neural_network_model import Model
+from src.parcels_valuation.utils.plots import draw_plots
 
 
 def create_logger():
@@ -29,7 +30,7 @@ def train_model_decorator():
                              'in configuration_constants.py')
                 return 0
             trained_model = func(*args, **kwargs)
-            trained_model.save_model()
+            # trained_model.save_model()
             return trained_model
 
         return func_wrapper
@@ -44,7 +45,7 @@ def train_model(database_handler):
     neural_network_model.create_model()
     neural_network_model.save_callback()
     # type: dataframe
-    data_to_train_model = database_handler.execute_query("EXEC dbo.GetDateToTrainModel "
+    data_to_train_model = database_handler.execute_query("EXEC dbo.GetDateToTrainModelWithoutPrice "
                                                          "@LimitDate = {}, "
                                                          "@BucketType={}, "
                                                          "@ExcludedList='{}'"
@@ -53,15 +54,17 @@ def train_model(database_handler):
                                                                  excluded_values))
 
     # split into X set and Y set
-    x = data_to_train_model.iloc[:, 1:71]
-    y = data_to_train_model.iloc[:, 71]
+    x = data_to_train_model.iloc[:, 1:68] # 71
+    y = data_to_train_model.iloc[:, 68]
 
     results = neural_network_model.fit_model(training_x_values=x.values, training_y_values=y.values,
                                              batch_size=len(x.values), epochs=epochs_value,
                                              validation_split=validation_split_value, verbose=verbose_value)
 
     logging.info('Model summary:')
-    neural_network_model.model.summary(results)
+    neural_network_model.model.summary()
+    draw_plots(history_object=results)
+    neural_network_model.save_model()
     return neural_network_model.model
 
 

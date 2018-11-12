@@ -40,16 +40,17 @@ class Model:
 
     def create_model(self):
         self.model = Sequential()
-        self.model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
+        #self.model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
+        self.model.add(Dense(67, input_dim=67, kernel_initializer='normal', activation='relu'))
         self.model.add(Dense(50, kernel_initializer='normal'))
         self.model.add(Dense(1, kernel_initializer='normal'))
 
         try:
-            self.model.load_weights(self.weights_path)
+             self.model.load_weights(self.weights_path)
         except OSError:
             logger.error('Problem with reading the file {}'.format(self.weights_path))
             sys.exit(1)
-        logger.debug('Weights loaded to model.')
+        logger.debug('Weights {} loaded to model.'.format(self.weights_path))
         self.model.compile(loss=mean_squared_error, optimizer='adam',
                            metrics=['mean_squared_error',
                                     'mean_absolute_error',
