@@ -1,4 +1,3 @@
-
 -------------------		MAPPING TABLES	-------------
 
 --Simple_Zones_Mapping +
@@ -62,7 +61,7 @@ IF (NOT EXISTS (SELECT *
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_NAME = 'Localization_MA_Mapping'))
 BEGIN
-	CREATE TABLE Localization_SA_Mapping	(
+	CREATE TABLE Localization_MA_Mapping	(
 		MA_Street_and_City_and_State nvarchar(100),
 		MA_Street_and_City_and_State_int int IDENTITY(1,1) NOT NULL
 	)
@@ -84,15 +83,15 @@ END
 
 
 --6
-----Table to map BD_LINE_1_Quality---
+----Table to map BD_LINE_1_Quality__Class___Shap_Mapping---
 
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
-                 WHERE TABLE_NAME = 'Zoning_Codes_Mapping'))
+                 WHERE TABLE_NAME = 'BD_LINE_1_Quality__Class___Shap_Mapping'))
 BEGIN
-	CREATE TABLE Zoning_Codes_Mapping	(
-		Zoning_Code nvarchar(15),
-		Zoning_Code_int int IDENTITY(1,1) NOT NULL
+	CREATE TABLE BD_LINE_1_Quality__Class___Shap_Mapping	(
+		BD_LINE_1_Quality__Class___Shap nvarchar(5),
+		BD_LINE_1_Quality__Class___Shap_int int IDENTITY(1,1) NOT NULL
 	)
 END
 

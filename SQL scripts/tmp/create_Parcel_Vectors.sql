@@ -37,38 +37,8 @@ SELECT
 	BD_LINE_2_Year_Changed,	BD_LINE_2_Unit_Cost_Main, BD_LINE_2_RCN_Main, 
 	BD_LINE_3_Year_Changed, BD_LINE_3_Unit_Cost_Main,BD_LINE_3_RCN_Main,	--20
 	BD_LINE_4_Year_Changed,	Landlord_Reappraisal_Year,	Landlord_Number_of_Units,	
-	Recorders_Document_Number, Shape, --5,
-	CENTER_X, CENTER_Y, CENTER_LAT, CENTER_LON
+	Recorders_Document_Number, Shape --5
 INTO PARCEL_VECTORS FROM PARCEL;
-
--- =============================================
--- Add indexes to PARCEL_VECTORS
--- Primary Key on objectID
--- Spatial index on Shape
--- =============================================
-
-ALTER TABLE PARCEL_VECTORS
-ADD CONSTRAINT PK_ObjectID PRIMARY KEY CLUSTERED (OBJECTID);  
-GO  
-
-SET ARITHABORT ON
-SET CONCAT_NULL_YIELDS_NULL ON
-SET QUOTED_IDENTIFIER ON
-SET ANSI_NULLS ON
-SET ANSI_PADDING ON
-SET ANSI_WARNINGS ON
-SET NUMERIC_ROUNDABORT OFF
-GO
-
-CREATE SPATIAL INDEX [SP_Shape] ON [dbo].[PARCEL_VECTORS]
-(
-	[Shape]
-)USING  GEOMETRY_AUTO_GRID 
-WITH (BOUNDING_BOX =(6275487.79, 1384146.14, 6668480.77, 2122084.6), 
-CELLS_PER_OBJECT = 16, PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-
-
 
 -- =============================================
 -- Get data from Zoning_Code column
@@ -98,6 +68,7 @@ GO
 -- data from Shape geometry column
 -- =============================================
 
+
 UPDATE PARCEL_VECTORS
   SET Parcel_Area=Shape.STArea()
 GO
@@ -119,7 +90,7 @@ BEGIN
 	Agricultural SMALLINT, 
 	Commercial SMALLINT,
 	Manufacturing SMALLINT,
-	Price_Group_int INT
+	Price_Group VARCHAR(50)
 END
 GO
 
@@ -302,13 +273,13 @@ UPDATE PARCEL_VECTORS
 -- =============================================
 
  UPDATE PARCEL_VECTORS
- SET Price_Group_int = 0
+ SET Price_Group='cheap'
    WHERE LS1_Sale_Amount <= 500000
- UPDATE PARCEL_VECTORS
- SET Price_Group_int = 1
+ UPDATE FILTERED_PARCEL
+ SET Price_Group='medium'
    WHERE ( LS1_Sale_Amount > 500000 and LS1_Sale_Amount < 1000000 )
- UPDATE PARCEL_VECTORS
- SET Price_Group_int = 2
+ UPDATE FILTERED_PARCEL
+ SET Price_Group = 'expensive'
     WHERE LS1_Sale_Amount >= 1000000
 
 -- =============================================
@@ -351,7 +322,7 @@ ELSE
 BEGIN
 	INSERT INTO Simple_Zones_Mapping (Simple_Zoning_Code)
 	SELECT DISTINCT P.Simple_Zoning_Code 
-	FROM PARCEL_VECTORS P
+	SELECT PARCEL_VECTORS P
 	WHERE P.Simple_Zoning_Code not in (
 		SELECT DISTINCT P.Simple_Zoning_Code FROM PARCEL_VECTORS P
 		inner join Simple_Zones_Mapping L
@@ -374,7 +345,7 @@ ELSE
 BEGIN
 	INSERT INTO Directions_Mapping (Direction)
 	SELECT DISTINCT P.SA_Direction 
-	FROM PARCEL_VECTORS P
+	SELECT PARCEL_VECTORS P
 	WHERE P.SA_Direction NOT IN (
 	SELECT DISTINCT P.SA_Direction FROM PARCEL_VECTORS P
 	INNER JOIN Directions_Mapping D
@@ -402,9 +373,9 @@ ELSE
 BEGIN
 	INSERT INTO Localization_SA_Mapping (SA_Street_and_City_and_State)
 	SELECT DISTINCT P.SA_Street_and_City_and_State 
-	FROM PARCEL_VECTORS P
+	FROM Lands_Vectors P
 	WHERE P.SA_Street_and_City_and_State NOT IN (
-	SELECT DISTINCT P.SA_Street_and_City_and_State FROM PARCEL_VECTORS P
+	SELECT DISTINCT P.SA_Street_and_City_and_State FROM Lands_Vectors P
 	INNER JOIN Localization_SA_Mapping L
 	ON L.SA_Street_and_City_and_State = P.SA_Street_and_City_and_State
 	)
@@ -502,13 +473,13 @@ ADD SA_Localization_int int,
 	Zoning_Code_int int,
 	BD_LINE_1_Quality__Class___Shap_int int,
 	City_int int
-GO
+
 
 -- Rewriting mapping from mapping tables into Lands_Vector table
 --1
-UPDATE P SET P.SA_Direction_int = D.Direction_int
-FROM PARCEL_VECTORS P
-INNER JOIN Directions_Mapping D ON P.SA_Direction = D.Direction
+UPDATE l SET l.SA_Direction_int = d.Direction_int
+FROM PARCEL_VECTORS l
+INNER JOIN Directions_Mapping d ON l.SA_Direction = d.Direction
 GO
 
 UPDATE PARCEL_VECTORS
@@ -517,9 +488,9 @@ WHERE SA_Direction IS NULL
 GO
 
 --2
-UPDATE P SET P.MA_Direction_int = D.Direction_int
-FROM PARCEL_VECTORS P
-INNER JOIN Directions_Mapping D ON P.MA_Direction = D.Direction
+UPDATE l SET l.MA_Direction_int = d.Direction_int
+FROM PARCEL_VECTORS l
+INNER JOIN Directions_Mapping d ON l.MA_Direction = d.Direction
 GO
 
 UPDATE PARCEL_VECTORS
@@ -528,9 +499,9 @@ WHERE MA_Direction IS NULL
 GO
 
 --3
-UPDATE P SET P.Zoning_Code_int = Z.Zoning_Code_int
-FROM PARCEL_VECTORS P
-INNER JOIN Zoning_Codes_Mapping Z ON P.Zoning_Code = Z.Zoning_Code
+UPDATE l SET l.Zoning_Code_int = z.Zoning_Code_int
+FROM PARCEL_VECTORS l
+INNER JOIN Zoning_Codes_Mapping z ON l.Zoning_Code = z.Zoning_Code
 GO
 
 -- Zoning Code = NULL -> Zoning_Code_int = 0
@@ -540,9 +511,9 @@ WHERE Zoning_Code_int IS NULL
 GO
 
 --4
-UPDATE P SET P.SA_Localization_int = LM.SA_Street_and_City_and_State_int
-FROM PARCEL_VECTORS P
-INNER JOIN Localization_SA_Mapping LM ON P.SA_Street_and_City_and_State = LM.SA_Street_and_City_and_State
+UPDATE l SET l.SA_Localization_int = lm.SA_Street_and_City_and_State_int
+FROM PARCEL_VECTORS l
+INNER JOIN Localization_SA_Mapping lm ON l.SA_Street_and_City_and_State = lm.SA_Street_and_City_and_State
 GO
 
 UPDATE PARCEL_VECTORS
@@ -551,9 +522,9 @@ WHERE SA_Localization_int IS NULL
 GO
 
 --5
-UPDATE P SET P.MA_Localization_int = LM.MA_Street_and_City_and_State_int
-FROM PARCEL_VECTORS P
-INNER JOIN Localization_MA_Mapping LM ON P.MA_Street_and_City_and_State = LM.MA_Street_and_City_and_State
+UPDATE l SET l.MA_Localization_int = lm.MA_Street_and_City_and_State_int
+FROM PARCEL_VECTORS l
+INNER JOIN Localization_MA_Mapping lm ON l.MA_Street_and_City_and_State = lm.MA_Street_and_City_and_State
 GO
 
 UPDATE PARCEL_VECTORS
@@ -562,9 +533,9 @@ WHERE MA_Localization_int IS NULL
 GO
 
 --6
-UPDATE P SET P.Simple_Zone_int = S.Simple_Zone_int
-FROM PARCEL_VECTORS P
-INNER JOIN Simple_Zones_Mapping S ON P.Simple_Zoning_Code = S.Simple_Zoning_Code
+UPDATE l SET l.Simple_Zone_int = s.Simple_Zone_int
+FROM PARCEL_VECTORS l
+INNER JOIN Simple_Zones_Mapping s ON l.Simple_Zoning_Code = s.Simple_Zoning_Code
 GO
 
 UPDATE PARCEL_VECTORS
@@ -573,9 +544,9 @@ WHERE Simple_Zone_int IS NULL
 GO
 
 --7
-UPDATE P SET P.BD_LINE_1_Quality__Class___Shap_int = M.BD_LINE_1_Quality__Class___Shap_int
-FROM PARCEL_VECTORS P
-INNER JOIN BD_LINE_1_Quality__Class___Shap_Mapping M ON P.BD_LINE_1_Quality__Class___Shap = M.BD_LINE_1_Quality__Class___Shap
+UPDATE l SET l.BD_LINE_1_Quality__Class___Shap_int = m.BD_LINE_1_Quality__Class___Shap_int
+FROM PARCEL_VECTORS l
+INNER JOIN BD_LINE_1_Quality__Class___Shap_Mapping m ON l.BD_LINE_1_Quality__Class___Shap = m.BD_LINE_1_Quality__Class___Shap
 GO
 
 UPDATE PARCEL_VECTORS SET BD_LINE_1_Quality__Class___Shap_int = 0 
@@ -583,9 +554,9 @@ WHERE BD_LINE_1_Quality__Class___Shap_int IS NULL
 GO
 
 --8
-UPDATE P SET P.City_int = C.City_int
-FROM PARCEL_VECTORS P
-INNER JOIN City_Mapping C ON P.City = C.City
+UPDATE l SET l.City_int = c.City_int
+FROM PARCEL_VECTORS l
+INNER JOIN City_Mapping c ON l.City = c.City
 GO
 
 -- City = NULL -> City_int = 0
@@ -603,6 +574,7 @@ SA_Direction, SA_Street_Name, SA_City_and_State,
 MA_Direction, MA_Street_Name, MA_City_and_State,
 Zoning_Code, BD_LINE_1_Quality__Class___Shap,
 SA_Street_and_City_and_State, MA_Street_and_City_and_State, City, Simple_Zoning_Code
+
 
 -- =============================================
 -- Move LS1_Sale_Amount column to the end and rename it

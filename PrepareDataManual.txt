@@ -16,17 +16,17 @@ Check if you copy data properly. Run (select top 10 * from Parcel) on database L
 
 Note: All scripts you will find in SQL scripts directory.
 
-3. Run DDL_Create_Mapping_Tables.sql script. It will create schema for tables to Map all not integer values from Parcel table.
+3. Add indexes and constraints to Parcel table. Run script DDL_PK_Constraints_Indexes.sql.
 
-4. Run all scripts, which create stored procedures needed to run program properly. 
+4. Run DDL_Create_Mapping_Tables.sql script. It will create schema for tables to Map all not integer values from Parcel table.
+
+5. Run all scripts, which create stored procedures needed to run program properly. 
 Run:
 sp_GetColumnsWithNullValues.sql
 sp_GetRowsWithNullValues.sql
-sp_GetColumnsWithNullValues.sql
+sp_UpdateNullValues.sql
 
-sp_GetColumnsWithNullValues.sql
-
-5. Run:
+6. Run:
 	EXEC GetRowsWithNullValues 
 
    and then 

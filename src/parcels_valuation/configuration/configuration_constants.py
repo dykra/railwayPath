@@ -26,7 +26,7 @@ classification_buckets = ['cheap', 'medium', 'expensive']
 """
     Name of bucket currently using to train neural network model.
 """
-current_bucket = 'cheap'
+current_bucket = 'medium' # 'cheap'
 
 """
    Paths to:
