@@ -34,7 +34,7 @@ Run scripts:
 I.	EXEC GetRowsWithNullValues 
 II.	EXEC GetColumnsWithNullValues @Table_Name = 'PARCEL_VECTORS' 
 	
-Analize results and wonder if it will be not a huge lossof data if these data will be treat as if there were '0'.
+Analize results and wonder if it will be not a huge loss of data if these data will be treat as if there were '0'.
 
 8. If you decide that all NULL values can be changed into 0 integer value, then run script:
 mapping_NULL_values.sql
