@@ -8,7 +8,7 @@ from keras.callbacks import ModelCheckpoint
 from src.parcels_valuation.file_names_builder import get_checkpoints_filename, get_model_filename
 from src.parcels_valuation.utils.logger import create_loggers_helper
 from src.parcels_valuation.configuration.configuration_constants import weights_file_path, \
-    epochs_value, validation_split_value, verbose_value, seed
+    epochs_value, validation_split_value, verbose_value, seed, train_model_with_price_parameters
 
 
 def create_logger():
@@ -40,13 +40,15 @@ class Model:
 
     def create_model(self):
         self.model = Sequential()
-        #self.model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
-        self.model.add(Dense(67, input_dim=67, kernel_initializer='normal', activation='relu'))
+        if train_model_with_price_parameters:
+            self.model.add(Dense(70, input_dim=70, kernel_initializer='normal', activation='relu'))
+        else:
+            self.model.add(Dense(67, input_dim=67, kernel_initializer='normal', activation='relu'))
         self.model.add(Dense(50, kernel_initializer='normal'))
         self.model.add(Dense(1, kernel_initializer='normal'))
 
         try:
-             self.model.load_weights(self.weights_path)
+            self.model.load_weights(self.weights_path)
         except OSError:
             logger.error('Problem with reading the file {}'.format(self.weights_path))
             sys.exit(1)

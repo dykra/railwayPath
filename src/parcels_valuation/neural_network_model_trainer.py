@@ -7,9 +7,11 @@ from src.parcels_valuation.utils.database_handler import DatabaseHandler
 from src.parcels_valuation.utils.logger import create_loggers_helper
 from src.parcels_valuation.configuration.configuration_constants import limit_date, excluded_values, weights_file_path, \
     model_target_folder, validation_split_value, verbose_value, epochs_value, current_bucket, model_overwrite, \
-    file_names_convention
+    file_names_convention, train_model_with_price_parameters
 from src.parcels_valuation.neural_network_model import Model
 from src.parcels_valuation.utils.plots import draw_plots
+
+parcel_prices_mapping = {'cheap': 0, 'medium': 1, 'expensive': 2}
 
 
 def create_logger():
@@ -44,18 +46,26 @@ def train_model(database_handler):
     neural_network_model = Model()
     neural_network_model.create_model()
     neural_network_model.save_callback()
-    # type: dataframe
-    data_to_train_model = database_handler.execute_query("EXEC dbo.GetDateToTrainModelWithoutPrice "
+    if train_model_with_price_parameters:
+        procedure = 'GetDateToTrainModel'
+    else:
+        procedure = 'GetDateToTrainModelWithoutPriceParameters'
+    # Type: dataframe
+    data_to_train_model = database_handler.execute_query("EXEC dbo.{} "
                                                          "@LimitDate = {}, "
                                                          "@BucketType={}, "
                                                          "@ExcludedList='{}'"
-                                                         .format(limit_date,
-                                                                 current_bucket,
+                                                         .format(procedure,
+                                                                 limit_date,
+                                                                 parcel_prices_mapping[current_bucket],
                                                                  excluded_values))
 
-    # split into X set and Y set
-    x = data_to_train_model.iloc[:, 1:68] # 71
-    y = data_to_train_model.iloc[:, 68]
+    # Pandas DataFrame.shape return a tuple representing the dimensionality of the DataFrame
+    data_size = data_to_train_model.shape[1]
+    # Split into X set and Y set
+    # Take all columns except the first one - OBJECID and the last one - Sale_Amount
+    x = data_to_train_model.iloc[:, 1: data_size - 1]
+    y = data_to_train_model.iloc[:, data_size - 1]
 
     results = neural_network_model.fit_model(training_x_values=x.values, training_y_values=y.values,
                                              batch_size=len(x.values), epochs=epochs_value,
@@ -71,7 +81,6 @@ def train_model(database_handler):
 def main():
     database_handler = DatabaseHandler()
     try:
-        # for bucket in classification_buckets:
         train_model(database_handler=database_handler)
     finally:
         database_handler.close_connection()

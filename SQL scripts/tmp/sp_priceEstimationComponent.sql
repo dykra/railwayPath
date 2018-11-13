@@ -31,7 +31,7 @@ SELECT  OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr, LAND_Curr_Val
         Manufacturing, SA_Localization_int, MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
         Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount
 FROM PARCEL_VECTORS
-WHERE Price_Group LIKE @BucketType
+WHERE Price_Group_int LIKE @BucketType
       AND LS1_Sale_Date > @LimitDate
       AND LS1_Sale_Amount not in (SELECT value FROM STRING_SPLIT(@ExcludedList, ';'))
 	  AND Price_Per_Single_Area_Unit > 1
@@ -66,7 +66,7 @@ SELECT  OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr, IMPROVE_Curr_
         Manufacturing, SA_Localization_int, MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
         Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount
 FROM PARCEL_VECTORS
-WHERE Price_Group LIKE @BucketType
+WHERE Price_Group_int LIKE @BucketType
       AND LS1_Sale_Date > @LimitDate
       AND LS1_Sale_Amount not in (SELECT value FROM STRING_SPLIT(@ExcludedList, ';'))
 	  and Land_Curr_Value not in (SELECT value FROM STRING_SPLIT(@ExcludedList, ';'))
@@ -103,7 +103,7 @@ SELECT  OBJECTID, PERIMETER, PARCEL_TYP, TRA_1, LAND_Curr_Roll_Yr, LAND_Curr_Val
         Manufacturing, SA_Localization_int, MA_Localization_int, MA_Direction_int, SA_Direction_int, Simple_Zone_int,
         Zoning_Code_int, BD_LINE_1_Quality__Class___Shap_int, City_int, Sale_Amount
 FROM PARCEL_VECTORS
-WHERE Price_Group LIKE @BucketType
+WHERE Price_Group_int LIKE @BucketType
       AND ( LS1_Sale_Date <= @LimitDate
             OR
             LS1_Sale_Amount IN (SELECT value FROM STRING_SPLIT(@ExcludedList, ';')))
@@ -121,11 +121,4 @@ AS
 UPDATE PARCEL_VECTORS
   SET Estimated_Amount = @NEW_Estimated_Amount, Row_Version_Stamp = Row_Version_Stamp + 1
   WHERE OBJECTID = @ObjectID
-GO
-
-CREATE TABLE ESTIMATED_PRICES
-(
-	ID INT,
-	Integer INT
-)
 GO

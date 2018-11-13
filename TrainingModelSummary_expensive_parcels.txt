@@ -1,0 +1,57 @@
+"C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\python.exe" "C:\Program Files\JetBrains\PyCharm 2018.1.4\helpers\pydev\pydev_run_in_console.py" 53377 53378 C:/Magdalena/INZYNIERKA/railwayPath/src/parcels_valuation/neural_network_model_trainer.py
+Running C:/Magdalena/INZYNIERKA/railwayPath/src/parcels_valuation/neural_network_model_trainer.py
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Magdalena\\INZYNIERKA\\railwayPath', 'C:/Magdalena/INZYNIERKA/railwayPath/src/parcels_valuation'])
+Using TensorFlow backend.
+2018-11-12 22:41:03,566 - __main__ - INFO - Creation of model.
+2018-11-12 22:41:03.618622: I T:\src\github\tensorflow\tensorflow\core\platform\cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+2018-11-12 22:41:03,654 - src.parcels_valuation.neural_network_model - DEBUG - Weights ./../resources/20150000_expensive_only_no_price_parameters.hdf5 loaded to model.
+2018-11-12 22:41:03,792 - src.parcels_valuation.utils.database_handler - DEBUG - Reading data from database, executing: EXEC dbo.GetDateToTrainModelWithoutPrice @LimitDate = 20150000, @BucketType=expensive, @ExcludedList='0;9;999999999'
+Train on 33258 samples, validate on 3696 samples
+Epoch 1/10
+ - 1s - loss: 431012352.0000 - mean_squared_error: 431012352.0000 - mean_absolute_error: 7964.9624 - mean_absolute_percentage_error: 0.2962 - val_loss: 12514646556672.0000 - val_mean_squared_error: 12514646556672.0000 - val_mean_absolute_error: 2567391.7500 - val_mean_absolute_percentage_error: 92.3549
+Epoch 00001: val_loss improved from inf to 12514646556672.00000, saving model to ./../resources/best_result/withoutPrice20150000_expensive.hdf5
+Epoch 2/10
+ - 1s - loss: 6111316410368.0000 - mean_squared_error: 6111316410368.0000 - mean_absolute_error: 2185097.2500 - mean_absolute_percentage_error: 106.3815 - val_loss: 1742057242624.0000 - val_mean_squared_error: 1742057242624.0000 - val_mean_absolute_error: 930435.8750 - val_mean_absolute_percentage_error: 32.8189
+Epoch 00002: val_loss improved from 12514646556672.00000 to 1742057242624.00000, saving model to ./../resources/best_result/withoutPrice20150000_expensive.hdf5
+Epoch 3/10
+ - 1s - loss: 808445345792.0000 - mean_squared_error: 808445345792.0000 - mean_absolute_error: 784778.0000 - mean_absolute_percentage_error: 37.9172 - val_loss: 1415657160704.0000 - val_mean_squared_error: 1415657160704.0000 - val_mean_absolute_error: 897554.3125 - val_mean_absolute_percentage_error: 33.5717
+Epoch 00003: val_loss improved from 1742057242624.00000 to 1415657160704.00000, saving model to ./../resources/best_result/withoutPrice20150000_expensive.hdf5
+Epoch 4/10
+ - 1s - loss: 745269559296.0000 - mean_squared_error: 745269559296.0000 - mean_absolute_error: 781609.5625 - mean_absolute_percentage_error: 38.6347 - val_loss: 6823056244736.0000 - val_mean_squared_error: 6823056244736.0000 - val_mean_absolute_error: 1949011.3750 - val_mean_absolute_percentage_error: 71.8875
+Epoch 00004: val_loss did not improve from 1415657160704.00000
+Epoch 5/10
+ - 1s - loss: 3520964067328.0000 - mean_squared_error: 3520964067328.0000 - mean_absolute_error: 1683635.1250 - mean_absolute_percentage_error: 82.8251 - val_loss: 5707816501248.0000 - val_mean_squared_error: 5707816501248.0000 - val_mean_absolute_error: 1787204.2500 - val_mean_absolute_percentage_error: 66.4169
+Epoch 00005: val_loss did not improve from 1415657160704.00000
+Epoch 6/10
+ - 1s - loss: 2961460428800.0000 - mean_squared_error: 2961460428800.0000 - mean_absolute_error: 1548693.6250 - mean_absolute_percentage_error: 76.5158 - val_loss: 1882043711488.0000 - val_mean_squared_error: 1882043711488.0000 - val_mean_absolute_error: 1029248.8750 - val_mean_absolute_percentage_error: 39.1946
+Epoch 00006: val_loss did not improve from 1415657160704.00000
+Epoch 7/10
+ - 1s - loss: 986298974208.0000 - mean_squared_error: 986298974208.0000 - mean_absolute_error: 900909.4375 - mean_absolute_percentage_error: 45.1828 - val_loss: 42004271104.0000 - val_mean_squared_error: 42004271104.0000 - val_mean_absolute_error: 79886.5156 - val_mean_absolute_percentage_error: 3.7790
+Epoch 00007: val_loss improved from 1415657160704.00000 to 42004271104.00000, saving model to ./../resources/best_result/withoutPrice20150000_expensive.hdf5
+Epoch 8/10
+ - 1s - loss: 8916612096.0000 - mean_squared_error: 8916612096.0000 - mean_absolute_error: 76301.0469 - mean_absolute_percentage_error: 4.4299 - val_loss: 1307802730496.0000 - val_mean_squared_error: 1307802730496.0000 - val_mean_absolute_error: 823307.0625 - val_mean_absolute_percentage_error: 27.7898
+Epoch 00008: val_loss did not improve from 42004271104.00000
+Epoch 9/10
+ - 1s - loss: 622931673088.0000 - mean_squared_error: 622931673088.0000 - mean_absolute_error: 683999.5000 - mean_absolute_percentage_error: 31.7472 - val_loss: 3221819228160.0000 - val_mean_squared_error: 3221819228160.0000 - val_mean_absolute_error: 1318466.5000 - val_mean_absolute_percentage_error: 45.8659
+Epoch 00009: val_loss did not improve from 42004271104.00000
+Epoch 10/10
+ - 1s - loss: 1597312335872.0000 - mean_squared_error: 1597312335872.0000 - mean_absolute_error: 1111914.7500 - mean_absolute_percentage_error: 52.5609 - val_loss: 3474955698176.0000 - val_mean_squared_error: 3474955698176.0000 - val_mean_absolute_error: 1373301.2500 - val_mean_absolute_percentage_error: 47.7308
+Epoch 00010: val_loss did not improve from 42004271104.00000
+2018-11-12 22:41:16,897 - src.parcels_valuation.utils.plots - DEBUG - Drawing plots for history_object.
+DEBUG:src.parcels_valuation.utils.plots:Drawing plots for history_object.
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_1 (Dense)              (None, 67)                4556      
+_________________________________________________________________
+dense_2 (Dense)              (None, 50)                3400      
+_________________________________________________________________
+dense_3 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 8,007
+Trainable params: 8,007
+Non-trainable params: 0
+_________________________________________________________________
+PyDev console: starting.
+Python 3.6.5 (v3.6.5:f59c0932b4, Mar 28 2018, 17:00:18) [MSC v.1900 64 bit (AMD64)] on win32

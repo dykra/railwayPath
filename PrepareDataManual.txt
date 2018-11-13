@@ -20,17 +20,28 @@ Note: All scripts you will find in SQL scripts directory.
 
 4. Run DDL_Create_Mapping_Tables.sql script. It will create schema for tables to Map all not integer values from Parcel table.
 
-5. Run all scripts, which create stored procedures needed to run program properly. 
+5. Run script create_Parcel_Vectors. This script creates new table Parcel_Vectors based on Parcel table.
+	
+6. Update NULL values.
+Run all scripts, which create stored procedures needed to run program properly. 
 Run:
 sp_GetColumnsWithNullValues.sql
 sp_GetRowsWithNullValues.sql
 sp_UpdateNullValues.sql
 
-6. Run:
-	EXEC GetRowsWithNullValues 
-
-   and then 
-	EXEC GetColumnsWithNullValues @Table_Name = 'PARCEL_VECTORS' 
+Run scripts: 
 	
-Analize results and wonder if it will be not a huge loss if these data will be treat as if there were '0'.
+I.	EXEC GetRowsWithNullValues 
+II.	EXEC GetColumnsWithNullValues @Table_Name = 'PARCEL_VECTORS' 
+	
+Analize results and wonder if it will be not a huge lossof data if these data will be treat as if there were '0'.
+
+8. If you decide that all NULL values can be changed into 0 integer value, then run script:
+mapping_NULL_values.sql
+
+Script displays table name and column in it with NULL values in table given as parameter (default for table PARCEL_VECTORS). 
+Result should be empty.
+
+9. Run script to create procedures witch will be use to train model and save results:
+sp_priceEstimationComponent.sql
 
