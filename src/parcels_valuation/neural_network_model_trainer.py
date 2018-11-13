@@ -1,17 +1,15 @@
 import logging
 import os
-import sys
 
-from src.parcels_valuation.file_names_builder import get_model_filename
+from src.parcels_valuation.utils.file_names_builder import get_model_filename
 from src.parcels_valuation.utils.database_handler import DatabaseHandler
 from src.parcels_valuation.utils.logger import create_loggers_helper
-from src.parcels_valuation.configuration.configuration_constants import limit_date, excluded_values, weights_file_path, \
-    model_target_folder, validation_split_value, verbose_value, epochs_value, current_bucket, model_overwrite, \
-    file_names_convention, train_model_with_price_parameters
+from src.parcels_valuation.configuration.configuration_constants import limit_date, excluded_values, \
+    validation_split_value, verbose_value, epochs_value, current_bucket, model_overwrite, \
+    train_model_with_price_parameters
 from src.parcels_valuation.neural_network_model import Model
 from src.parcels_valuation.utils.plots import draw_plots
-
-parcel_prices_mapping = {'cheap': 0, 'medium': 1, 'expensive': 2}
+from src.parcels_valuation.utils.prices_mapping import parcel_prices_mapping
 
 
 def create_logger():
@@ -32,11 +30,8 @@ def train_model_decorator():
                              'in configuration_constants.py')
                 return 0
             trained_model = func(*args, **kwargs)
-            # trained_model.save_model()
             return trained_model
-
         return func_wrapper
-
     return decorator
 
 

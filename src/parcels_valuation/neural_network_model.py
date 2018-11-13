@@ -5,7 +5,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.losses import mean_squared_error
 from keras.callbacks import ModelCheckpoint
-from src.parcels_valuation.file_names_builder import get_checkpoints_filename, get_model_filename
+from src.parcels_valuation.utils.file_names_builder import get_checkpoints_filename, get_model_filename
 from src.parcels_valuation.utils.logger import create_loggers_helper
 from src.parcels_valuation.configuration.configuration_constants import weights_file_path, \
     epochs_value, validation_split_value, verbose_value, seed, train_model_with_price_parameters

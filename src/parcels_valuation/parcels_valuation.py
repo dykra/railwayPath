@@ -4,9 +4,10 @@ import os
 from keras.engine.saving import load_model
 import numpy as np
 from src.parcels_valuation.configuration.configuration_constants import *
-from src.parcels_valuation.file_names_builder import get_model_filename
+from src.parcels_valuation.utils.file_names_builder import get_model_filename
 from src.parcels_valuation.utils.database_handler import DatabaseHandler
 from src.parcels_valuation.utils.logger import create_loggers_helper
+from src.parcels_valuation.utils.prices_mapping import parcel_prices_mapping
 import logging
 
 
@@ -41,7 +42,9 @@ def main():
                                                                          "@LimitDate = {}, "
                                                                          "@BucketType={}, "
                                                                          "@ExcludedList='{}'"
-                                                                         .format(limit_date, bucket, excluded_values))
+                                                                         .format(limit_date,
+                                                                                 parcel_prices_mapping[bucket],
+                                                                                 excluded_values))
                 x = df_parcels_to_valuation.iloc[:, 1:71]
                 prediction = model.predict(x)
 

@@ -51,4 +51,4 @@ train_model_with_price_parameters = False
   Variable to set if overwrite file with neural network model or not. 
   Warning! If set to True, previous model would be lost. 
 """
-model_overwrite = True #False
+model_overwrite = True # False
