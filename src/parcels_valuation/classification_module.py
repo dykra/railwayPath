@@ -35,10 +35,10 @@ class CalculateValue:
 
     def predict(self, data_to_predict):
         y = data_to_predict[self.model.target_column]
-        X = data_to_predict[self.model.X_columns]
-        y_predicted = self.model.model.predict(X)
+        x = data_to_predict[self.model.X_columns]
+        y_predicted = self.model.model.predict(x)
         logger.info('Accuracy of logistic regression: {:.4f}'
-                    .format(self.model.model.score(X, y)))
+                    .format(self.model.model.score(x, y)))
         return y_predicted
 
 

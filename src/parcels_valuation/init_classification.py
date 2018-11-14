@@ -3,7 +3,8 @@ import csv
 from os.path import abspath
 
 from utils.database_handler import DatabaseHandler
-from utils.serialization_module import *
+from utils.serialization_module import create_logger
+from utils.file_names_builder import make_file_name
 from configuration.configuration_constants import *
 from classification_module import CalculateValue, get_model, ClassificationLogisticRegression
 from sklearn.model_selection import train_test_split
@@ -19,6 +20,8 @@ parser.add_argument('--model_overwrite',
                     action='store_true',
                     default=False,
                     help='Specify whether to override the model.')
+
+logger = create_logger()
 
 
 def classification_regression_with_test_set():

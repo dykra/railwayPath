@@ -9,5 +9,6 @@ setup(
     author='Kazior,Nowak,Palewicz,Tomasiewicz',
     author_email='railwayPathINZYNIERKA@gmail.com',
     description='',
-    install_requires=['pymssql', 'pandas', 'scikit-learn', 'python-dotenv', 'dotenv'],
+    install_requires=['pymssql',
+                      'pandas', 'scikit-learn', 'python-dotenv']
 )
