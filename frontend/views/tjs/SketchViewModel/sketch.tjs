@@ -1,4 +1,4 @@
-function(view, layers, symbols){
+function(map, view, layers, symbols){
 
   view.when(function () {
     // create a new sketch view model
@@ -13,6 +13,7 @@ function(view, layers, symbols){
     //add polygon object
     const polygonClass = {{reglue:"Polygon/polygon"}};
     var polygonGenerator = polygonClass(layers.errors, layers.temporaryObjects,  polygonStack, symbols.polygon, parcelLayersStack, parameters);
+    let parcelLoader = parcelLoaderClass(map, view, parcelLayersStack);
 
     setUpClickHandler();
 
@@ -28,9 +29,14 @@ function(view, layers, symbols){
     sketchViewModel.on("update-complete", polygonGenerator.updatePolygon);
     sketchViewModel.on("update-cancel", polygonGenerator.updatePolygon);
 
+    sketchViewModel.on("create-complete", parcelLoader.loadRectangle);
+
     sketchViewModel.on("reshape-start", polygonGenerator.removePolygon);
     // called when sketchViewModel's create-complete event is fired.
     function addGraphic(event) {
+      if(event.tool === "rectangle"){
+        return;
+      }
       // console.log(event);
       // Create a new graphic and set its geometry to
       // `create-complete` event geometry.
@@ -138,7 +144,7 @@ function(view, layers, symbols){
         elements[i].classList.remove("active");
       }
       if (selectedButton) {
-        selectedButton.classList.add("active");
+        // selectedButton.classList.add("active");
       }
     }
 

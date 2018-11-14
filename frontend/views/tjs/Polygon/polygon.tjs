@@ -8,7 +8,7 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
     // console.log(event.geometry);
     // console.log(sketchViewModel.graphic.symbol);
     // console.log(sketchViewModel);
-    if (event.geometry.type !== "polyline") {
+    if (event.tool !== "polyline") {
       return;
     }
     getImpossibleSegment(event.geometry);
@@ -33,7 +33,7 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
   }
 
   function updateRailwayPolygon(event) {
-    if (event.geometry.type !== "polyline") {
+    if (event.tool !== "polyline") {
       return;
     }
     getImpossibleSegment(event.geometry);
@@ -42,7 +42,7 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
   }
 
   function removeRailwayPolygon(event) {
-    if (event.geometry.type !== "polyline") {
+    if (event.tool !== "polyline") {
       return;
     }
     getImpossibleSegment(event.geometry);

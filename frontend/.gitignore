@@ -74,3 +74,5 @@ typings/
 
 .idea
 .idea/workspace.xml
+
+.vscode

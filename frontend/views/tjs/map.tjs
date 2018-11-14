@@ -8,7 +8,9 @@ require([
   "esri/geometry/Polygon",
   "esri/geometry/Polyline",
   "esri/layers/MapImageLayer",
-  "esri/geometry/geometryEngine"
+  "esri/geometry/geometryEngine",
+  "esri/geometry/Point",
+  "esri/geometry/SpatialReference"
 ], function (
   Map,
   MapView,
@@ -19,14 +21,21 @@ require([
   Polygon,
   Polyline,
   MapImageLayer,
-  geometryEngine
+  geometryEngine,
+  Point,
+  SpatialReference
 ) {
   const parameters = {{reglue:"Parameters/parameterProvider"}};
   const layers = {{reglue:"Parameters/layers"}};
   const connectorClass = {{reglue:"Connector/connector"}};
   const symbols = {{reglue:"Parameters/symbols"}};
   const sketchClass = {{reglue:"SketchViewModel/sketch"}};
-
+  const parcelLoaderClass = {{reglue:"Connector/parcelLoader"}};
+  const utilityFunctions = {{reglue:"Utils/utilityFunctions"}};
+      let ids = [{"objectid": 15}, {"objectid": 1025712}, {"objectid": 15781}];
+    utilityFunctions.getParcelsPrices(ids, function (response) {
+        console.log(response);
+    });
   // right now there are global variables
   // TODO: refactor these
   let polygonStack = [];
@@ -45,12 +54,15 @@ require([
     map: map,
     center: [-118.352, 33.883],
     scale: 50000,
+    constraints: {
+      rotationEnabled: false
+    }
   });
 
   connectorClass(map,view, parcelLayersStack);
 
 
-  let sketch = sketchClass(view, layers, symbols);
+  let sketch = sketchClass(map, view, layers, symbols);
 
 
 });
