@@ -18,12 +18,12 @@ def create_logger():
 logger = create_logger()
 
 
-def serialize_classification_model(file_name, model):
+def save_classification_model(file_name, model):
     joblib.dump(model, file_name)
     logger.info('Model serialized to {} '.format(file_name))
 
 
-def deserialize_classification_model(file_name):
+def restore_classification_model(file_name):
     logger.debug('Model {}  deserialization.'.format(file_name))
     return joblib.load(file_name)
 
@@ -42,8 +42,8 @@ class CalculateValue:
         return y_predicted
 
 
-@serialization_object_decorate(serialize_function=serialize_classification_model,
-                               deserialize_function=deserialize_classification_model,
+@serialization_object_decorate(serialize_function=save_classification_model,
+                               deserialize_function=restore_classification_model,
                                )
 def get_model(query, model_file_name, target_column, database_handler, overwrite=False):
     logger.info('Creation of model.')
