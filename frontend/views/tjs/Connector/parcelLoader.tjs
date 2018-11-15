@@ -20,8 +20,10 @@ function(map, view, layerStack){
     console.log({defExpr:defExpr, points: points, minPoint: minpoint, event:event, layer:connectorLayer});
     connectorLayer.definitionExpression = defExpr;
     map.layers.add(connectorLayer);
+    
     layerStack.push(connectorLayer);
     connectorLayer.load();
+    map.reorder(map.layers.items[map.layers.items.length-1],1);
   }
 
   return {

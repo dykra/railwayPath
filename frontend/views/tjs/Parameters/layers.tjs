@@ -11,9 +11,15 @@ function(){
   const errorLayer = new GraphicsLayer({
     id: "errorGraphic"
   });
+
+  const areaErrorLayer = new GraphicsLayer({
+    id: "errorGraphic"
+  });
+
   return {
     graphics: graphicsLayer,
     temporaryObjects: tempLayer,
-    errors: errorLayer
+    errors: errorLayer,
+    areaErrors: areaErrorLayer
   };
 }();

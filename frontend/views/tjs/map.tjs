@@ -44,11 +44,13 @@ require([
   let parcelMap = {};
   let editGraphic;
 
+  
   let map = new Map({
     basemap: "gray",
-    layers: [layers.temporaryObjects, layers.errors, layers.graphics]
+    layers: [layers.temporaryObjects, layers.areaErrors, layers.graphics, layers.errors]
   });
 
+  window.map = map;
   const view = new MapView({
     container: "viewDiv",
     map: map,

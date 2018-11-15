@@ -33,18 +33,13 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
   }
 
   function updateRailwayPolygon(event) {
-    if (event.tool !== "polyline") {
-      return;
-    }
+    event.tool = "polyline";
     getImpossibleSegment(event.geometry);
     // console.log(oldPolygon);
     addRailwayPolygon(event);
   }
 
   function removeRailwayPolygon(event) {
-    if (event.tool !== "polyline") {
-      return;
-    }
     getImpossibleSegment(event.geometry);
     let oldPolygon = polygonStack[polygonEditGraphic.graphicId];
     // console.log(oldPolygon);
