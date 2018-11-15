@@ -38,14 +38,14 @@ button {
 #pen {
     margin-top: -13px;
     margin-left: -8px;
-    background: white;
+    background: none;;
 }
 
 input {
   border: rgba(5, 77, 99, 0.8);
     padding: 7px;
     margin: 5px !important;
-    width: 300px;
+    width: 290px;
     border: 0;
     border-bottom: 1px solid #ccc;
 }
@@ -65,8 +65,28 @@ input ~ .focus-border{
 input:focus~ .focus-border{
     width: 300px;
     transition: 0.4s;
-    left: 0;}
-/**/
+    left: 0;
+}
+
+.input_box{
+	width: 360px;
+	color: white;
+}
+
+.info {
+	position: absolute;
+	top: 50%;
+	right: 4%;
+	transform: translate(-50%, -50%);
+}
+
+#info {
+	width: 50px;
+}
+
+#info:active {
+    transform: translateY(4px);
+}
 
 .top_bar{
     padding: 8px 16px;
@@ -243,4 +263,12 @@ footer > p:hover {
 
 .margin-bottom {
     margin-bottom: 16px;
+}
+ol {
+	color: white;	
+}
+
+ol li {
+	color: #FFECD1; /*#EBFCD2;*/
+	font-size: 18px;
 }
