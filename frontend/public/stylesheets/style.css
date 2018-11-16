@@ -45,3 +45,20 @@ body,
   background: #0079c1;
   color: #e4e4e4;
 }
+
+#price {
+	align-items: flex-start;
+	margin: 0;
+	line-height: 25px;
+}
+
+#dolar{
+	height: 25px;
+	align-items: flex-end
+}
+
+#countPrice {
+	content: url(../images/money_bag.png);
+	width: 32px;
+	height: 32px;
+}

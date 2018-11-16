@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>RailwayPath</title>
-
+  <link rel="icon" href="../images/loc2.png">
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <script src="https://js.arcgis.com/4.9/"></script>
   <link rel="stylesheet" href="../stylesheets/style.css">
@@ -20,9 +20,9 @@
     <button class="action-button esri-icon-blank-map-pin" id="pointButton"
             type="button" title="Draw point"></button>
     <button class="action-button esri-icon-polyline" id="polylineButton" type="button"
-            title="Draw polyline"></button>
+            title="Draw railway path"></button>
     <button class="action-button esri-icon-polygon" id="polygonButton" type="button"
-            title="Draw polygon"></button>
+            title="Get parcels"></button>
     <button class="action-button esri-icon-checkbox-unchecked" id="rectangleButton"
             type="button" title="Draw rectangle"></button>
     <button class="action-button esri-icon-radio-unchecked" id="circleButton"
@@ -31,9 +31,14 @@
             title="Clear graphics"></button>
     <button class="action-button esri-icon-polyline" id="railwayButton" type="button"
             title="Draw railway"></button>
+	
     
   </div>
-  <div id="railwayPrice">0</div>
+  <div id="railwayPrice" style="display:flex">
+	<p id="price" style="align-items: flex-start">0 </p>
+	<img id="dolar" style="align-items: flex-end" src="../images/currency_dollar_sign.png" >
+	</p>
+  </div>
 </div>
 </body>
 
