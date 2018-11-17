@@ -32,16 +32,6 @@ def get_altitudes():
     return altCtrl.get_altitude_list_from_database_as_json(points_string)
 
 
-# @app.route('/areaprice', methods = ['POST'])
-# def get_area_price():
-#     points_list = request.form.get('points_list')
-#     print(points_list)
-#     points_string = convert_points_list_to_points_string(points_list)
-#
-#     apController = AreaPriceController()
-#
-#     return apController.get_price_of_area_as_json(points_string)
-
 @app.route('/prices', methods = ['POST'])
 def get_area_price():
     data = request.data.decode("utf-8")

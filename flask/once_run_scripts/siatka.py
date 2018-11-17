@@ -119,7 +119,7 @@ for i in range (0,total_number):
 
 
 def generate_insert_for_point(point):
-    return "insert into siatka (number, altitude) values ({}, {});\n".format(point[0],point[2])
+    return "insert into altitudesNet (number, altitude) values ({}, {});\n".format(point[0],point[2])
 
 
 

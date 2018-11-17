@@ -12,7 +12,6 @@ class AltitudeRepository:
 
     def get_altitudes_string_from_database(self, points_string):
         command = "select dbo.getAltitudesFromCoordinateList(\'{}\')".format(points_string)
-        print(command)
         altitude_cursor = self.db.execute_statement(command)
         return altitude_cursor.fetchall()[0][0]
 

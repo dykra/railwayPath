@@ -4,7 +4,7 @@ CREATE TABLE dbo.conf
    (netsize int NOT NULL, south float NOT NULL, north float NOT NULL, east float NOT NULL, west float NOT NULL,
     xcoordsstep float NOT NULL, ycoordsstep float NOT NULL, xsidelength int NOT NULL, ysidelength int NOT NULL)
 
-CREATE TABLE dbo.siatka
+CREATE TABLE dbo.altitudesNet
    (number int NOT NULL, altitude float NOT NULL)
 
 CREATE TYPE [dbo].[PointsToGetAltitude] AS TABLE(
@@ -37,17 +37,15 @@ BEGIN
 		@xSideLen int, @ySideLen int, @number int, @altitude float
 
 	-- Add the T-SQL statements to compute the return value here
-	--select @plon = -117.935320, @plat = 34.316591
 	select @west = west, @south = south, @xcc = xCoordsStep, @ycc = yCoordsStep, @xSideLen = xSideLength, @ySideLen = ySideLength
 	from dbo.conf
 	select @xf = (@plon - @west)/@xcc, @yf = (@plat - @south)/@ycc
 	select @x = FLOOR(@xf), @y = FLOOR(@yf)
 	select @number = @xSideLen * @y + @x
 
-	--select @x, @y, @number
 	INSERT @points
 	select number, altitude , @west + @xcc * (number % @xSideLen) as 'longitude', @south + @ycc * (number/@xSideLen) as 'latitude'
-	from dbo.siatka
+	from dbo.altitudesNet
 	where number = @number or number = @number + 1 or number = @number + @xSideLen or number = @number + @xSideLen + 1
 
 	RETURN
