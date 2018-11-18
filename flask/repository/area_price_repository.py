@@ -1,9 +1,9 @@
-from static.utils import db_connection
+from static.utils import get_db_connection
 
 
 class AreaPriceRepository:
     def __init__(self):
-        self.db = db_connection
+        self.db = get_db_connection()
 
     def get_price_of_area(self, points_string):
         # TODO uncommennt lines below as soon as the method in the database is implemented

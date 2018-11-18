@@ -7,6 +7,8 @@ import requests
 import pymssql
 import json
 
+from flask.static.utils import get_db_connection
+
 print(datetime.now())
 def get_point_list_with_altitudes_from_open_elevation_api(points_list):
     post_data = {"locations" : []}
@@ -59,8 +61,8 @@ def get_base_url():
 
 
 
-db = DatabaseHandler('89.69.106.183:50002', 'agh', 'agh', 'LosAngelesCounty')
-
+# db = DatabaseHandler('89.69.106.183:50002', 'agh', 'agh', 'LosAngelesCounty')
+db = get_db_connection()
 west = db.execute_statement("select top 1 center_lon from dbo.PARCEL where CENTER_X != 0 and CENTER_Y != 0 order by CENTER_LON")
 wlon = float(west.fetchall()[0][0])
 print(wlon)

@@ -1,9 +1,9 @@
-from static.utils import db_connection
+from static.utils import get_db_connection
 
 
 class AltitudeRepository:
     def __init__(self):
-        self.db = db_connection
+        self.db = get_db_connection()
 
     def get_altitude_from_database(self, latitude_str, longitude_str):
         altitude_cursor = self.db.execute_statement(

@@ -1,6 +1,7 @@
 from static.DatabaseHandler import DatabaseHandler
 
-db_connection = DatabaseHandler('89.69.106.183:50002', 'agh', 'agh', 'LosAngelesCounty')
+def get_db_connection():
+    return DatabaseHandler(server_name='89.69.106.183:50002', database_password='agh', user_name='agh', database_name='LosAngelesCounty')
 
 
 def convert_points_list_to_points_string(points_list):
