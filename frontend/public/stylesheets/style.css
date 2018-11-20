@@ -103,3 +103,7 @@ body,
 #rectangleButton:before {
 	background-image: url('../images/download.png');
 }
+
+#changeMap:before {
+	background-image: url('../images/world3.png');
+}
