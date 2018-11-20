@@ -5,7 +5,7 @@ function(){
   const pointSymbol = {
     type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
     style: "square",
-    color: "#8A2BE2",
+    color: "#2554C7",
     size: "16px",
     outline: { // autocasts as new SimpleLineSymbol()
       color: [255, 255, 255],
@@ -15,7 +15,7 @@ function(){
 
   const polylineSymbol = {
     type: "simple-line", // autocasts as new SimpleLineSymbol()
-    color: "#8A2BE2",
+    color: "#2554C7",
     width: "4",
     style: "dash"
   };
