@@ -37,7 +37,7 @@ function(){
 
   const polygonSymbol = {
     type: "simple-fill", // autocasts as new SimpleFillSymbol()
-    color: "#ADD8E6",
+    color: "#4fabc9",
     style: "solid",
     outline: {
       color: "white",
