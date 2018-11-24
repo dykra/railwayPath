@@ -1,0 +1,16 @@
+function startProgram(){
+  let designSpeed = document.getElementById("design_speed").value;
+  let minCurvatureRadius = document.getElementById("min_curvature_radius").value;
+  let maxFall = document.getElementById("max_fall").value;
+  let roadWidth = document.getElementById("road_width").value;
+
+  location.href = location.origin + '/html/map' +
+    '?designSpeed=' + designSpeed +
+    '&curvatureRadius=' + minCurvatureRadius +
+    '&maxFall=' + maxFall +
+    '&roadWidth=' + roadWidth;
+  // location.href=window.location.href + 'map?designSpeed=' + design_speed +
+  // '&minCurvatureRadius=' + min_curvature_radius +
+  // '&maxFall=' + max_fall +
+  // '&roadWidth=' + road_width;
+}

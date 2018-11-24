@@ -1,5 +1,7 @@
 from static.DatabaseHandler import DatabaseHandler
 
+from flask.static.utils import get_db_connection
+
 
 class Configuration:
     def __init__(self, filename) -> None:
@@ -25,7 +27,7 @@ class Configuration:
 
 
 def insert_configuration_to_db(c, db):
-    insert_statement = "insert into dbo.conf(netsize, south, north, east, west, xcoordsstep, ycoordsstep, xsidelength, ysidelength) values ({}, {}, {}, {}, {}, {}, {}, {}, {})".format(
+    insert_statement = "insert into dbo.altitudes_net_configuration(netsize, south, north, east, west, xcoordsstep, ycoordsstep, xsidelength, ysidelength) values ({}, {}, {}, {}, {}, {}, {}, {}, {})".format(
                             c.netsize, c.south, c.north, c.east, c.west, c.xcoordsstep, c.ycoordsstep, c.xsidelength, c.ysidelength
                         )
     db.execute_statement(insert_statement)
@@ -37,8 +39,8 @@ def insert_altitudes(db):
 
 
 def main():
-    db = DatabaseHandler('89.69.106.183:50002', 'agh', 'agh', 'LosAngelesCounty')
-
+    # db = DatabaseHandler('89.69.106.183:50002', 'agh', 'agh', 'LosAngelesCounty')
+    db = get_db_connection()
     c = Configuration("xconf.txt")
     # insert_configuration_to_db(c, db)
 
