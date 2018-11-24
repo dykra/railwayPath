@@ -3,7 +3,9 @@ import pandas as pd
 import logging
 import sys
 from dotenv import load_dotenv
+
 from src.parcels_valuation.utils.logger import create_loggers_helper
+
 import os
 
 load_dotenv()
@@ -31,8 +33,7 @@ class DatabaseHandler:
                                         password=database_password,
                                         database=database_name)
         except pymssql.OperationalError:
-            logger.error('Not all parameters to '
-                         'connect with database are provided.')
+            logger.error('Error while connecting to database. Check all the parameters.')
             sys.exit(1)
         self.cursor = self.conn.cursor()
 
