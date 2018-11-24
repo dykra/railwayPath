@@ -27,7 +27,7 @@ class Configuration:
 
 
 def insert_configuration_to_db(c, db):
-    insert_statement = "insert into dbo.conf(netsize, south, north, east, west, xcoordsstep, ycoordsstep, xsidelength, ysidelength) values ({}, {}, {}, {}, {}, {}, {}, {}, {})".format(
+    insert_statement = "insert into dbo.altitudes_net_configuration(netsize, south, north, east, west, xcoordsstep, ycoordsstep, xsidelength, ysidelength) values ({}, {}, {}, {}, {}, {}, {}, {}, {})".format(
                             c.netsize, c.south, c.north, c.east, c.west, c.xcoordsstep, c.ycoordsstep, c.xsidelength, c.ysidelength
                         )
     db.execute_statement(insert_statement)

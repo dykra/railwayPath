@@ -1,15 +1,21 @@
 
 
--- table dbo.conf contains configuration of the altitudes net, that is calculated once, required to make altitudes calculating O(1)
-CREATE TABLE dbo.conf
+--=====================================================================================================================
+-- table dbo.altitudes_net_configuration contains configuration of the altitudes net, that is calculated once, required to make altitudes calculating O(1)
+--=====================================================================================================================
+CREATE TABLE dbo.altitudes_net_configuration
    (netsize int NOT NULL, south float NOT NULL, north float NOT NULL, east float NOT NULL, west float NOT NULL,
     xcoordsstep float NOT NULL, ycoordsstep float NOT NULL, xsidelength int NOT NULL, ysidelength int NOT NULL)
 
+--=====================================================================================================================
 -- table dbo.altitudesNet contains net of altitudes (numbers start from lower left corner and go right, end on upper right corner
+--=====================================================================================================================
 CREATE TABLE dbo.altitudesNet
    (number int NOT NULL, altitude float NOT NULL)
 
+--=====================================================================================================================
 -- type required to pass information about net cell to functions
+--=====================================================================================================================
 CREATE TYPE [dbo].[PointsToGetAltitude] AS TABLE(
 	[number] [int] NULL,
 	[altitude] [float] NULL,
@@ -19,7 +25,7 @@ CREATE TYPE [dbo].[PointsToGetAltitude] AS TABLE(
 
 GO
 
---
+--=====================================================================================================================
 -- INPUT
 --    @plon - longitude of point checked
 --    @plat - latitude of point checked
@@ -28,8 +34,9 @@ GO
 --              each point that is in the part of the world covered by net has it's square
 --              table points contains four corners of such square
 --
--- function calculates number of square in which the point is based on dbo.conf table,
+-- function calculates number of square in which the point is based on dbo.altitudes_net_configuration table,
 --   then returns proper points from net - 4 corners of such square
+--=====================================================================================================================
 CREATE FUNCTION [dbo].[getSquaresFromPoints]
 (
 	@plon float,
@@ -52,7 +59,7 @@ BEGIN
 
 	-- Add the T-SQL statements to compute the return value here
 	select @west = west, @south = south, @xcc = xCoordsStep, @ycc = yCoordsStep, @xSideLen = xSideLength, @ySideLen = ySideLength
-	from dbo.conf
+	from dbo.altitudes_net_configuration
 	select @xf = (@plon - @west)/@xcc, @yf = (@plat - @south)/@ycc
 	select @x = FLOOR(@xf), @y = FLOOR(@yf)
 	select @number = @xSideLen * @y + @x
@@ -67,7 +74,7 @@ END
 
 GO
 
---
+--=====================================================================================================================
 -- INPUT
 --    @points - four corners of net square
 --    @plon - longitude of point checked
@@ -77,6 +84,7 @@ GO
 --
 -- function uses bilinear interpolation to estimate altitude of point (@plat, @plon) based on
 --    four corners of square in which this point is
+--=====================================================================================================================
 CREATE FUNCTION interpolateAltitude(@Points PointsToGetAltitude READONLY, @plat float, @plon float)
 RETURNS float
 AS
@@ -156,6 +164,7 @@ END
 
 GO
 
+--=====================================================================================================================
 -- INPUT
 --    @plon - longitude of point checked
 --    @plat - latitude of point checked
@@ -164,6 +173,7 @@ GO
 --
 -- function returning altitude, it's called by backend server, it calls other SQL functions
 --    (something like "endpoint" here)
+--=====================================================================================================================
 CREATE FUNCTION dbo.getAltitudeFromCoordinates
 (
 	@lat float,
@@ -184,9 +194,11 @@ END
 GO
 
 
+--=====================================================================================================================
 -- parses points from string to table
 -- input format: <altitude><comma><longitude><comma><latitude><semicolon> for each point
 -- In this version of SQL I haven't found anything better
+--=====================================================================================================================
 CREATE FUNCTION [dbo].[getTableFromAltitudesString]
 (
 	@data varchar(max)
@@ -255,9 +267,10 @@ BEGIN
   RETURN
 END
 
-
+--=====================================================================================================================
 -- calls dbo.getAltitudeFromCoordinates for each point in list passed via @pointsString
 --    and parsed in dbo.getTableFromAltitudesString
+--=====================================================================================================================
 CREATE FUNCTION dbo.getAltitudesFromCoordinateList
 (
 	@pointsString varchar(max)
