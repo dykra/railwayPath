@@ -25,14 +25,14 @@ body,
 }
 
 .action-button {
-  font-size: 16px;
   background-color: transparent;
   border: 1px solid #D3D3D3;
   color: #6e6e6e;
-  height: 32px;
-  width: 32px;
+  height: 42px;
+  width: 42px;
   text-align: center;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  padding: 0px;
 }
 
 .action-button:hover,
@@ -61,4 +61,49 @@ body,
 	content: url(../images/money_bag.png);
 	width: 32px;
 	height: 32px;
+}
+
+.menu_button:before {
+   	background-size: 36px 36px;
+    	display: inline-block;
+    	width: 36px; 
+    	height: 36px;
+    	content:"";
+	vertical-align: middle;
+}
+
+#hand_button:before {
+	background-image: url('../images/hand_attendance.png');
+}
+
+#count_price_button:before {
+	background-image: url('../images/money_bag.png');
+}
+
+#resetBtn:before {
+	background-image: url('../images/trash_can.png');
+}
+
+#polygonButton:before {
+	background-image: url('../images/selection_custom_shape.png');
+}
+
+#polylineButton:before {
+	background-image: url('../images/railway.png');
+}
+
+#circleButton:before {
+	background-image: url('../images/circle.png');
+}
+
+#pointButton:before {
+	background-image: url('../images/location.png');
+}
+
+#rectangleButton:before {
+	background-image: url('../images/download.png');
+}
+
+#changeMap:before {
+	background-image: url('../images/world3.png');
 }
