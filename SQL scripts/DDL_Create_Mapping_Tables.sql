@@ -1,4 +1,3 @@
-
 -------------------		MAPPING TABLES	-------------
 
 --Simple_Zones_Mapping +

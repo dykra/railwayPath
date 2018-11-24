@@ -3,7 +3,9 @@ import pandas as pd
 import logging
 import sys
 from dotenv import load_dotenv
-from utils.logger import create_loggers_helper
+
+from src.parcels_valuation.utils.logger import create_loggers_helper
+
 import os
 
 load_dotenv()
@@ -37,7 +39,7 @@ class DatabaseHandler:
 
     def execute_query(self, query):
         self.cursor.execute(query)
-        logger.debug('Reading data from database')
+        logger.debug('Reading data from database, executing: {}'.format(query))
         return pd.read_sql(query, self.conn)
 
     def close_connection(self):

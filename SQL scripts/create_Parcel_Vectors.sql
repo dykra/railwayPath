@@ -605,14 +605,6 @@ Zoning_Code, BD_LINE_1_Quality__Class___Shap,
 SA_Street_and_City_and_State, MA_Street_and_City_and_State, City, Simple_Zoning_Code
 
 -- =============================================
--- Mapping NULL values into numbers
--- =============================================
-
-EXEC UpdateNullValues
-
-EXEC GetColumnsWithNullValues
-
--- =============================================
 -- Move LS1_Sale_Amount column to the end and rename it
 -- =============================================
 
@@ -623,5 +615,6 @@ ADD Sale_Amount int,
 GO
 
 UPDATE PARCEL_VECTORS SET Sale_Amount = LS1_Sale_Amount, 
-						  Row_Version_Stamp = 0
+						  Row_Version_Stamp = 0,
+						  Estimated_Amount = 0						
 GO

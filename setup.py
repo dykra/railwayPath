@@ -6,8 +6,9 @@ setup(
     packages=[''],
     url='',
     license='',
-    author='Kazior,Nowak,Palewicz,Tomasiewicz',
+
+    author='Nowak,Palewicz',
     author_email='railwayPathINZYNIERKA@gmail.com',
     description='',
-    install_requires=['pymssql', 'pandas', 'scikit-learn', 'python-dotenv']
+    install_requires=['pymssql', 'matplotlib', 'numpy', 'tensorflow', 'pandas', 'keras', 'python-dotenv']
 )
