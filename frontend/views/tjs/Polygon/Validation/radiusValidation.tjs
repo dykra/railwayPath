@@ -1,0 +1,84 @@
+function(parameters){
+
+  // function that checks if the line have good curve radius
+  function getSegmentWithInValidRadius(polyline) {
+    if (polyline.paths[0].length < 3) {
+      return null;
+    }
+
+    let paths = polyline.paths[0];
+
+    let polylineArray = [];
+
+    for(let i=0;i<paths.length-2;i++){
+      const radius = calculateCircuscribedCircleRadius(paths[i],paths[i+1],paths[i+2]);
+      // console.log(radius);
+      if(radius<parameters.minCurvatureRadius){
+        let points = [paths[i],paths[i+1],paths[i+2]];
+        polylineArray.push(points);
+      }
+    }
+    if(polylineArray===[])
+      return null;
+    else
+      return createPolylineFromPoints(polylineArray);
+  }
+
+  function calculateCircuscribedCircleRadius(A, B, C) {
+    let O = calculateCenterOfCircuscribedCircle(A, B, C);
+
+    //TODO: remove debug logging
+    // console.log({"name": "A", "x": A[0], "y": A[1], "A": A});
+    // console.log({"name": "B", "x": B[0], "y": B[1], "B": B});
+    // console.log({"name": "C", "x": C[0], "y": C[1], "C": C});
+    // console.log({"name": "O", "x": O[0], "y": O[1], "O": O});
+    // console.log(view.spatialReference);
+    // return getDistanceFromLatLonInM(A,O);
+    return Math.sqrt(Math.pow(A[0] - O[0], 2) + Math.pow(A[1] - O[1], 2));
+  }
+
+  // function that calculate center of circle for further validation
+  function calculateCenterOfCircuscribedCircle(A, B, C) {
+    // I have no idea how to write it more human readable, so in case of bug rewrite whole function
+    let point = [];
+    // console.log({A:A,B:B,C:C});
+    point[0] = (-(A[0] * (A[0] - B[0]) / (2 * (A[1] - B[1])))
+      - B[0] * (A[0] - B[0]) / (2 * (A[1] - B[1])) + B[0] * (B[0] - C[0])
+      / (2 * (B[1] - C[1])) + C[0] * (B[0] - C[0]) / (2 * (B[1] - C[1]))
+      - A[1] / 2 + C[1] / 2) / ((B[0] - C[0]) / (B[1] - C[1]) - (A[0] - B[0]) / (A[1] - B[1]));
+
+    point[1] = (A[0] - B[0]) / (B[1] - A[1]) * (point[0] - (A[0] + B[0]) / 2) + (A[1] + B[1]) / 2;
+    return point;
+  }
+
+
+  function createPolylineFromPoints(points) {
+    return new Polyline({
+      type: "polyline",
+      spatialReference: view.spatialReference,
+      hasZ: false,
+      paths: points
+    });
+  }
+
+  function getSegment(polyline, points = 3, startPoint = 0) {
+    const line = polyline.clone();
+
+    let paths = [];
+
+    if (line.paths[0].length < startPoint+points) return line;
+
+    for (let i = startPoint; i <= startPoint+points; i++) {
+      paths.push([line.getPoint(0, i)]);
+    }
+
+    return createPolylineFromPoints(paths);
+  }
+
+  return{
+    getImpossibleRadiusSegments: function(polyline){
+      return getSegmentWithInValidRadius(polyline);
+    }
+  }
+
+}

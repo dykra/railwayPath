@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Railway Path</title>
+	<link rel="icon" href="images/loc2.png">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="stylesheets/index.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 600px)" href="stylesheets/small_screen.css" />
+	<script src='./javascript/index'></script>
+</head>
+
+<body>
+
+<!-- Navigation bar -->
+<div class="top">
+    <div class="top_bar">
+        <a href="#home" class="bar-item"><b>Draw</b> Railway Path</a>
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class= "bar-item-right hide-on-small-screen">
+            <a href="#about" class="bar-item">About</a>
+            <a href="#contact" class="bar-item">Help</a>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="title_on_image" id="home">
+    <div id="content">
+        <div class="display-middle center">
+            <h1 style="display: flex ">
+                <div class="padding black">
+                    <img id = "pen" src ="images/pencil.png">
+                    <b>Draw</b>
+                </div>
+                <div class="hide-on-small-screen subtitle">Railway Path</div>
+            </h1>
+        </div>
+        <div class="inputs">
+			<div class="input_box">
+				<input id="design_speed" placeholder="Design speed">
+				km/h
+			</div>
+			<div class="input_box">
+				<input id="min_curvature_radius" placeholder="Minimum radius of curvature">
+				m
+            </div>
+			<div class="input_box">
+				<input id="max_fall" placeholder="Maximal fall in the area">
+				%
+            </div>
+			<div class="input_box">
+				<input id="road_width" placeholder="Width of the road under the railway">
+				m
+            </div>
+			<button id="run_button" onclick="startProgram()">Run</button>
+        </div>
+		<div class="info">
+            <a href="#contact">
+			<img id = "info" src ="images/info.png">
+			</a>
+        </div>
+    </div>
+</header>
+
+<!-- Page content -->
+<div class="content padding" style="max-width:1564px">
+
+    <!-- About Section -->
+    <div class="container padding-32" id="about">
+        <h3 class="border-bottom border-light-grey padding-16">About</h3>
+        <p>The application delivers high quality GIS solutions for customers involved in process of railway paths investment.
+            Our application supports process of choosing railway path.
+            User can draw a line as a new railway path and gets the information about prices of areas needed to build such path.
+            Prices are estimated using machine learning. What is more some path validations are implemented such as
+            checking if the proposed path does not exceed the minimal radius of curves and maximal fall in area.
+
+        </p>
+        Application features:
+        <ul>
+            <li>Possibility to draw path on real very accurate map</li>
+            <li>Displaying parcels from selected area</li>
+			<li>Displaying some information about parcels (including predicted price)</li>
+			<li>Trace validation - checkoing if minimal radius of curvvature is not exceded or maximal fall in the area are not exceeded</li>
+            <li>Prediction of sumarized trace price</li>
+        </ul>
+    </div>
+
+    <!-- Help Section -->
+    <div class="container padding-32" style=" background: linear-gradient(#2c736b, #054d63);" id="contact">
+        <h3 class="border-bottom border-light-grey padding-16" style="color: lightgrey">Help</h3>
+        <p style=" color: white">
+			Below are presented parameters, which can be adjusted to needs. Based on them application will validate your trace.
+			<ol> 
+				<li>Design speed [km/h]</li> 
+					The speed, which ensure save ride for one vehicle in normal condition. This parameter has to be established at the beginning of planning train path.
+					It depends on path function and kind of transport.
+				<li>Minimum radius of curvature [m]</li>
+					For specified design speed, trace must not exceed minimum radius of curvature. It is possibility to add more restriction for curvature. 
+					Adjust this parameter to your needs.
+				<li>Maximal fall in the area [%]</li>
+					For specified design speed, trace must not exceed maximal fall in the area. The trace must not have too huge grade for specified type of rail vehicle.
+					This factor is very important. Adjust it.
+				<li>Width of the road under the railway [m]</li>
+					This parameter specified how width trace application will draw on the map.
+					You can also draw on your own extra parcels for traction power infrastructure, maintenance facility, railway stations e.t.c.
+			</ol>
+		</p>
+    </div>
+
+    <!-- End page content -->
+</div>
+
+
+<!-- Footer -->
+<footer class="footer center black padding-16" id="footer">
+    <p>Railway Path</p>
+</footer>
+
+</body>
+</html>
