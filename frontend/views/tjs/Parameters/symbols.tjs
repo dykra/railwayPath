@@ -45,6 +45,8 @@ function(){
     }
   };
 
+
+
   let errorArraySymbols = [];
   for(let i in paleteArray){
     let symbol = JSON.parse(JSON.stringify(polygonSymbol));

@@ -1,6 +1,8 @@
 function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, parameters){
 
   const radiusValidationClass = {{reglue:"Polygon/Validation/radiusValidation"}};
+  const topologyValidationClass = {{reglue:"Polygon/Validation/topologyValidation"}};
+  let topologyValidation = topologyValidationClass();
 
   var polygonEditGraphic;
 
@@ -128,6 +130,7 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
       });
       errorLayer.add(graphic);
     }
+    topologyValidation.getImpossibleTopologySegment(polyline);
 
     //topology validation
   }

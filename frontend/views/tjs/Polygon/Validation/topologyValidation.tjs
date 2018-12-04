@@ -1,4 +1,23 @@
 function(){
-    function getImpossibleRadiusSegment(polyline){
+    function getImpossibleTopologySegment(polyline){
+        let points = polyline.paths[0];
+        let pointObjects = [];
+        let altitudes = [];
+        for(let i = 0; i<points.length; i++){
+            let point = webMercatorUtils.xyToLngLat(points[i][0],points[i][1]);
+            pointObjects.push({
+                "latitude": point[0],
+                "longitude": point[1]
+            });
+        }
+        // utilityFunctions.getParcelsAltitudes(pointObjects, checkForTopologyErrors);
     }
+
+    function checkForTopologyErrors(altitudes){
+        console.log(altitudes);
+    }
+
+    return {
+        getImpossibleTopologySegment: getImpossibleTopologySegment
+    };
 }

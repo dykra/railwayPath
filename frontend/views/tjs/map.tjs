@@ -10,7 +10,8 @@ require([
   "esri/layers/MapImageLayer",
   "esri/geometry/geometryEngine",
   "esri/geometry/Point",
-  "esri/geometry/SpatialReference"
+  "esri/geometry/SpatialReference",
+  "esri/geometry/support/webMercatorUtils"
 ], function (
   Map,
   MapView,
@@ -23,7 +24,8 @@ require([
   MapImageLayer,
   geometryEngine,
   Point,
-  SpatialReference
+  SpatialReference,
+  webMercatorUtils
 ) {
   const parameters = {{reglue:"Parameters/parameterProvider"}};
   const layers = {{reglue:"Parameters/layers"}};
