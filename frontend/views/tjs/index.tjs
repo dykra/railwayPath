@@ -4,6 +4,7 @@ function startProgram(){
   let maxFall = document.getElementById("max_fall").value;
   let roadWidth = document.getElementById("road_width").value;
 
+  if(valid_parameters(designSpeed, minCurvatureRadius, maxFall, roadWidth)){
   location.href = location.origin + '/html/map' +
     '?designSpeed=' + designSpeed +
     '&curvatureRadius=' + minCurvatureRadius +
@@ -13,4 +14,14 @@ function startProgram(){
   // '&minCurvatureRadius=' + min_curvature_radius +
   // '&maxFall=' + max_fall +
   // '&roadWidth=' + road_width;
+  }
+}
+
+function valid_parameters(designSpeed, minCurvatureRadius, maxFall, roadWidth){
+	if(designSpeed > 300 || designSpeed < 20 || !Number.isInteger(designSpeed)){
+	wrongParameters_alert.style.display = "block";
+	return false;
+  }
+  return true;
+
 }

@@ -25,9 +25,76 @@
     </div>
 </div>
 
+<!-- Popup error - wrong parameters -->
+<div id="wrongParameters_alert" style="display: none" class="alert">
+  <div class="alert_content">
+    <button id="close">
+			<img id = "info" src ="images/close.png">
+	</button>
+    <p>Enter parameters</p>
+  </div>
+
+</div>
+<script>
+var close_button = document.getElementById("close");
+
+// When the user clicks the button, open the modal 
+close_button.onclick = function() {
+    wrongParameters_alert.style.display = "none";
+}
+
+</script>
+<style>
+#close{
+	background: none;
+	border: none;
+	color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.alert {
+    display: block; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Alert Content */
+.alert_content {
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 15%;
+    padding: 20px;
+    padding-left: 50px;
+    border: #ff3333;
+    width: 700px;
+    border-radius: 10px;
+    height: 100px;
+    color: white;
+    background: #ff3333;
+}
+</style>
+
 <!-- Header -->
 <header class="title_on_image" id="home">
     <div id="content">
+	<button id="myBtn">Open Alert</button>
         <div class="display-middle center">
             <h1 style="display: flex ">
                 <div class="padding black">
