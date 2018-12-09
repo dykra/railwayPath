@@ -49,19 +49,23 @@
         </div>
         <div class="inputs">
 			<div class="input_box">
-				<input id="design_speed" placeholder="Design speed">
+				<p class="desc">Design speed</p>
+				<input id="design_speed">
 				km/h
 			</div>
 			<div class="input_box">
-				<input id="min_curvature_radius" placeholder="Minimum radius of curvature">
+				<p class="desc">Minimum radius of curvature</p>
+				<input id="min_curvature_radius">
 				m
             </div>
 			<div class="input_box">
-				<input id="max_fall" placeholder="Maximal fall in the area">
+				<p class="desc">Maximal fall in the area</p>
+				<input id="max_fall">
 				%
             </div>
 			<div class="input_box">
-				<input id="road_width" placeholder="Width of the road under the railway">
+				<p class="desc">Width of the road under the railway</p>
+				<input id="road_width">
 				m
             </div>
 			<button id="run_button" onclick="startProgram()">Run</button>
@@ -104,17 +108,25 @@
 			Below are presented parameters, which can be adjusted to needs. Based on them application will validate your trace.
 			<ol> 
 				<li>Design speed [km/h]</li> 
-					The speed, which ensure save ride for one vehicle in normal condition. This parameter has to be established at the beginning of planning train path.
+					<p>The speed, which ensure save ride for one vehicle in normal condition. This parameter has to be established at the beginning of planning train path.
 					It depends on path function and kind of transport.
+					<br><br>
+					</p>
 				<li>Minimum radius of curvature [m]</li>
-					For specified design speed, trace must not exceed minimum radius of curvature. It is possibility to add more restriction for curvature. 
+					<p>For specified design speed, trace must not exceed minimum radius of curvature. It is possibility to add more restriction for curvature. 
 					Adjust this parameter to your needs.
+					<br><br>
+					</p>
 				<li>Maximal fall in the area [%]</li>
-					For specified design speed, trace must not exceed maximal fall in the area. The trace must not have too huge grade for specified type of rail vehicle.
+					<p>For specified design speed, trace must not exceed maximal fall in the area. The trace must not have too huge grade for specified type of rail vehicle.
 					This factor is very important. Adjust it.
+					<br><br>
+					</p>
 				<li>Width of the road under the railway [m]</li>
-					This parameter specified how width trace application will draw on the map.
+					<p>This parameter specified how width trace application will draw on the map.
 					You can also draw on your own extra parcels for traction power infrastructure, maintenance facility, railway stations e.t.c.
+					<br><br>
+					</p>
 			</ol>
 		</p>
     </div>

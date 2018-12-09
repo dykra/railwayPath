@@ -43,10 +43,12 @@ button {
 }
 
 input {
-  border: rgba(5, 77, 99, 0.8);
-    padding: 7px;
-    margin: 5px !important;
-    width: 290px;
+    opacity: 0.9;
+    border: rgba(5, 77, 99, 0.8);
+    padding: 4px;
+    padding-left: 10px;
+    margin: 3px !important;
+    width: 200px;
     border: 0;
     border-bottom: 1px solid #ccc;
 }
@@ -155,7 +157,7 @@ input:focus~ .focus-border{
 .inputs{
     position: absolute;
     top: 60%;
-    left: 50%;
+    left: 60%;
     transform: translate(-50%, -50%);
     ms-transform: translate(-50%, -50%);
 
@@ -170,7 +172,7 @@ input:focus~ .focus-border{
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 300px;
+    width: 200px;
     position: center;
 }
 
@@ -270,10 +272,14 @@ ol {
 }
 
 ol li {
-	color: #FFECD1; /*#EBFCD2;*/
+	color: lightgray;
 	font-size: 18px;
 }
-
+.desc{
+	margin: 0px;
+	margin-left: 6px;
+	color: lightgray;
+}
 /*
 	Style for wrong parameters popup 
 */
