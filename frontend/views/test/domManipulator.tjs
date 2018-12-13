@@ -1,0 +1,59 @@
+function(){
+
+  let tests = [];
+
+  function addTest(name, pass, error){
+    tests.push({name:name,pass:pass,error: error});
+  }
+
+  function generateDom(){
+    let element = document.getElementById("testPlaceholder");
+    if(element === null){
+      document.addEventListener("DOMContentLoaded", function(event){
+        generateDom();
+      });
+    } else {
+      element.innerHTML="";
+      for(let i in tests){
+        let div = document.createElement("div");
+        div.style.width = "100%";
+        div.style.height = "80px";
+        if(tests[i].pass===true){
+          div.style.background = "green";
+        } else{
+          div.style.background = "red";
+        }
+        div.style.color = "white";
+        div.style.borderRadius = "25px";
+        div.style.textAlign = "center";
+        div.innerHTML = tests[i].name;
+        div.innerHTML += "<br>";
+        if(tests[i].pass===true){
+          div.innerHTML += "passed";
+        } else{
+          div.innerHTML += "not passed";
+        }
+        div.innerHTML += "<br>";
+        div.innerHTML += tests[i].error;
+        element.appendChild(div);
+        let space = document.createElement("div");
+        space.style.width = "100%";
+        space.style.height = "10px";
+        element.appendChild(space);
+      }
+    }
+
+  }
+
+
+  return {
+    addTest: function(name, pass, error){
+      addTest(name,pass, error);
+    },
+    generateDom: function(){
+      generateDom();
+    }
+
+  }
+
+}();

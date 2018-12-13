@@ -1,0 +1,80 @@
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/layers/FeatureLayer",
+  "esri/widgets/Sketch/SketchViewModel",
+  "esri/Graphic",
+  "esri/layers/GraphicsLayer",
+  "esri/geometry/Polygon",
+  "esri/geometry/Polyline",
+  "esri/layers/MapImageLayer",
+  "esri/geometry/geometryEngine",
+  "esri/geometry/Point",
+  "esri/geometry/SpatialReference",
+  "esri/geometry/support/webMercatorUtils"
+], function (
+  Map,
+  MapView,
+  FeatureLayer,
+  SketchViewModel,
+  Graphic,
+  GraphicsLayer,
+  Polygon,
+  Polyline,
+  MapImageLayer,
+  geometryEngine,
+  Point,
+  SpatialReference,
+  webMercatorUtils
+) {
+  let domGenerator={{reglue:"test/domManipulator"}};
+  let Assert={{reglue:"test/testRunner"}};
+  console.log("test");
+
+
+  // const view = new MapView({
+  //   container: "viewDiv",
+  //   center: [-118.352, 33.883],
+  //   scale: 50000,
+  //   constraints: {
+  //     rotationEnabled: false
+  //   }
+  // });
+  // let params = {minCurvatureRadius: 200};
+  // let line = {paths: [[[1, 1], [2, 2], [3, 3], [2, 2], [1, 1]]]};
+  // console.log(window.asdasd = radiusValidator(params).getImpossibleRadiusSegments(line));
+
+
+
+
+
+// console.log(Assert.equals("testValidation", function(){return 2}, 2));
+  let test1 = Assert.equals("radiusValidationTest", function () {
+    let radiusValidator={{reglue:"tjs/Polygon/Validation/radiusValidation"}};
+    const view = new MapView({
+      container: "viewDiv",
+      center: [-118.352, 33.883],
+      scale: 50000,
+      constraints: {
+        rotationEnabled: false
+      }
+    });
+    let params = {minCurvatureRadius: 200};
+    let line = {paths: [[[1, 1], [2, 2], [3, 3], [2, 2], [1, 1]]]};
+    return radiusValidator(params).getImpossibleRadiusSegments(line).__accessor__.store._values.type;
+  }, "polyline");
+  domGenerator.addTest(test1.name, test1.pass, test1.error);
+  domGenerator.addTest("restApiTest", true,"");
+  domGenerator.addTest("failedTest", false, "testFailedTest");
+  domGenerator.addTest("layerTest", true, "");
+  domGenerator.addTest("topologyValidationTest", true, "");
+  domGenerator.addTest("topologyValidationTest", true, "");
+  domGenerator.addTest("getTopologyTest", true, "");
+  domGenerator.addTest("getPriceTest", true, "");
+
+  domGenerator.generateDom();
+
+// element.innerText="asd";
+
+
+});

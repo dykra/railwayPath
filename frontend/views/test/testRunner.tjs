@@ -1,0 +1,31 @@
+function(){
+  return {
+    equals: function(name, fun, value){
+      try{
+        let ret = fun();
+        console.log(ret);
+        if( ret === value){
+          return {name:name, pass: true, error:""};
+        } else {
+          return {name:name, pass: false, error:"values not equals"};
+        }
+      }
+      catch (err) {
+        return {name:name, pass: false, error:err.message};
+      }
+    },
+    notEquals: function(name, fun, value){
+      try{
+        let ret = fun();
+        if( ret !== value){
+          return {name:name, pass: true, error:""};
+        } else {
+          return {name:name, pass: false, error:"values equals"};
+        }
+      }
+      catch (err) {
+        return {name:name, pass: false, error:err.message};
+      }
+    }
+  }
+}()
