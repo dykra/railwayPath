@@ -6,13 +6,13 @@
 GO
 
 BULK INSERT ESTIMATED_PRICE_GROUP
-    FROM 'C:\Magdalena\INZYNIERKA\estimated_price_group.csv' -- here change path
+    FROM '[path]' -- here change path
     WITH
     (
     FIRSTROW = 1,
     FIELDTERMINATOR = ',',  -- CSV field delimiter
     ROWTERMINATOR = '\n',
-    ERRORFILE = 'C:\Magdalena\INZYNIERKA\estimated_pg_errors.txt', -- here change path
+    ERRORFILE = '[path]', -- here change path
     TABLOCK
     )
 
