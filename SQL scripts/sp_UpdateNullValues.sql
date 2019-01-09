@@ -1,13 +1,15 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Author:		Magdalena Nowak
 -- Create date: 8.09.2018
 -- Description:	Procedure to update all NULL values to 0.
---				Works for nvarchar and int columns. 
+--				Works for nvarchar and int columns.
 -- =============================================
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE OR ALTER PROCEDURE UpdateNullValues 
 	@Table_Name nvarchar(255) = 'PARCEL_VECTORS'
 AS

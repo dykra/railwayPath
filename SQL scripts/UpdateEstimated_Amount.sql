@@ -1,3 +1,8 @@
+-- =============================================
+-- Author:  Magdalena Nowak
+-- Create date: 18.11.2018
+-- Description: Procedures to update estimated price
+-- =============================================
 
 
 CREATE TABLE ESTIMATED_PRICES

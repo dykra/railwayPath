@@ -4,15 +4,11 @@
 -- Description: Procedures to created before running the price estimation component
 -- =============================================
 
---TODO procedura do string split !!!
--- zeby nie trzeba bylo ustawiac niczego inneog
---TODO testy z pythonem 3.6
-
 -- ===============================================
 -- Procedure to get training data
 -- ===============================================
 
-CREATE PROCEDURE [dbo].[GetDateToTrainClassificationModel]
+CREATE PROCEDURE [dbo].[GetDataToTrainClassificationModel]
     @LimitDate nvarchar(8),
     @ExcludedList nvarchar(MAX)
 AS

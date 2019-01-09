@@ -1,14 +1,14 @@
-﻿
+﻿-- =============================================
+-- Author:		Magdalena Nowak
+-- Create date: 7.09.2018
+-- Description:	Procedure to get rows with at least one NULL value.
+-- =============================================
 
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Author:		Magdalena,Nowak
--- Create date: 7.09.2018
--- Description:	Procedure to get rows with at least one NULL value.
--- =============================================
+
 CREATE OR ALTER PROCEDURE GetRowsWithNullValues 
 	@TableName nvarchar(255) = N'PARCEL_VECTORS' 
 AS
