@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>RailwayPath</title>
+  <link rel="icon" href="../images/loc2.png">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.9/"></script>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+
+  <script src="../javascript/map.js"></script>
+</head>
+
+<body>
+<div id="viewDiv">
+  <div id="topbar">
+    
+    <button class="action-button menu_button" id="pointButton"
+            type="button" title="Draw point"></button>
+    <button class="action-button menu_button" id="polylineButton" type="button"
+            title="Draw railway path"></button>
+	<button class="action-button menu_button" id="rectangleButton"
+            type="button" title="Get parcels"></button>
+    <button class="action-button menu_button" id="polygonButton" type="button"
+            title="Draw shape"></button>
+    <button class="action-button menu_button" id="circleButton"
+            type="button" title="Draw circle"></button>
+	<button class="action-button menu_button"  id="count_price_button" type="button"
+            title="Count price"></button>
+	<button class="action-button menu_button" id="changeMap" type="button"
+            title="Change basemap"></button>
+	<button class="action-button menu_button"  id="hand_button" type="button"
+            title="Hand"></button>
+	<button class="action-button menu_button" id="resetBtn" type="button"
+            title="Clear graphics"></button>
+    
+  </div>
+  <div id="railwayPrice" style="display:flex">
+	<p id="price" style="align-items: flex-start">0 </p>
+	<img id="dolar" style="align-items: flex-end" src="../images/currency_dollar_sign.png" >
+	</p>
+  </div>
+</div>
+</body>
+
+</html>

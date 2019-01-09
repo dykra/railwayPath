@@ -1,0 +1,109 @@
+/* 
+	Valid ranges of entered parameters
+*/
+var min_designSpeed = 20;
+var max_designSpeed = 300;
+var min_minCurvatureRadius = 20;
+var max_minCurvatureRadius = 500;
+var min_maxFall = 0;
+var max_maxFall = 20;
+var min_roadWidth = 1;
+var max_roadWidth = 20;
+
+/* 
+	Set action for close button in invalid parameters popup
+*/
+document.onreadystatechange = 
+function () {
+	if(document.readyState == 'complete'){
+		console.log( "document loaded" );
+		var close_button = document.getElementById("close");
+		close_button.onclick = function() {
+			invalidParametersError.style.display = "none";
+		}
+	}
+}
+
+/*
+	Function is called after click on the button "Run"
+*/
+function startProgram(){
+  let designSpeed = document.getElementById("design_speed").value;
+  let minCurvatureRadius = document.getElementById("min_curvature_radius").value;
+  let maxFall = document.getElementById("max_fall").value;
+  let roadWidth = document.getElementById("road_width").value;
+
+  if(isParametersValid(designSpeed, minCurvatureRadius, maxFall, roadWidth)){
+  location.href = location.origin + '/html/map' +
+    '?designSpeed=' + designSpeed +
+    '&curvatureRadius=' + minCurvatureRadius +
+    '&maxFall=' + maxFall +
+    '&roadWidth=' + roadWidth;
+  // location.href=window.location.href + 'map?designSpeed=' + design_speed +
+  // '&minCurvatureRadius=' + min_curvature_radius +
+  // '&maxFall=' + max_fall +
+  // '&roadWidth=' + road_width;
+  }
+}
+
+
+function isParametersValid(designSpeed, minCurvatureRadius, maxFall, roadWidth){
+	if(designSpeed == "" && minCurvatureRadius== "" && maxFall == "" && roadWidth == ""){
+		document.getElementById("p1").innerHTML = "Enter parameters.";
+		invalidParametersError.style.display = "block";
+		return false;
+	}
+	
+	var alert_text = "Invalid parameters: ";
+	var firstInvalidParam = true;
+	var invalid_d = false, invalid_c = false, invalid_f =false, invalid_r =false;
+	invalid_d = isInvalidRangeOrType(designSpeed, min_designSpeed, max_designSpeed);
+	invalid_c = isInvalidRangeOrType(minCurvatureRadius, min_minCurvatureRadius, max_minCurvatureRadius);
+	invalid_f = isInvalidRangeOrType(maxFall, min_maxFall, max_maxFall);
+	invalid_r = isInvalidRangeOrType(roadWidth, min_roadWidth, max_roadWidth);
+	
+	if(invalid_d){
+		alert_text += "Design speed";
+		firstInvalidParam = false;
+	}
+	if(invalid_c){
+		if(!firstInvalidParam) {
+			alert_text += ", ";
+		}
+		alert_text += "Minimum radius of curvature";
+		firstInvalidParam = false;
+	}
+	if(invalid_f){
+		if(!firstInvalidParam) {
+			alert_text += ", ";
+		}
+		alert_text += "Maximal fall in the area";
+		firstInvalidParam = false;
+	}
+	if(invalid_r){
+		if(!firstInvalidParam) {
+			alert_text += ", ";
+		}
+		alert_text += "Width of the road under the railway";
+		firstInvalidParam = false;
+	}
+	alert_text += "."
+	
+	if(firstInvalidParam){
+		return true;
+	} else {
+		document.getElementById("p1").innerHTML = alert_text;
+		invalidParametersError.style.display = "block";
+		return false;
+	}
+
+}
+
+function isInvalidRangeOrType(param, min, max){
+	var param_int = parseInt(param);
+	if(param_int > max || param_int < min
+		|| !Number.isInteger(param_int)){
+		return true;
+	}
+	return false;
+}
