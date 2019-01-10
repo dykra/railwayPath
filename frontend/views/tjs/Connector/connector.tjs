@@ -1,6 +1,13 @@
 function (map, view, layerStack) {
     let baseUrl = "http://188.166.62.104:5000/";
 
+  const residentialZones = [19, 20, 21, 22, 23, 24, 25, 26];
+  const agriculturalZones = [2,3];
+  const combiningZones = [16,17,18];
+  const commercialZones = [4,5,6,7,8,9,10,11];
+  const industrialZones = [13, 14, 15];
+
+
 
 
   view.on("click", function (event) {
@@ -14,12 +21,29 @@ function (map, view, layerStack) {
           if (response.results.length > 0) {
               getParcelsPrices([{"objectid": response.results[0].graphic.attributes.OBJECTID}], function (resPrice) {
                   console.log(resPrice);
-                  var price = JSON.parse(resPrice)[0]["price"];
+                  let price = JSON.parse(resPrice)[0]["price"];
+                  let zoning_code = -(-(JSON.parse(resPrice)[0]["zoning_code"]));
+                  let type;
+                  if(zoning_code in residentialZones){
+                    type="residental zone";
+                  } else if(zoning_code in agriculturalZones){
+                    type="agricultural zone";
+                  } else if(zoning_code in combiningZones){
+                    type="combining zone";
+                  } else if(zoning_code in commercialZones){
+                    type="commercial zone";
+                  } else if(zoning_code in industrialZones){
+                    type="industrial zone";
+                  } else {
+                    type="other zone";
+                  }
+
                   view.popup.open({
                       title: "Parcel",
                       location: response.results[0].mapPoint,
                       content: "<h1>ID: " + response.results[0].graphic.attributes.OBJECTID + "</h1>" +
-                      "<h1>Price: " + price +  "</h1>"
+                      "<h1>Price: " + price +  "</h1>" +
+                        "<h2>Type: "+ type + " " + zoning_code  + "</h2>"
                   });
               });
 

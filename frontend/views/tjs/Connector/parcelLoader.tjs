@@ -26,8 +26,12 @@ function(map, view, layerStack){
     map.layers.add(connectorLayer);
 
     layerStack.push(connectorLayer);
+    window.layerStack = map.layers;
     connectorLayer.load();
+    console.log(connectorLayer);
     map.reorder(map.layers.items[map.layers.items.length-1],1);
+    var priceCheckerClass = {{reglue:"Connector/priceChecker"}};
+    var priceChecker = priceCheckerClass(polygonStack, layerStack);
   }
 
   return {

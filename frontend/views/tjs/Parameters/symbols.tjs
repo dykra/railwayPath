@@ -1,6 +1,6 @@
 function(){
 
-  const paleteArray = ["#e52d00","#ffc90d","#f9fbd4","#43b54d","#29aae3"];
+  const paleteArray = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#f1c40f", "#e67e22", "#e74c3c"];
 
   const pointSymbol = {
     type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
@@ -45,6 +45,16 @@ function(){
     }
   };
 
+  const areaError = {
+    type: "simple-fill", // autocasts as new SimpleFillSymbol()
+    color: "#c0392b",
+    style: "solid",
+    outline: {
+      color: "white",
+      width: 1
+    }
+  };
+
 
 
   let errorArraySymbols = [];
@@ -60,7 +70,8 @@ function(){
     polylineElevationError: polylineElevationErrorSymbol,
     polygon: polygonSymbol,
     point: pointSymbol,
-    errorArrayPalete: errorArraySymbols
+    errorArrayPalete: errorArraySymbols,
+    areaError: areaError
   }
 
 }();

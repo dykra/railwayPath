@@ -28,7 +28,7 @@ require([
   webMercatorUtils
 ) {
   let domGenerator={{reglue:"test/domManipulator"}};
-  let Assert={{reglue:"test/testRunner"}};
+  let reglue={{reglue:"test/testRunner"}};
   console.log("test");
 
 
@@ -49,7 +49,7 @@ require([
 
 
 // console.log(Assert.equals("testValidation", function(){return 2}, 2));
-  let test1 = Assert.equals("radiusValidationTest", function () {
+  let test1 = reglue.equals("radiusValidationTest", function () {
     let radiusValidator={{reglue:"tjs/Polygon/Validation/radiusValidation"}};
     const view = new MapView({
       container: "viewDiv",
@@ -64,13 +64,14 @@ require([
     return radiusValidator(params).getImpossibleRadiusSegments(line).__accessor__.store._values.type;
   }, "polyline");
   domGenerator.addTest(test1.name, test1.pass, test1.error);
-  domGenerator.addTest("restApiTest", true,"");
-  domGenerator.addTest("failedTest", false, "testFailedTest");
-  domGenerator.addTest("layerTest", true, "");
-  domGenerator.addTest("topologyValidationTest", true, "");
-  domGenerator.addTest("topologyValidationTest", true, "");
-  domGenerator.addTest("getTopologyTest", true, "");
-  domGenerator.addTest("getPriceTest", true, "");
+  // domGenerator.addTest("restApiTest", true,"");
+  // let failedTest = reglue.equals("failedTest", )
+  // domGenerator.addTest("failedTest", false, "testFailedTest");
+  // domGenerator.addTest("layerTest", true, "");
+  // domGenerator.addTest("topologyValidationTest", true, "");
+  // domGenerator.addTest("topologyValidationTest", true, "");
+  // domGenerator.addTest("getTopologyTest", true, "");
+  // domGenerator.addTest("getPriceTest", true, "");
 
   domGenerator.generateDom();
 

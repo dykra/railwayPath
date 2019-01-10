@@ -1,0 +1,22 @@
+function(feature){
+  const residentialZones = [19, 20, 21, 22, 23, 24, 25, 26];
+  const agriculturalZones = [2,3];
+  const combiningZones = [16,17,18];
+  const commercialZones = [4,5,6,7,8,9,10,11];
+  const industrialZones = [13, 14, 15];
+
+  if(feature.attributes.zoning_code in residentialZones){
+
+  } else if(feature.attributes.zoning_code in agriculturalZones){
+
+  } else if(feature.attributes.zoning_code in combiningZones){
+
+  } else if(feature.attributes.zoning_code in commercialZones){
+
+  } else if(feature.attributes.zoning_code in industrialZones){
+
+  } else {
+
+  }
+
+}
