@@ -62,14 +62,11 @@ function(polygonStack, layerStack) {
       //109405 - square foot
       let featureArea = geometryEngine.geodesicArea(feature.geometry, 109405);
       let intersectPolygon = geometryEngine.intersect(feature.geometry, polygon.geometry);
-      // console.log({geodesicArea:feature.attributes.zoning_code, asd:feature.attributes.geodesicArea in errorAreas});
-      // console.log(feature.attributes.zoning_code === 21);
       if(errorAreas.indexOf(feature.attributes.zoning_code)!==-1){
         let graphic = new Graphic({
           geometry: intersectPolygon,
           symbol: symbols.areaError
         });
-        // console.log(feature.attributes.zoning_code);
         layers.areaErrors.add(graphic);
       }
       let intersectArea = geometryEngine.geodesicArea(intersectPolygon, 109405);

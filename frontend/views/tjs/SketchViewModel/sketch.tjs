@@ -37,7 +37,6 @@ function(map, view, layers, symbols){
       if(event.tool === "rectangle"){
         return;
       }
-      // console.log(event);
       // Create a new graphic and set its geometry to
       // `create-complete` event geometry.
       const graphic = new Graphic({

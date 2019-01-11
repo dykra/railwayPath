@@ -39,14 +39,13 @@ require([
         console.log(response);
     });
   // right now there are global variables
-  // TODO: refactor these
   let polygonStack = [];
   let parcelLayersStack = [];
   let id = 0;
   let parcelMap = {};
   let editGraphic;
 
-  
+
   let map = new Map({
     basemap: "gray",
     layers: [layers.temporaryObjects, layers.areaErrors, layers.graphics, layers.errors]

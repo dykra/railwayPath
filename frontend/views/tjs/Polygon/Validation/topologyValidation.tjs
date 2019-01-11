@@ -10,7 +10,6 @@ function(){
                 "longitude": point[1]
             });
         }
-        // utilityFunctions.getParcelsAltitudes(pointObjects, checkForTopologyErrors);
     }
 
     function checkForTopologyErrors(altitudes){

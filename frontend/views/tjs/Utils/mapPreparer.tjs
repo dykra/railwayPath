@@ -18,7 +18,6 @@ function(){
   var map = new Map({
 
     basemap: "gray",
-    // layers: [tempLayer, errorLayer, graphicsLayer]
 
   });
   map.add(graphicsLayer);
@@ -34,8 +33,5 @@ function(){
   return {
     map: map,
     view: view,
-    // graphicsLayer: graphicsLayer,
-    // tempLayer: tempLayer,
-    // errorLayer: errorLayer
   };
 }

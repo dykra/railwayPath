@@ -7,9 +7,6 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
   var polygonEditGraphic;
 
   function addRailwayPolygon(event) {
-    // console.log(event.geometry);
-    // console.log(sketchViewModel.graphic.symbol);
-    // console.log(sketchViewModel);
     if (event.tool !== "polyline") {
       return;
     }
@@ -44,7 +41,6 @@ function(errorLayer, tempLayer, polygonStack, polygonSymbol, layerStack, paramet
   function removeRailwayPolygon(event) {
     getImpossibleSegment(event.geometry);
     let oldPolygon = polygonStack[polygonEditGraphic.graphicId];
-    // console.log(oldPolygon);
     const index = polygonStack.indexOf(polygonEditGraphic);
     if(index >= 0){
       polygonStack.splice(index,1);

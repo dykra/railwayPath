@@ -9,8 +9,4 @@ function startProgram(){
     '&curvatureRadius=' + minCurvatureRadius +
     '&maxFall=' + maxFall +
     '&roadWidth=' + roadWidth;
-  // location.href=window.location.href + 'map?designSpeed=' + design_speed +
-  // '&minCurvatureRadius=' + min_curvature_radius +
-  // '&maxFall=' + max_fall +
-  // '&roadWidth=' + road_width;
 }
