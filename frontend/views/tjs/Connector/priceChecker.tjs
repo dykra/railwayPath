@@ -1,0 +1,78 @@
+function(polygonStack, layerStack) {
+  let price = 0;
+  let errorAreas = [0,1,21,2];
+  var layerMapperClass = {{reglue:"Connector/layerMapper"}};
+  var layerMapper = layerMapperClass(layerStack);
+
+  let promisesToMap = layerMapper.promiseStack.length;
+
+  if(layerMapper.promiseStack.length>0) {
+    while (layerMapper.promiseStack.length > 0) {
+      layerMapper.promiseStack.pop().then(function (result) {
+        mapFeatures(result.features);
+
+      }, function (result) {
+        console.log("query rejected");
+        waitForCallbacksAndUpdate();
+      })
+    }
+  } else{
+    waitForCallbacksAndUpdate();
+  }
+
+  function waitForCallbacksAndUpdate(){
+    if(promisesToMap>1){
+      promisesToMap--;
+    } else{
+      console.log("done");
+      let price = 0;
+      for(let i in parcelMap){
+        for(j in polygonStack){
+          price += calculatePriceOfPolygon(polygonStack[j],parcelMap[i]);
+        }
+      }
+      document.getElementById("railwayPrice").innerText = price;
+    }
+  }
+
+  function mapFeatures(features){
+    let ids = [];
+    for(let i=0;i<features.length;i++){
+      ids.push({"objectid":features[i].attributes.OBJECTID});
+      parcelMap[features[i].attributes.OBJECTID]=features[i];
+    }
+    utilityFunctions.getParcelsPrices(ids, function (response) {
+
+      let object = JSON.parse(response);
+      for(let i in object){
+        parcelMap[object[i].objectid].attributes.LS1_Sale_Amount = object[i].price;
+        parcelMap[object[i].objectid].attributes.zoning_code = -(-object[i].zoning_code);
+      }
+      waitForCallbacksAndUpdate();
+    });
+  }
+
+  function calculatePriceOfPolygon(polygon, feature){
+    if(feature.attributes.LS1_Sale_Amount===null){
+      return 0;
+    }
+    if(geometryEngine.intersects(polygon.geometry, feature.geometry)){
+      feature.symbol.set(symbols.areaError);
+      window.testfeature = feature;
+      //109405 - square foot
+      let featureArea = geometryEngine.geodesicArea(feature.geometry, 109405);
+      let intersectPolygon = geometryEngine.intersect(feature.geometry, polygon.geometry);
+      if(errorAreas.indexOf(feature.attributes.zoning_code)!==-1){
+        let graphic = new Graphic({
+          geometry: intersectPolygon,
+          symbol: symbols.areaError
+        });
+        layers.areaErrors.add(graphic);
+      }
+      let intersectArea = geometryEngine.geodesicArea(intersectPolygon, 109405);
+      return Math.round(feature.attributes.LS1_Sale_Amount * (intersectArea/featureArea));
+    }
+    return 0;
+  }
+
+}

@@ -1,0 +1,77 @@
+function(){
+
+  const paleteArray = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#f1c40f", "#e67e22", "#e74c3c"];
+
+  const pointSymbol = {
+    type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+    style: "square",
+    color: "#2554C7",
+    size: "16px",
+    outline: { // autocasts as new SimpleLineSymbol()
+      color: [255, 255, 255],
+      width: 3
+    }
+  };
+
+  const polylineSymbol = {
+    type: "simple-line", // autocasts as new SimpleLineSymbol()
+    color: "#2554C7",
+    width: "4",
+    style: "dash"
+  };
+
+
+  const polylineErrorSymbol = {
+    type: "simple-line", // autocasts as new SimpleLineSymbol()
+    color: "#FF0000",
+    width: "5",
+    style: "solid"
+  };
+
+  const polylineElevationErrorSymbol = {
+    type: "simple-line", // autocasts as new SimpleLineSymbol()
+    color: "#8B4513",
+    width: "5",
+    style: "solid"
+  };
+
+  const polygonSymbol = {
+    type: "simple-fill", // autocasts as new SimpleFillSymbol()
+    color: "#4fabc9",
+    style: "solid",
+    outline: {
+      color: "white",
+      width: 1
+    }
+  };
+
+  const areaError = {
+    type: "simple-fill", // autocasts as new SimpleFillSymbol()
+    color: "#c0392b",
+    style: "solid",
+    outline: {
+      color: "white",
+      width: 1
+    }
+  };
+
+
+
+  let errorArraySymbols = [];
+  for(let i in paleteArray){
+    let symbol = JSON.parse(JSON.stringify(polygonSymbol));
+    symbol.color = paleteArray[i];
+    errorArraySymbols.push(symbol);
+  }
+
+  return{
+    polyline: polylineSymbol,
+    polylineError: polylineErrorSymbol,
+    polylineElevationError: polylineElevationErrorSymbol,
+    polygon: polygonSymbol,
+    point: pointSymbol,
+    errorArrayPalete: errorArraySymbols,
+    areaError: areaError
+  }
+
+}();

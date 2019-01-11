@@ -1,0 +1,42 @@
+function(map, view, layerStack){
+  function loadRectangle(event){
+    if(event.tool !== "rectangle")
+      return;
+    let points = event.geometry.rings[0];
+    points.pop();
+    points = points.sort();
+    let minLon = points[0][0];
+    let maxLon = points[3][0];
+    let minLat = points[0][1];
+    let maxLat = points[3][1];
+    let minpoint = new Point(minLon,minLat, new SpatialReference(102100));
+    let maxpoint = new Point(maxLon,maxLat, new SpatialReference(102100));
+    let defExpr =
+      `CENTER_LAT > ${minpoint.latitude} 
+    AND CENTER_LAT < ${maxpoint.latitude} 
+    AND CENTER_LON > ${maxpoint.longitude} 
+    AND CENTER_LON < ${minpoint.longitude}`;
+    var connectorLayer = new FeatureLayer({
+      id: "connectorLayer",
+      url: "http://arcgis.epicland.com:6080/arcgis/rest/services/Test2/Service3/MapServer",
+      outFields: ["OBJECTID", "LS1_Sale_Amount", "CENTER_LAT", "CENTER_LON"]
+    });
+    console.log({defExpr:defExpr, points: points, minPoint: minpoint, event:event, layer:connectorLayer});
+    connectorLayer.definitionExpression = defExpr;
+    map.layers.add(connectorLayer);
+
+    layerStack.push(connectorLayer);
+    window.layerStack = map.layers;
+    connectorLayer.load();
+    console.log(connectorLayer);
+    map.reorder(map.layers.items[map.layers.items.length-1],1);
+    var priceCheckerClass = {{reglue:"Connector/priceChecker"}};
+    var priceChecker = priceCheckerClass(polygonStack, layerStack);
+  }
+
+  return {
+    loadRectangle: function(points){
+      return loadRectangle(points);
+    }
+  }
+}
